@@ -10,8 +10,8 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Ecto.Multi
-alias Breakbench.Repo
+
+alias Breakbench.{Repo, Sport}
 alias Breakbench.AddressComponents.Country
 
 # Json file reader's helper
@@ -19,12 +19,13 @@ read! = & __DIR__
   |> Path.join(&1)
   |> File.read!
   |> Poison.decode!
-# Countries
-countries = read!.("seeds/countries.json")
-  |> Map.to_list
-  |> Enum.map(fn {k, v} -> %{short_name: k, long_name: v} end)
 
+for {short_name, long_name} <- read!.("seeds/countries.json") do
+  attrs = %{short_name: short_name, long_name: long_name}
+  Repo.get(Country, short_name) || AddressComponents.create_country(attrs)
+end
 
-Multi.new
-|> Multi.insert_all(:countries, Country, countries)
-|> Repo.transaction
+for {type, sports} <- read!.("seeds/sports.json"), sport <- sports do
+  attrs = %{name: sport, type: type}
+  Repo.get(Sport, sport) || Repo.insert!(struct(Sport, attrs))
+end
