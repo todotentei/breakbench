@@ -3,10 +3,10 @@ defmodule Breakbench.Repo.Migrations.CreateColloquialAreas do
 
   def change do
     create table(:colloquial_areas) do
-      add :short_name, :string, null: false
-      add :long_name, :string, null: false
+      add :short_name, :citext, null: false
+      add :long_name, :citext, null: false
       add :country_short_name, references(:countries, on_delete: :delete_all,
-        column: :short_name, type: :string), null: false
+        column: :short_name, type: :citext), null: false
 
       timestamps()
     end

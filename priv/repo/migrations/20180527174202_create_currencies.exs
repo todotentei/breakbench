@@ -3,9 +3,9 @@ defmodule Breakbench.Repo.Migrations.CreateCurrencies do
 
   def change do
     create table(:currencies, primary_key: false) do
-      add :code, :string, primary_key: true
+      add :code, :citext, primary_key: true
       add :decimal_digits, :integer
-      add :name, :string
+      add :name, :citext
       add :name_plural, :string
       add :symbol, :string
       add :symbol_native, :string
