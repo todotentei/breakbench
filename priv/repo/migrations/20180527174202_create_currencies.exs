@@ -6,7 +6,7 @@ defmodule Breakbench.Repo.Migrations.CreateCurrencies do
       add :code, :citext, primary_key: true
       add :decimal_digits, :integer
       add :name, :citext
-      add :name_plural, :string
+      add :name_plural, :citext
       add :symbol, :string
       add :symbol_native, :string
     end
