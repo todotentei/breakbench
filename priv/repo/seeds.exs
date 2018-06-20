@@ -11,9 +11,8 @@
 # and so on) as they will fail if something goes wrong.
 
 
-alias Breakbench.{
-  Repo, AddressComponents, Activities, Currency
-}
+alias Breakbench.Repo
+alias Breakbench.{AddressComponents, Activities, Exchanges}
 
 # Json file reader's helper
 read! = & __DIR__
@@ -35,6 +34,6 @@ end
 
 for currency <- read!.("seeds/currencies.json") do
   currency = AtomicMap.convert(currency, safe: false)
-  Repo.get(Currency, currency.code)
-    || Repo.insert!(struct(Currency, currency))
+  Repo.get(Exchanges.Currency, currency.code)
+    || Repo.insert!(struct(Exchanges.Currency, currency))
 end

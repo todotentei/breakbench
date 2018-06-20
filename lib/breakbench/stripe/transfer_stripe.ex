@@ -41,7 +41,7 @@ defmodule Breakbench.TransferStripe do
     end
 
 
-    belongs_to :currency, Breakbench.Currency, sync: false
+    belongs_to :currency, Breakbench.Exchanges.Currency, sync: false
     belongs_to :balance_transaction, Breakbench.BalanceTransactionStripe
     belongs_to :destination, Breakbench.AccountStripe
     belongs_to :source_transaction, Breakbench.ChargeStripe

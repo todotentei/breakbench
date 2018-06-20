@@ -21,7 +21,7 @@ defmodule Breakbench.StripePaymentMethods.Source do
     field :type, :string
     field :usage, :string
 
-    belongs_to :currency, Breakbench.Currency, type: :string,
+    belongs_to :currency, Breakbench.Exchanges.Currency, type: :string,
       foreign_key: :currency_code, references: :code, on_replace: :nilify
     belongs_to :customer, Breakbench.StripeResources.Customer, type: :string,
       on_replace: :nilify

@@ -44,7 +44,7 @@ defmodule Breakbench.Customer.SourceStripe do
     end
 
 
-    belongs_to :currency, Breakbench.Currency, sync: false
+    belongs_to :currency, Breakbench.Exchanges.Currency, sync: false
     belongs_to :customer, Breakbench.CustomerStripe
   end
 end

@@ -21,7 +21,7 @@ defmodule Breakbench.StripePaymentMethods.BankAccount do
       on_replace: :nilify
     belongs_to :country, Breakbench.AddressComponents.Country, type: :string,
       foreign_key: :country_short_name, references: :short_name, on_replace: :nilify
-    belongs_to :currency, Breakbench.Currency, type: :string,
+    belongs_to :currency, Breakbench.Exchanges.Currency, type: :string,
       foreign_key: :currency_code, references: :code, on_replace: :nilify
     belongs_to :customer, Breakbench.StripeResources.Customer, type: :string,
       on_replace: :nilify

@@ -33,7 +33,7 @@ defmodule Breakbench.StripeResources.Charge do
 
     belongs_to :balance_transaction, Breakbench.StripeResources.BalanceTransaction,
       type: :string, on_replace: :nilify
-    belongs_to :currency, Breakbench.Currency, type: :string,
+    belongs_to :currency, Breakbench.Exchanges.Currency, type: :string,
       foreign_key: :currency_code, references: :code, on_replace: :nilify
     belongs_to :customer, Breakbench.StripeResources.Customer, type: :string,
       on_replace: :nilify

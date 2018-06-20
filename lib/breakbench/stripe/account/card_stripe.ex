@@ -52,7 +52,7 @@ defmodule Breakbench.Account.CardStripe do
 
 
     belongs_to :country, Breakbench.AddressComponents.Country, sync: false
-    belongs_to :currency, Breakbench.Currency, sync: false
+    belongs_to :currency, Breakbench.Exchanges.Currency, sync: false
     belongs_to :account, Breakbench.AccountStripe
   end
 end

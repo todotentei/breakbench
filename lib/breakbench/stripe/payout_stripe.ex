@@ -58,7 +58,7 @@ defmodule Breakbench.PayoutStripe do
     end
 
 
-    belongs_to :currency, Breakbench.Currency, sync: false
+    belongs_to :currency, Breakbench.Exchanges.Currency, sync: false
     belongs_to :balance_transaction, Breakbench.BalanceTransactionStripe
   end
 end

@@ -18,7 +18,7 @@ defmodule Breakbench.StripeResources.Customer do
     field :metadata, :map
     field :shipping, :map
 
-    belongs_to :currency, Breakbench.Currency, type: :string,
+    belongs_to :currency, Breakbench.Exchanges.Currency, type: :string,
       foreign_key: :currency_code, references: :code, on_replace: :nilify
   end
 
