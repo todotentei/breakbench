@@ -12,6 +12,8 @@ defmodule Breakbench.Application do
       supervisor(Breakbench.Repo, []),
       # Start the Geocoding module
       supervisor(Breakbench.Geocode, []),
+      # Start the Stripe module
+      supervisor(Breakbench.Stripe, []),
       # Start the endpoint when the application starts
       supervisor(BreakbenchWeb.Endpoint, []),
       # Start your own worker by calling: Breakbench.Worker.start_link(arg1, arg2, arg3)

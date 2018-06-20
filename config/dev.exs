@@ -56,3 +56,7 @@ config :breakbench, Breakbench.Repo,
   database: "breakbench_v1_3_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Configure stripe
+config :breakbench, Stripe,
+  secret: "sk_test_5XvMbTiV3CVJH4c8HnIBMAgv"

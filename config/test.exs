@@ -17,3 +17,8 @@ config :breakbench, Breakbench.Repo,
   database: "breakbench_v1_3_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Configure stripe
+config :breakbench, Stripe,
+  test_mode: true,
+  mock_server: Breakbench.StripeMockServer

@@ -24,6 +24,14 @@ config :breakbench, Google,
   timezone_api_key: "AIzaSyA3yOIC-s_zBag_2RwIc4QFDtTaYV1rVpI",
   httpoison: [recv_timeout: 5000, timeout: 8000]
 
+config :breakbench, Stripe,
+  endpoint: "https://api.stripe.com/",
+  schema: "v1",
+  version: "2018-05-21",
+  list: [limit: 10],
+  httpoison: [recv_timeout: 5000, timeout: 8000],
+  webhook: [tolerance: 300000]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

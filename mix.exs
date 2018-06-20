@@ -25,8 +25,16 @@ defmodule Breakbench.Mixfile do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(:test) do
+    [
+      "lib",
+      "test/support",
+      "test/factories",
+      "test/mock_servers"
+    ]
+  end
+
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -45,7 +53,8 @@ defmodule Breakbench.Mixfile do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:httpoison, "~> 1.0"},
-      {:atomic_map, "~> 0.9"}
+      {:atomic_map, "~> 0.9"},
+      {:ex_machina, "~> 2.2", only: :test}
     ]
   end
 
