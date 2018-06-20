@@ -4,4 +4,5 @@ defmodule Breakbench.Factory do
   use Breakbench.AddressComponents.CountryFactory
   use Breakbench.CurrencyFactory
   use Breakbench.StripeFactory
+  use Breakbench.SportFactory
 end

@@ -12,7 +12,7 @@
 
 
 alias Breakbench.{
-  Repo, AddressComponents, Sport, Currency
+  Repo, AddressComponents, Activities, Currency
 }
 
 # Json file reader's helper
@@ -29,8 +29,8 @@ end
 
 for {type, sports} <- read!.("seeds/sports.json"), sport <- sports do
   attrs = %{name: sport, type: type}
-  Repo.get(Sport, sport)
-    || Repo.insert!(struct(Sport, attrs))
+  Repo.get(Activities.Sport, sport)
+    || Repo.insert!(struct(Activities.Sport, attrs))
 end
 
 for currency <- read!.("seeds/currencies.json") do

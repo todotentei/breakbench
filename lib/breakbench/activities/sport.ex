@@ -1,4 +1,4 @@
-defmodule Breakbench.Sport do
+defmodule Breakbench.Activities.Sport do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -12,7 +12,7 @@ defmodule Breakbench.Sport do
   @doc false
   def changeset(sport, attrs) do
     sport
-    |> cast(attrs, [:name, :type])
-    |> validate_required([:name])
+      |> cast(attrs, [:name, :type])
+      |> validate_required([:name])
   end
 end
