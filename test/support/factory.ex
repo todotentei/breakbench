@@ -5,4 +5,5 @@ defmodule Breakbench.Factory do
   use Breakbench.CurrencyFactory
   use Breakbench.StripeFactory
   use Breakbench.SportFactory
+  use Breakbench.UserFactory
 end
