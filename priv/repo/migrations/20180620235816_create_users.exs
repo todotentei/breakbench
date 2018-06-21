@@ -7,10 +7,10 @@ defmodule Breakbench.Repo.Migrations.CreateUsers do
       add :middle_name, :string
       add :last_name, :string, null: false
       add :given_name, :string
-      add :email, :string, null: false
+      add :email, :citext, null: false
       add :date_of_birth, :date
-      add :gender, :string
-      add :username, :string, null: false
+      add :gender, :citext
+      add :username, :citext, null: false
       add :profile, :string
       add :password_hash, :string
 
