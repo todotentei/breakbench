@@ -8,7 +8,7 @@ defmodule Breakbench.Repo.Migrations.CreateBalanceTransactions do
       add :amount, :integer
       add :available_on, :utc_datetime
       add :created, :utc_datetime
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
       add :description, :string
       add :exchange_rate, :decimal
       add :fee, :integer

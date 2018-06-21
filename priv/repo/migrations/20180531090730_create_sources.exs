@@ -9,7 +9,7 @@ defmodule Breakbench.Repo.Migrations.CreateSources do
       add :client_secret, :string
       add :code_verification, :map
       add :created, :utc_datetime
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
       add :flow, :string
       add :metadata, :map
       add :owner, :map
@@ -19,7 +19,7 @@ defmodule Breakbench.Repo.Migrations.CreateSources do
       add :status, :string
       add :type, :string
       add :usage, :string
-      add :customer_id, references(:customers, type: :string, on_replace: :nilify)
+      add :customer_id, references(:customers, type: :string)
     end
 
     create index(:sources, [:currency_code])

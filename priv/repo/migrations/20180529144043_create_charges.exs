@@ -9,20 +9,20 @@ defmodule Breakbench.Repo.Migrations.CreateCharges do
       add :amount_refunded, :integer
       add :application, :string
       add :application_fee, :string
-      add :balance_transaction_id, references(:balance_transactions, type: :string, on_replace: :nilify)
+      add :balance_transaction_id, references(:balance_transactions, type: :string)
       add :captured, :boolean
       add :created, :utc_datetime
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
-      add :customer_id, references(:customers, type: :string, on_replace: :nilify)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
+      add :customer_id, references(:customers, type: :string)
       add :description, :string
-      add :destination_id, references(:accounts, type: :string, on_replace: :nilify)
+      add :destination_id, references(:accounts, type: :string)
       add :dispute, :string
       add :failure_code, :string
       add :failure_message, :string
       add :fraud_details, :map
       add :invoice, :string
       add :metadata, :map
-      add :on_behalf_of_id, references(:accounts, type: :string, on_replace: :nilify)
+      add :on_behalf_of_id, references(:accounts, type: :string)
       add :outcome, :map
       add :paid, :boolean
       add :receipt_email, :string

@@ -9,7 +9,7 @@ defmodule Breakbench.Repo.Migrations.CreateCustomers do
       add :business_vat_id, :string
       add :created, :utc_datetime
       add :default_source, :string
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
       add :delinquent, :boolean
       add :description, :string
       add :email, :string

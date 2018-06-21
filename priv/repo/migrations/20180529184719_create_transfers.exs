@@ -7,15 +7,15 @@ defmodule Breakbench.Repo.Migrations.CreateTransfers do
       add :object, :string
       add :amount, :integer
       add :amount_reversed, :integer
-      add :balance_transaction_id, references(:balance_transactions, type: :string, on_replace: :nilify)
+      add :balance_transaction_id, references(:balance_transactions, type: :string)
       add :created, :utc_datetime
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
       add :description, :string
-      add :destination_id, references(:accounts, type: :string, on_replace: :nilify)
+      add :destination_id, references(:accounts, type: :string)
       add :destination_payment, :string
       add :metadata, :map
       add :reversed, :boolean
-      add :source_transaction_id, references(:charges, type: :string, on_replace: :nilify)
+      add :source_transaction_id, references(:charges, type: :string)
       add :source_type, :string
       add :transfer_group, :string
     end

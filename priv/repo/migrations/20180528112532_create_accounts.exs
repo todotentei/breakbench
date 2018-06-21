@@ -9,11 +9,11 @@ defmodule Breakbench.Repo.Migrations.CreateAccounts do
       add :business_name, :string
       add :business_url, :string
       add :charges_enabled, :boolean
-      add :country_short_name, references(:countries, column: :short_name, type: :citext, on_replace: :nilify)
+      add :country_short_name, references(:countries, column: :short_name, type: :citext)
       add :created, :utc_datetime
       add :debit_negative_balances, :boolean
       add :decline_charge_on, :map
-      add :default_currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
+      add :default_currency_code, references(:currencies, column: :code, type: :citext)
       add :details_submitted, :boolean
       add :display_name, :string
       add :email, :string

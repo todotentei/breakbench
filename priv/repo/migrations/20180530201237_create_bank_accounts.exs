@@ -9,9 +9,9 @@ defmodule Breakbench.Repo.Migrations.CreateBankAccounts do
       add :account_holder_name, :string
       add :account_holder_type, :string
       add :bank_name, :string
-      add :country_short_name, references(:countries, column: :short_name, type: :citext, on_replace: :nilify)
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
-      add :customer_id, references(:customers, type: :string, on_replace: :nilify)
+      add :country_short_name, references(:countries, column: :short_name, type: :citext)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
+      add :customer_id, references(:customers, type: :string)
       add :default_for_currency, :boolean
       add :fingerprint, :string
       add :last4, :string

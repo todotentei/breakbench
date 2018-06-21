@@ -3,8 +3,8 @@ defmodule Breakbench.Repo.Migrations.AlterChargesAddTransfer do
 
   def change do
     alter table(:charges) do
-      add :source_transfer_id, references(:transfers, type: :string, on_replace: :nilify)
-      add :transfer_id, references(:transfers, type: :string, on_replace: :nilify)
+      add :source_transfer_id, references(:transfers, type: :string)
+      add :transfer_id, references(:transfers, type: :string)
       add :transfer_group, :string
     end
 

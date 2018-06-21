@@ -8,9 +8,9 @@ defmodule Breakbench.Repo.Migrations.CreatePayouts do
       add :amount, :integer
       add :arrival_date, :utc_datetime
       add :automatic, :boolean
-      add :balance_transaction_id, references(:balance_transactions, type: :string, on_replace: :nilify)
+      add :balance_transaction_id, references(:balance_transactions, type: :string)
       add :created, :utc_datetime
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
       add :description, :string
       add :failure_balance_transaction, :string
       add :failure_code, :string

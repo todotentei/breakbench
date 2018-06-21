@@ -6,11 +6,11 @@ defmodule Breakbench.Repo.Migrations.CreateTransferReversals do
       add :id, :string, primary_key: true
       add :object, :string
       add :amount, :integer
-      add :balance_transaction_id, references(:balance_transactions, type: :string, on_replace: :nilify)
+      add :balance_transaction_id, references(:balance_transactions, type: :string)
       add :created, :utc_datetime
-      add :currency_code, references(:currencies, column: :code, type: :citext, on_replace: :nilify)
+      add :currency_code, references(:currencies, column: :code, type: :citext)
       add :metadata, :map
-      add :transfer_id, references(:transfers, type: :string, on_replace: :nilify)
+      add :transfer_id, references(:transfers, type: :string)
     end
 
     create index(:transfer_reversals, [:balance_transaction_id])
