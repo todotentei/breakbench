@@ -1,6 +1,6 @@
 import "../node_modules/materialize-css/dist/css/materialize.min.css";
 import "../node_modules/materialize-css/dist/js/materialize.min.js";
-import "../css/app.css";
+import "../css/app.scss";
 
 // Import dependencies
 //
