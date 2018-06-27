@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -15,21 +16,43 @@ module.exports = (env, options) => ({
       new OptimizeCSSAssetsPlugin({})
     ]
   },
-  entry: './js/app.js',
+  entry: [
+    'bootstrap-loader',
+    './js/app.jsx'
+  ],
   output: {
     filename: 'app.js',
     path: path.resolve(__dirname, '../priv/static/js')
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     rules: [{
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      use: 'babel-loader'
+    }, {
       test: /\.js$/,
       exclude: /node_modules/,
+      use: 'babel-loader'
+    }, {
+      test: /\.css$/,
+      use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+    }, {
+      test: /\.scss$/,
+      use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+    }, {
+      test: /\.(eot|svg|ttf|woff|woff2)$/,
       use: {
-        loader: 'babel-loader'
+        loader: 'file-loader',
+        options: {
+          outputPath: '../fonts/'
+        }
       }
     }, {
-      test: /\.(css|scss)$/,
-      use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      test: /\.(jpg|png|gif)$/,
+      use: 'file-loader'
     }]
   },
   plugins: [
@@ -37,8 +60,27 @@ module.exports = (env, options) => ({
       filename: '../css/app.css'
     }),
     new CopyWebpackPlugin([{
-      from: 'static/',
+      from: './static/',
       to: '../'
-    }])
+    }]),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Tether: 'tether',
+      'window.Tether': 'tether',
+      Popper: ['popper.js', 'default'],
+      Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
+      Button: 'exports-loader?Button!bootstrap/js/dist/button',
+      Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel',
+      Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse',
+      Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown',
+      Modal: 'exports-loader?Modal!bootstrap/js/dist/modal',
+      Popover: 'exports-loader?Popover!bootstrap/js/dist/popover',
+      Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy',
+      Tab: 'exports-loader?Tab!bootstrap/js/dist/tab',
+      Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip',
+      Util: 'exports-loader?Util!bootstrap/js/dist/util',
+    }),
   ]
 });

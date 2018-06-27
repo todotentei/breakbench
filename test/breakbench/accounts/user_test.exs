@@ -9,7 +9,7 @@ defmodule Breakbench.UserTest do
 
     @update_attrs %{username: "updated_username", email: "updated.email@example.com"}
     @invalid_attrs %{username: nil, email: nil}
-    @not_unique_attrs %{username: "username", email: "email", first_name: "first_name", last_name: "last_name"}
+    @not_unique_attrs %{username: "username", email: "email", full_name: "full_name"}
 
     test "list_users/0 returns all users" do
       [user_one, user_two] = insert_pair(:user)

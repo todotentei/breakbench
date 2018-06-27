@@ -4,9 +4,7 @@ defmodule Breakbench.Accounts.User do
 
 
   schema "users" do
-    field :first_name, :string
-    field :middle_name, :string
-    field :last_name, :string
+    field :full_name, :string
     field :given_name, :string
     field :email, :string
     field :date_of_birth, :date
@@ -31,9 +29,9 @@ defmodule Breakbench.Accounts.User do
   @doc false
   def changeset(struct, attrs) do
     struct
-      |> cast(attrs, [:first_name, :middle_name, :last_name, :given_name,
+      |> cast(attrs, [:full_name, :given_name,
          :email, :date_of_birth, :gender, :username, :profile])
-      |> validate_required([:first_name, :last_name, :email, :username])
+      |> validate_required([:full_name, :email, :username])
       |> validate_length(:username, min: 1, max: 20)
       |> unique_constraint(:username)
       |> unique_constraint(:email)

@@ -13,10 +13,27 @@ defmodule BreakbenchWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug Breakbench.Auth.Pipeline
+  end
+
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   scope "/", BreakbenchWeb do
-    pipe_through [:browser]
+    pipe_through [:browser, :auth]
 
     get "/", PageController, :index
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
+    get "/register", UserController, :new
+    post "/register", UserController, :create
+  end
+
+  scope "/", BreakbenchWeb do
+    pipe_through [:browser, :auth, :ensure_auth]
   end
 
   # Other scopes may use custom stacks.

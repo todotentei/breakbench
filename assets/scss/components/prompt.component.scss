@@ -1,0 +1,38 @@
+@import '../color';
+
+.prompt {
+  display: flex;
+  min-height: 50px;
+  background-color: $dusty-light;
+
+  .prompt-body {
+    width: 100%;
+    padding: 15px 0px 15px 30px;
+  }
+
+  .prompt-close {
+    float: right;
+
+    &, button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      width: 50px;
+      height: 100%;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.prompt.prompt-danger {
+  border: 1px solid #F03434;
+  background-color: rgba(240,52,52,0.1);
+
+  &, .fa-times { color: #F03434; }
+}

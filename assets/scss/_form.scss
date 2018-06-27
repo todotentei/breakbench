@@ -1,0 +1,81 @@
+@import "color";
+
+.form-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+
+  .form-container-header,
+  .form-container-body,
+  .form-container-footer {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .form-container-header {
+    height: 50px;
+    justify-content: center;
+  }
+
+  .form-logo {
+    margin-bottom: 50px;
+  }
+}
+
+
+.form-box {
+  padding: 30px;
+
+  form {
+    & > div {
+      margin: 0;
+      margin-bottom: 20px;
+    }
+
+    label {
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-weight: bold;
+      font-size: 11px;
+    }
+
+    button.submit {
+      width: 100%;
+      color: white;
+      background-color: black;
+    }
+  }
+}
+
+.form-callout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  a {
+    color: black;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+.form-box,
+.form-callout {
+  border: 1px solid $dusty-light;
+  background-color: white;
+}
+
+.forgot-password {
+  button {
+    color: $dusty;
+    font-size: 12px;
+    font-weight: lighter;
+    border: none;
+    background: none;
+    padding: 0;
+
+    &:hover { cursor: pointer; }
+  }
+}

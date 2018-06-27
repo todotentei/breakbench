@@ -1,0 +1,12 @@
+@import "../form";
+
+.register-form {
+  width: 100%;
+  min-width: 320px;
+  max-width: 520px;
+}
+
+.register-form #flash-container { margin-top: 20px; }
+.register-form .form-callout {
+  margin-top: 20px;
+}

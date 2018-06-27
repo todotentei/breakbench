@@ -54,7 +54,7 @@ defmodule Breakbench.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:httpoison, "~> 1.0"},
       {:atomic_map, "~> 0.9"},
-      {:ex_machina, "~> 2.2", only: :test}
+      {:ex_machina, "~> 2.2", only: :test},
     ]
   end
 

@@ -5,9 +5,7 @@ defmodule Breakbench.UserFactory do
 
       def user_factory do
         %User{
-          first_name: "first_name",
-          middle_name: "middle_name",
-          last_name: "last_name",
+          full_name: "full_name",
           given_name: "given_name",
           email: sequence(:email, &"email-#{&1}@example.com"),
           date_of_birth: ~D[1995-01-01],

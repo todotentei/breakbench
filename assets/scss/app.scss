@@ -1,0 +1,82 @@
+@import 'fontawesome';
+@import 'fa-solid';
+@import 'fa-regular';
+
+@import 'color';
+@import 'components';
+@import 'forms';
+@import 'pages';
+
+/* This file is for your main application css. */
+
+body {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+}
+
+header, main { width: 100%; }
+
+a {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  #logo-1st-part { fill: black; }
+  #logo-2nd-part { fill: black; }
+}
+
+.app-header {
+  height: 80px;
+
+  &, nav {
+    display: flex;
+    background: #24292e;
+    overflow: hidden;
+    align-items: center;
+  }
+
+  nav {
+    width: 900px;
+    box-shadow: none;
+    margin: 0 auto;
+    justify-content: space-between;
+  }
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  svg {
+    height: 32px;
+    width: 32px;
+  }
+
+  &:hover {
+    background: none;
+  }
+}
+
+.homepage {
+  width: 100%;
+
+  &, .info{ background: #2b3137; }
+  .info {
+    height: 650px;
+    width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+
+    h1 { color: white; }
+  }
+}
