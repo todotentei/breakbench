@@ -36,6 +36,15 @@ defmodule BreakbenchWeb.Router do
     pipe_through [:browser, :auth, :ensure_auth]
   end
 
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: BreakbenchWeb.Schema,
+      interface: :simple,
+      context: %{pubsub: BreakbenchWeb.Endpoint}
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", BreakbenchWeb do
   #   pipe_through :api

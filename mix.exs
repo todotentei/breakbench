@@ -55,6 +55,8 @@ defmodule Breakbench.Mixfile do
       {:httpoison, "~> 1.0"},
       {:atomic_map, "~> 0.9"},
       {:ex_machina, "~> 2.2", only: :test},
+      {:absinthe_plug, "~> 1.4.0"},
+      {:absinthe_ecto, "~> 0.1.0"}
     ]
   end
 
