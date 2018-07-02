@@ -7,12 +7,12 @@ input.form-control {
 }
 
 input.form-control {
-  border-color: $dusty-light;
+  border-color: $bb-dusty-200;
 }
 
 .form-group.has-error {
   input {
-    border: 1px solid $danger;
-    background-color: $danger-light;
+    border: 1px solid $bb-danger-400;
+    background-color: $bb-danger-100;
   }
 }

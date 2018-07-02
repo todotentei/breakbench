@@ -4,12 +4,12 @@ export function flash(state = {}, action) {
   switch (action.type) {
     case flashConstants.SUCCESS:
       return {
-        type: 'flash-success',
+        class: 'flash-success',
         message: action.message
       };
     case flashConstants.ERROR:
       return {
-        type: 'flash-danger',
+        class: 'flash-danger',
         message: action.message
       };
     case flashConstants.CLEAR:

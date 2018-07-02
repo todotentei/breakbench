@@ -1,34 +1,40 @@
 import { userConstants } from "../constants";
 import { userService } from "../services";
-import { flashActions } from "./";
+import { loggedActions, flashActions } from "./";
 import { history } from "../helpers"
+import _debounce from 'lodash.debounce';
 
 export const userActions = {
   login,
   register
 };
 
+
 function login(login, password) {
   return dispatch => {
     dispatch(request({ login }));
 
     userService.login(login, password)
-      .then(
-        data => {
-          if (data.type === "ok") {
-            dispatch(success(data));
-            history.push("/");
-          } else {
-            const error = data.message || "unexpected error";
-            dispatch(failure(error.toString()));
-            dispatch(flashActions.error(error.toString()));
-          }
-        },
-        error => {
-          dispatch(failure(error.toString()));
-          dispatch(flashActions.error(error.toString()));
+      .then(data => {
+        if (data.status === "ok") {
+          const message = data.message || "Welcome back!";
+          dispatch(success(data));
+          dispatch(loggedActions.success())
+          history.push("/")
+        } else if (data.status === "error") {
+          const message = data.message || "Incorrect username or password";
+          dispatch(failure(message.toString()));
+          dispatch(loggedActions.error())
+          dispatch(flashActions.error(message.toString()));
+        } else {
+          const message = "Unexpected error";
+          dispatch(failure(message.toString()));
+          dispatch(flashActions.error(message.toString()));
         }
-      );
+      }, error => {
+        dispatch(failure(error.toString()));
+        dispatch(flashActions.error(error.toString()));
+      });
   };
 
   function request(data) { return { type: userConstants.LOGIN_REQUEST, data } };
@@ -44,7 +50,6 @@ function register(data) {
       .then(
         data => {
           dispatch(success());
-          history.push('/login');
           dispatch(flashActions.success('Registration successful'));
         },
         error => {

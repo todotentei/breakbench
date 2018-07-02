@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import { connect } from 'react-redux';
-import {
-  Form, Button, FormGroup, Label, Input
-} from "reactstrap";
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import { flashActions, userActions } from '../actions';
-import { Logo } from "../icons";
-import { Prompt } from '../components';
+import { Logo } from '../icons';
+import { Flash } from '../components';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -16,16 +15,25 @@ class LoginForm extends Component {
       login: '',
       password: ''
     };
+    this.bodyRef = React.createRef();
+    this.formRef = React.createRef();
   }
 
-  handleFlashClose = (event) => {
+  handleFocus = (event) => {
+    event.preventDefault();
+
+    const { flash } = this.props;
     const { dispatch } = this.props;
-    dispatch(flashActions.clear());
+
+    if (Object.keys(flash).length != 0)
+      dispatch(flashActions.clear())
   }
 
   handleChange = (event) => {
-    const { id, value } = event.target;
-    this.setState({ [id]: value });
+    event.preventDefault();
+
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
   handleSubmit = (event) => {
@@ -34,11 +42,30 @@ class LoginForm extends Component {
     const { login, password } = this.state;
     const { dispatch } = this.props;
 
-    if (login && password) {
+    if (login && password)
       dispatch(userActions.login(login, password));
-    } else {
+    else
       dispatch(flashActions.error('This field is required'));
-    }
+  }
+
+   componentWillReceiveProps = (nextProps) => {
+     const { logged } = nextProps;
+
+     if (logged && logged.status == true) {
+       this.formRef.current.remove()
+       ReactDOM.render((
+         <div className="logged-welcoming">
+           <div>
+             <Logo height='48' width='48' />
+           </div>
+           <div>
+             <h3>Welcome back!</h3>
+             <p>We're so excited to see you again!</p>
+             <p className="text-muted small">Page is redirecting...</p>
+           </div>
+         </div>
+       ), this.bodyRef.current)
+     }
   }
 
   render() {
@@ -46,70 +73,59 @@ class LoginForm extends Component {
     const { login, password } = this.state;
 
     return (
-      <div className='container-fluid form-container'>
-        <div className='form-container-header'></div>
-        <div className='form-container-body'>
-          <div className='login-form'>
-            <div className='form-box'>
+      <div ref={this.bodyRef} className='container-fluid form-container'>
+        <div ref={this.formRef} className='login-form'>
+          <div className='form-box'>
+          {
+            // <div className='form-logo'>
+            //   <Logo height='48' width='48' />
+            // </div>
+          }
 
-              <div className="form-logo">
-                <Logo height="48" width="48" />
+            <Form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <Label>Username or email address</Label>
+                <Input
+                  name='login'
+                  type='text'
+                  value={login}
+                  onFocus={this.handleFocus}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label>Password</Label>
+                <Input
+                  name='password'
+                  type='password'
+                  value={password}
+                  onFocus={this.handleFocus}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+
+              <div className='forgot-password'>
+                <button type='button'>Forgot your password?</button>
               </div>
 
-              <Form onSubmit={this.handleSubmit}>
-                <FormGroup>
-                  <Label for="login">Username or email address</Label>
-                  <Input
-                    autoFocus
-                    id="login"
-                    type="text"
-                    name="login"
-                    value={login}
-                    onChange={this.handleChange}
-                  />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={this.handleChange}
-                  />
-                </FormGroup>
-
-                <div className="forgot-password">
-                  <button>Forgot your password?</button>
-                </div>
-
-                <Button
-                    className="submit"
-                    type="submit"
-                    size="lg"
-                    block>
-                  Create new account
-                </Button>
-              </Form>
-            </div>
-            <div id='flash-container'>
-              {flash.message &&
-                <Prompt
-                    className='prompt-danger'
-                    onClose={this.handleFlashClose}>
-                  {flash.message}
-                </Prompt>
-              }
-            </div>
-            <div className='form-callout'>
-              <div>
-                Don't have an account? <a href='register'>Sign up</a>
-              </div>
+              <Button
+                  className='submit'
+                  type='submit'
+                  size='lg'
+                  block>
+                Sign in to your account
+              </Button>
+            </Form>
+          </div>
+          <div className='form-flash'>
+            {flash.message && <Flash />}
+          </div>
+          <div className='form-callout'>
+            <div>
+              Don't have an account? <a href='register'>Sign up</a>
             </div>
           </div>
-        </div>
-        <div className='form-container-footer'>
         </div>
       </div>
     );
@@ -117,10 +133,8 @@ class LoginForm extends Component {
 };
 
 function mapStateToProps(state) {
-  const { flash } = state;
-  const { loggingIn } = state.authentication;
-
-  return { flash, loggingIn };
+  const { flash, logged } = state;
+  return { flash, logged };
 }
 
 const connectedLoginForm = connect(mapStateToProps)(LoginForm);

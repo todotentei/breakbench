@@ -24,10 +24,6 @@ config :breakbench, Google,
   timezone_api_key: "AIzaSyA3yOIC-s_zBag_2RwIc4QFDtTaYV1rVpI",
   httpoison: [recv_timeout: 5000, timeout: 8000]
 
-config :breakbench, Breakbench.Guardian,
-  issuer: "breakbench",
-  secret_key: "3WS1Fp2mkhhIngE3XrE/3A6XKyejOjayjhGQzZQwTk4NESAtkPtAUw/ooN0XQKx+"
-
 config :breakbench, Stripe,
   endpoint: "https://api.stripe.com/",
   schema: "v1",

@@ -29,9 +29,9 @@ defmodule Breakbench.Accounts.User do
   @doc false
   def changeset(struct, attrs) do
     struct
-      |> cast(attrs, [:full_name, :given_name,
-         :email, :date_of_birth, :gender, :username, :profile])
-      |> validate_required([:full_name, :email, :username])
+      |> cast(attrs, [:full_name, :given_name, :email, :date_of_birth, :gender,
+         :username, :profile])
+      |> validate_required([:email, :username])
       |> validate_length(:username, min: 1, max: 20)
       |> unique_constraint(:username)
       |> unique_constraint(:email)

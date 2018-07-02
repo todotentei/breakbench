@@ -56,6 +56,7 @@ defmodule BreakbenchWeb.Schema do
       resolve &AccountsResolver.get_user/3
     end
     field :has_user, :boolean do
+      arg :email, :string
       arg :username, :string
       resolve &AccountsResolver.has_user/3
     end

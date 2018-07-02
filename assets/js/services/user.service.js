@@ -1,5 +1,29 @@
 import Axios from "axios";
 
+export const userService = {
+  check_email,
+  check_username,
+  login,
+  register
+};
+
+
+function check_email(email) {
+  return request({
+    method: "post",
+    url: "/api/graphiql",
+    data: { query: ` query { hasUser(email: "${email}") }` }
+  })
+}
+
+function check_username(username) {
+  return request({
+    method: "post",
+    url: "/api/graphiql",
+    data: { query: ` query { hasUser(username: "${username}") }` }
+  });
+}
+
 function login(login, password) {
   return request({
     method: "post",
@@ -26,11 +50,6 @@ function register(user) {
 
 function request(options) {
   return Axios(options)
-    .then(function(response) { return response.data; })
-    .catch(function(error) { console.log(error); });
+    .then(response => response.data)
+    .catch(error => { console.log(error); });
 }
-
-export const userService = {
-  login,
-  register
-};

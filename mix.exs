@@ -47,16 +47,16 @@ defmodule Breakbench.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.11"},
+      {:gettext, "~> 0.13.1"},
       {:cowboy, "~> 1.0"},
-      {:guardian, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:httpoison, "~> 1.0"},
+      {:httpoison, "~> 1.0", override: true},
       {:atomic_map, "~> 0.9"},
       {:ex_machina, "~> 2.2", only: :test},
       {:absinthe_plug, "~> 1.4.0"},
-      {:absinthe_ecto, "~> 0.1.0"}
+      {:absinthe_ecto, "~> 0.1.0"},
+      {:wallaby, "~> 0.20.0", [runtime: false, only: :test]}
     ]
   end
 

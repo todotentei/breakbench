@@ -4,7 +4,15 @@ use Mix.Config
 # you can enable the server option below.
 config :breakbench, BreakbenchWeb.Endpoint,
   http: [port: 4001],
-  server: false
+  server: true,
+  watchers: [node: ["node_modules/webpack/bin/webpack.js", "--mode", "none",
+                    "--silent", cd: Path.expand("../assets", __DIR__)]]
+
+config :wallaby,
+  screenshot_dir: "screenshots",
+  screenshot_on_failure: true
+
+config :breakbench, :sql_sandbox, true
 
 # Print only warnings and errors during test
 config :logger, level: :warn

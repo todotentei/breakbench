@@ -1,1 +1,2 @@
-export * from "./Logo";
+export * from './InvertLogo';
+export * from './Logo';

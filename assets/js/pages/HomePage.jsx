@@ -2,7 +2,7 @@ import React from "react";
 
 export const HomePage = () => {
   return (
-    <div className="container-fluid">
+    <div className="home-page">
       <h1>Homepage</h1>
     </div>
   )

@@ -1,6 +1,10 @@
 defmodule BreakbenchWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :breakbench
 
+  if Application.get_env(:breakbench, :sql_sandbox) do
+    plug Phoenix.Ecto.SQL.Sandbox
+  end
+
   socket "/socket", BreakbenchWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.

@@ -1,15 +1,27 @@
 /* Primary Color */
-$primary-color: #0fbcf9;
+$bb-primary-100: #dcebfd;
+$bb-primary-200: #9fc7fc;
+$bb-primary-300: #78A8f2;
+$bb-primary-600: #36393f;
+$bb-primary-700: #1f1f1f;
+$bb-primary-800: #393e42;
+$bb-primary-900: #292d30;
 
-/* Secondary Color */
-$secondary-color: #34e7e4;
+$bb-secondary: white;
 
 /* Grey Color */
-$dusty-light: #e5e5e5;
-$dusty: #8d8d8d;
-$dusty-dark: #454545;
+$bb-dusty-200: #e5e5e5;
+$bb-dusty-400: #8d8d8d;
+$bb-dusty-600: #454545;
 
 /* Danger Color */
-$danger-light: #fdd7e1;
-$danger: #fcb7c8;
-$danger-dark: #8c0628;
+$bb-danger-100: #fdf1f2;
+$bb-danger-400: #dc3545;
+$bb-danger-900: #8c0628;
+
+/* Success Color */
+$bb-success-100: #e4fff4;
+$bb-success-400: #00f593;
+$bb-success-500: #00d37e;
+$bb-success-600: #00b16a;
+$bb-success-900: #003a23;

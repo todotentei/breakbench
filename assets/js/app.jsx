@@ -23,10 +23,14 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
 import { store } from "./helpers";
-import { WebPage } from "./pages";
+import { Header, Content, Footer } from "./components";
 
 ReactDOM.render((
   <Provider store={store}>
-    <WebPage />
+    <div>
+      <Header />
+      <Content />
+      <Footer />
+    </div>
   </Provider>
 ), document.getElementById("breakbench-app"))

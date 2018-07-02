@@ -3,7 +3,7 @@ defmodule Breakbench.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :full_name, :string, null: false
+      add :full_name, :string
       add :given_name, :string
       add :email, :citext, null: false
       add :date_of_birth, :date

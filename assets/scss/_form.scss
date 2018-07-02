@@ -1,22 +1,10 @@
 @import "color";
 
 .form-container {
+  display: flex;
   width: 100%;
-  min-height: 100vh;
   padding: 20px;
-
-  .form-container-header,
-  .form-container-body,
-  .form-container-footer {
-    display: flex;
-    margin: 0 auto;
-    justify-content: center;
-  }
-
-  .form-container-header {
-    height: 50px;
-    justify-content: center;
-  }
+  justify-content: center;
 
   .form-logo {
     margin-bottom: 50px;
@@ -43,7 +31,7 @@
     button.submit {
       width: 100%;
       color: white;
-      background-color: black;
+      background-color: $bb-primary-900;
     }
   }
 }
@@ -55,7 +43,7 @@
   padding: 20px;
 
   a {
-    color: black;
+    color: $bb-primary-900;
     font-weight: bold;
     text-decoration: underline;
   }
@@ -63,13 +51,13 @@
 
 .form-box,
 .form-callout {
-  border: 1px solid $dusty-light;
+  border: 1px solid $bb-dusty-200;
   background-color: white;
 }
 
 .forgot-password {
   button {
-    color: $dusty;
+    color: $bb-dusty-400;
     font-size: 12px;
     font-weight: lighter;
     border: none;

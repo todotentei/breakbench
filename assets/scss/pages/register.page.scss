@@ -1,18 +1,3 @@
 .register-page {
-  .rp-info-col {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    background-color: black;
-
-    & > * { position: absolute; }
-
-    .logo {
-      z-index: 0;
-      width: 50%;
-      polygon { fill: #111; }
-    }
-  }
+  margin-top: 40px;
 }

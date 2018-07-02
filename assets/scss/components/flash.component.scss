@@ -1,16 +1,16 @@
 @import '../color';
 
-.prompt {
+.flash {
   display: flex;
   min-height: 50px;
-  background-color: $dusty-light;
+  background-color: $bb-dusty-200;
 
-  .prompt-body {
+  .flash-body {
     width: 100%;
     padding: 15px 0px 15px 30px;
   }
 
-  .prompt-close {
+  .flash-close {
     float: right;
 
     &, button {
@@ -30,9 +30,14 @@
   }
 }
 
-.prompt.prompt-danger {
-  border: 1px solid #F03434;
-  background-color: rgba(240,52,52,0.1);
+.flash.flash-danger {
+  border: 1px solid $bb-danger-400;
+  background-color: $bb-danger-100;
+  &, .fa-times { color: $bb-danger-900; }
+}
 
-  &, .fa-times { color: #F03434; }
+.flash.flash-success {
+  border: 1px solid $bb-success-400;
+  background-color: $bb-success-100;
+  &, .fa-times { color: $bb-success-900; }
 }

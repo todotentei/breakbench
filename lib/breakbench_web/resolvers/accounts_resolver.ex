@@ -16,8 +16,8 @@ defmodule BreakbenchWeb.AccountsResolver do
     end
   end
 
-  def has_user(_root, %{username: username}, _info) do
-    exist? = Repo.has?(Accounts.User, username: username)
+  def has_user(_root, clauses, _info) do
+    exist? = Repo.has?(Accounts.User, clauses)
     {:ok, exist?}
   end
 end

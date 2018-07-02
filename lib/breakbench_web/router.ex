@@ -13,16 +13,12 @@ defmodule BreakbenchWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :auth do
-    plug Breakbench.Auth.Pipeline
-  end
-
   pipeline :ensure_auth do
-    plug Guardian.Plug.EnsureAuthenticated
+    plug Breakbench.EnsureAuthenticated
   end
 
   scope "/", BreakbenchWeb do
-    pipe_through [:browser, :auth]
+    pipe_through [:browser]
 
     get "/", PageController, :index
     get "/login", SessionController, :new
@@ -33,20 +29,15 @@ defmodule BreakbenchWeb.Router do
   end
 
   scope "/", BreakbenchWeb do
-    pipe_through [:browser, :auth, :ensure_auth]
+    pipe_through [:browser, :ensure_auth]
   end
 
   scope "/api" do
-    pipe_through :api
+    pipe_through [:api]
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: BreakbenchWeb.Schema,
       interface: :simple,
       context: %{pubsub: BreakbenchWeb.Endpoint}
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", BreakbenchWeb do
-  #   pipe_through :api
-  # end
 end
