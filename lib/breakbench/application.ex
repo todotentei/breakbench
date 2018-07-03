@@ -14,8 +14,10 @@ defmodule Breakbench.Application do
       supervisor(Breakbench.Geocode, []),
       # Start the Stripe module
       supervisor(Breakbench.Stripe, []),
+      # Start the Timesheet module
+      supervisor(Breakbench.Timesheet, []),
       # Start the endpoint when the application starts
-      supervisor(BreakbenchWeb.Endpoint, []),
+      supervisor(BreakbenchWeb.Endpoint, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
