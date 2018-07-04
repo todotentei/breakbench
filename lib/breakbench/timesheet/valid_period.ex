@@ -2,6 +2,17 @@ defmodule Breakbench.Timesheet.ValidPeriod do
   @moduledoc false
 
 
+  # Convert
+  def to_valid_from(datetime) do
+    datetime || ~N[0000-01-01 00:00:00]
+  end
+
+  def to_valid_through(datetime) do
+    datetime || ~N[9999-12-31 23:59:59]
+  end
+
+
+  # Combine
   def combine(time_block0, time_block1) do
     time_blocks = [time_block0, time_block1]
 
@@ -11,11 +22,11 @@ defmodule Breakbench.Timesheet.ValidPeriod do
     cond do
       ts_edge_1_overlap? and ts_edge_2_overlap? ->
         valid_from = time_blocks
-          |> Enum.min_by(&Map.get_lazy(&1, :valid_from, fn -> 0 end))
+          |> Enum.min_by(&to_valid_from(&1.valid_from))
           |> Map.get(:valid_from)
 
         valid_through = time_blocks
-          |> Enum.max_by(&Map.get_lazy(&1, :valid_through, fn -> :infinity end))
+          |> Enum.max_by(&to_valid_through(&1.valid_through))
           |> Map.get(:valid_through)
 
         {valid_from, valid_through}
@@ -33,36 +44,30 @@ defmodule Breakbench.Timesheet.ValidPeriod do
 
       not(ts_edge_1_overlap? || ts_edge_2_overlap?) ->
         valid_from = time_blocks
-          |> Enum.max_by(&Map.get_lazy(&1, :valid_from, fn -> 0 end))
+          |> Enum.max_by(&to_valid_from(&1.valid_from))
           |> Map.get(:valid_from)
 
         valid_through = time_blocks
-          |> Enum.min_by(&Map.get_lazy(&1, :valid_through, fn -> :infinity end))
+          |> Enum.min_by(&to_valid_through(&1.valid_through))
           |> Map.get(:valid_through)
 
         {valid_from, valid_through}
     end
   end
 
+
+  # Break
   def break(time_block0, time_block1) do
     time_blocks = [time_block0, time_block1]
 
     valid_from = time_blocks
-      |> Enum.max_by(&Map.get_lazy(&1, :valid_from, fn -> 0 end))
+      |> Enum.max_by(&to_valid_from(&1.valid_from))
       |> Map.get(:valid_from)
 
     valid_through = time_blocks
-      |> Enum.min_by(&Map.get_lazy(&1, :valid_through, fn -> :infinity end))
+      |> Enum.min_by(&to_valid_through(&1.valid_through))
       |> Map.get(:valid_through)
 
     {valid_from, valid_through}
-  end
-
-  def to_valid_from(datetime) do
-    datetime || 0
-  end
-
-  def to_valid_through(datetime) do
-    datetime || :infinity
   end
 end
