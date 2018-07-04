@@ -1,9 +1,9 @@
 defmodule Breakbench.TimeBlockTest do
   use Breakbench.DataCase
 
-  alias Breakbench.Timesheet.TimeBlock
+  alias Breakbench.TimeBlock
 
-  import Breakbench.Timesheet.ValidPeriod, only:
+  import Breakbench.TimeBlock.ValidPeriod, only:
     [to_valid_from: 1, to_valid_through: 1]
 
 

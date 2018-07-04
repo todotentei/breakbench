@@ -1,9 +1,32 @@
-defmodule Breakbench.Timesheet.TimeBlock do
-  @moduledoc false
+defmodule Breakbench.TimeBlock do
+  use Application
 
-  alias Breakbench.Timesheet.{TimeSpan, ValidPeriod}
+  import Supervisor.Spec
 
-  import Breakbench.Timesheet.ValidPeriod, only:
+  # See http://elixir-lang.org/docs/stable/elixir/Application.html
+  # for more information on OTP Applications
+  def start(_type, _args) do
+    # Don't start charge
+    Supervisor.start_link([], strategy: :one_for_one)
+  end
+
+  def start_link do
+    children = [
+      worker(Breakbench.TimeBlock.Arrange, [])
+    ]
+
+    Supervisor.start_link(children, [
+          name: __MODULE__,
+      strategy: :one_for_one
+    ])
+  end
+
+
+  ## Callbacks
+
+  alias Breakbench.TimeBlock.{TimeSpan, ValidPeriod}
+
+  import Breakbench.TimeBlock.ValidPeriod, only:
     [to_valid_from: 1, to_valid_through: 1]
 
 
@@ -171,7 +194,7 @@ defmodule Breakbench.Timesheet.TimeBlock do
 
   ## Private
 
-  def append_on(list, condition, elements) do
+  defp append_on(list, condition, elements) do
     if condition, do: List.wrap(elements) ++ list, else: list
   end
 end

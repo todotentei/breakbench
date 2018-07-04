@@ -1,7 +1,7 @@
-defmodule Breakbench.Timesheet.Comparison do
+defmodule Breakbench.TimeBlock.Comparison do
   @moduledoc false
 
-  import Breakbench.Timesheet.ValidPeriod, only:
+  import Breakbench.TimeBlock.ValidPeriod, only:
     [to_valid_from: 1, to_valid_through: 1]
 
   def is_intersect?(time_block0, time_block1) do

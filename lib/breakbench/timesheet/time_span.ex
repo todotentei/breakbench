@@ -1,4 +1,4 @@
-defmodule Breakbench.Timesheet.TimeSpan do
+defmodule Breakbench.TimeBlock.TimeSpan do
   @moduledoc false
 
 

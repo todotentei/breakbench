@@ -1,4 +1,4 @@
-defmodule Breakbench.Timesheet.ValidPeriod do
+defmodule Breakbench.TimeBlock.ValidPeriod do
   @moduledoc false
 
 

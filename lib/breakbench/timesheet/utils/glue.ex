@@ -1,9 +1,8 @@
-defmodule Breakbench.Timesheet.Glue do
+defmodule Breakbench.TimeBlock.Glue do
   @moduledoc false
 
-  alias Breakbench.Timesheet.Arrange
-  alias Breakbench.Timesheet.TimeBlock
-  alias Breakbench.Timesheet.Comparison
+  alias Breakbench.TimeBlock
+  alias Breakbench.TimeBlock.{Arrange, Comparison}
 
 
   @doc """

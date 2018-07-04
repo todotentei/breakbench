@@ -1,9 +1,9 @@
 defmodule Breakbench.ArrangeTest do
   use Breakbench.DataCase
 
-  alias Breakbench.Timesheet.Arrange
+  alias Breakbench.TimeBlock.Arrange
 
-  import Breakbench.Timesheet.ValidPeriod, only:
+  import Breakbench.TimeBlock.ValidPeriod, only:
     [to_valid_from: 1, to_valid_through: 1]
 
 

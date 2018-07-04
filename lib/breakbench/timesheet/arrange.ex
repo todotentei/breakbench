@@ -1,8 +1,8 @@
-defmodule Breakbench.Timesheet.Arrange do
+defmodule Breakbench.TimeBlock.Arrange do
   use GenServer
 
-  alias Breakbench.Timesheet.Glue
-  alias Breakbench.Timesheet.TimeBlock
+  alias Breakbench.TimeBlock
+  alias Breakbench.TimeBlock.Glue
 
 
   @doc false
