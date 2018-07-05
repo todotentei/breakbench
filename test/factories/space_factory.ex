@@ -1,7 +1,7 @@
 defmodule Breakbench.SpaceFactory do
   defmacro __using__ _ do
     quote do
-      alias Breakbench.Places.Space
+      alias Breakbench.Places.{Space, SpaceOpeningHour}
 
       def space_factory do
         %Space{
@@ -17,6 +17,13 @@ defmodule Breakbench.SpaceFactory do
           longitude: 01.000000,
           timezone: "Australia/Melbourne",
           locality: build(:locality)
+        }
+      end
+
+      def space_opening_hour_factory do
+        %SpaceOpeningHour{
+          time_block: build(:time_block),
+          space: build(:space)
         }
       end
     end

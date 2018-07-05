@@ -14,10 +14,17 @@ defmodule Breakbench.Places.Space do
     field :longitude, :float
     field :timezone, :string
 
-    belongs_to :locality, Breakbench.AddressComponents.Locality, on_replace: :nilify
-    belongs_to :currency, Breakbench.Exchanges.Currency, type: :string,
-      foreign_key: :currency_code, references: :code, on_replace: :nilify
-    belongs_to :owner, Breakbench.Accounts.User, on_replace: :nilify
+
+    belongs_to :locality, Breakbench.AddressComponents.Locality,
+      on_replace: :nilify
+    belongs_to :currency, Breakbench.Exchanges.Currency,
+      type: :string, foreign_key: :currency_code, references: :code, on_replace: :nilify
+    belongs_to :owner, Breakbench.Accounts.User,
+      on_replace: :nilify
+
+
+    has_many :opening_hours, Breakbench.Places.SpaceOpeningHour
+
 
     timestamps()
   end

@@ -8,4 +8,5 @@ defmodule Breakbench.Factory do
   use Breakbench.SportFactory
   use Breakbench.UserFactory
   use Breakbench.SpaceFactory
+  use Breakbench.TimeBlockFactory
 end

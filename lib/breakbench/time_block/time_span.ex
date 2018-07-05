@@ -2,7 +2,7 @@ defmodule Breakbench.TimeBlock.TimeSpan do
   @moduledoc false
 
 
-  def combine(time_block0, time_block1) do
+  def merge(time_block0, time_block1) do
     time_blocks = [time_block0, time_block1]
 
     start_at = time_blocks

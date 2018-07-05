@@ -12,8 +12,8 @@ defmodule Breakbench.TimeBlock.ValidPeriod do
   end
 
 
-  # Combine
-  def combine(time_block0, time_block1) do
+  # merge
+  def merge(time_block0, time_block1) do
     time_blocks = [time_block0, time_block1]
 
     ts_edge_1_overlap? = Time.compare(time_block0.start_at, time_block1.start_at) == :eq
@@ -56,8 +56,8 @@ defmodule Breakbench.TimeBlock.ValidPeriod do
   end
 
 
-  # Break
-  def break(time_block0, time_block1) do
+  # Split
+  def split(time_block0, time_block1) do
     time_blocks = [time_block0, time_block1]
 
     valid_from = time_blocks

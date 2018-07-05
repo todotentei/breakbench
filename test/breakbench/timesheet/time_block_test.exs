@@ -7,7 +7,7 @@ defmodule Breakbench.TimeBlockTest do
     [to_valid_from: 1, to_valid_through: 1]
 
 
-  describe "combine" do
+  describe "merge" do
     @time_block1 %{day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[03:00:00],
       valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-05 00:00:00]}
     @time_block2 %{day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[05:00:00],
@@ -24,7 +24,7 @@ defmodule Breakbench.TimeBlockTest do
 
     """
     test "simple intersect" do
-      new_combination = TimeBlock.combine(@time_block1, @time_block2)
+      new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
@@ -60,7 +60,7 @@ defmodule Breakbench.TimeBlockTest do
 
     """
     test "exceed valid period" do
-      new_combination = TimeBlock.combine(@time_block1, @time_block2)
+      new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
@@ -104,7 +104,7 @@ defmodule Breakbench.TimeBlockTest do
 
     """
     test "overlap edge of time span" do
-      new_combination = TimeBlock.combine(@time_block1, @time_block2)
+      new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
@@ -131,7 +131,7 @@ defmodule Breakbench.TimeBlockTest do
 
   """
   test "the same time span overlap edge of valid period" do
-    new_combination = TimeBlock.combine(@time_block1, @time_block2)
+    new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
@@ -159,7 +159,7 @@ defmodule Breakbench.TimeBlockTest do
 
   """
   test "cover entire block" do
-    new_combination = TimeBlock.combine(@time_block1, @time_block2)
+    new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
@@ -202,7 +202,7 @@ defmodule Breakbench.TimeBlockTest do
 
   """
   test "infinite valid period with finite" do
-    new_combination = TimeBlock.combine(@time_block1, @time_block2)
+    new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
@@ -243,7 +243,7 @@ defmodule Breakbench.TimeBlockTest do
 
   """
   test "infinite valid_from with infinite valid_through" do
-    new_combination = TimeBlock.combine(@time_block1, @time_block2)
+    new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
@@ -271,7 +271,7 @@ defmodule Breakbench.TimeBlockTest do
 
   """
   test "both valid periods are infinite" do
-    new_combination = TimeBlock.combine(@time_block1, @time_block2)
+    new_combination = TimeBlock.merge(@time_block1, @time_block2)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and

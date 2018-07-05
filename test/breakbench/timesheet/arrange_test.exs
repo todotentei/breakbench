@@ -30,8 +30,8 @@ defmodule Breakbench.ArrangeTest do
       5        └─────┘       └─────┘        └───────────┘
 
     """
-    test "combine" do
-      uid = Arrange.combine(@time_blocks, @new_block)
+    test "merge" do
+      uid = Arrange.merge(@time_blocks, @new_block)
 
       insert_state = Arrange.lookup_state(uid, :insert)
       delete_state = Arrange.lookup_state(uid, :delete)
@@ -77,8 +77,8 @@ defmodule Breakbench.ArrangeTest do
     4     └─────┘              └─────┘
 
     """
-    test "combine infinite valid period with finite" do
-      uid = Arrange.combine(@time_blocks, @new_block)
+    test "merge infinite valid period with finite" do
+      uid = Arrange.merge(@time_blocks, @new_block)
 
       insert_state = Arrange.lookup_state(uid, :insert)
       delete_state = Arrange.lookup_state(uid, :delete)

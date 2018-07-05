@@ -13,8 +13,8 @@ defmodule Breakbench.TimeBlock.Glue do
       for time_block0 <- time_blocks do
         # Paste time_block0 with other time_blocks, except itself
         for time_block1 <- time_blocks -- [time_block0] do
-          if TimeBlock.combinable?(time_block0, time_block1) do
-            combination = TimeBlock.combine(time_block0, time_block1)
+          if TimeBlock.mergeable?(time_block0, time_block1) do
+            combination = TimeBlock.merge(time_block0, time_block1)
             # Remove old time_blocks and add the new combied to list
             time_blocks = time_blocks -- [time_block0, time_block1]
             time_blocks = time_blocks ++ combination
@@ -28,7 +28,7 @@ defmodule Breakbench.TimeBlock.Glue do
         insert_state = Arrange.lookup_state(uid, :insert)
 
         # If no new combination override the old one, then keep it
-        # Else, replace it with the new combined time_block
+        # Else, replace it with the new merged time_block
         if Enum.any?(delete_state, &Comparison.is_intersect?(&1, time_block0)) do
           # Remove overlapped time_block0 from delete state
           updated_delete_list =
@@ -37,7 +37,7 @@ defmodule Breakbench.TimeBlock.Glue do
                 &Comparison.is_intersect?(&1, time_block))
             end)
 
-          # If a new combined time_block is deplicated with an old time_block.
+          # If a new merged time_block is deplicated with an old time_block.
           # Keep the old time_block by remove it from delete queue, as it makes no
           # different of weather replace it or not.
           Arrange.update_state(uid, :delete, updated_delete_list)

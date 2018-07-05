@@ -58,16 +58,16 @@ defmodule Breakbench.TimeBlock.Arrange do
   ## Functions
 
   @doc """
-  Combine a new_time_block with a set of time_blocks.
+  merge a new_time_block with a set of time_blocks.
   Then glue all the broken pieces together.
 
   -> state uid
   """
-  def combine(time_blocks, new_time_block) do
+  def merge(time_blocks, new_time_block) do
     uid = new_state(time_blocks)
 
     time_blocks
-      |> Enum.reduce([], & &2 ++ TimeBlock.combine(&1, new_time_block))
+      |> Enum.reduce([], & &2 ++ TimeBlock.merge(&1, new_time_block))
       |> Glue.paste(state: uid)
 
     # Returns state id
@@ -75,16 +75,16 @@ defmodule Breakbench.TimeBlock.Arrange do
   end
 
   @doc """
-  Break target_time_block from related set of time_blocks.
-  The same as combine, then glue all the broken pieces together.
+  Split target_time_block from related set of time_blocks.
+  The same as merge, then glue all the broken pieces together.
 
   -> state uid
   """
-  def break(time_blocks, target_time_block) do
+  def split(time_blocks, target_time_block) do
     uid = new_state(time_blocks)
 
     time_blocks
-      |> Enum.reduce([], & &2 ++ TimeBlock.break(&1, target_time_block))
+      |> Enum.reduce([], & &2 ++ TimeBlock.split(&1, target_time_block))
       |> Glue.paste(uid)
 
     # Returns state id

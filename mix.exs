@@ -56,7 +56,8 @@ defmodule Breakbench.Mixfile do
       {:ex_machina, "~> 2.2", only: :test},
       {:absinthe_plug, "~> 1.4.0"},
       {:absinthe_ecto, "~> 0.1.0"},
-      {:wallaby, "~> 0.20.0", [runtime: false, only: :test]}
+      {:wallaby, "~> 0.20.0", [runtime: false, only: :test]},
+      {:timex, "~> 3.1"}
     ]
   end
 

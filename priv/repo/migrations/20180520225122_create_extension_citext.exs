@@ -1,4 +1,4 @@
-defmodule Breakbench.Repo.Migrations.CreateUsers do
+defmodule Breakbench.Repo.Migrations.CreateExtensionCitext do
   use Ecto.Migration
 
   def up do

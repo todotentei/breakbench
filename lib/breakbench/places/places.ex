@@ -6,99 +6,68 @@ defmodule Breakbench.Places do
   import Ecto.Query, warn: false
   alias Breakbench.Repo
 
+
+  ## Space
   alias Breakbench.Places.Space
 
-  @doc """
-  Returns the list of spaces.
-
-  ## Examples
-
-      iex> list_spaces()
-      [%Space{}, ...]
-
-  """
   def list_spaces do
     Repo.all(Space)
   end
 
-  @doc """
-  Gets a single space.
-
-  Raises `Ecto.NoResultsError` if the Space does not exist.
-
-  ## Examples
-
-      iex> get_space!(123)
-      %Space{}
-
-      iex> get_space!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_space!(id), do: Repo.get!(Space, id)
 
-  @doc """
-  Creates a space.
-
-  ## Examples
-
-      iex> create_space(%{field: value})
-      {:ok, %Space{}}
-
-      iex> create_space(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_space(attrs \\ %{}) do
     %Space{}
-    |> Space.changeset(attrs)
-    |> Repo.insert()
+      |> Space.changeset(attrs)
+      |> Repo.insert()
   end
 
-  @doc """
-  Updates a space.
-
-  ## Examples
-
-      iex> update_space(space, %{field: new_value})
-      {:ok, %Space{}}
-
-      iex> update_space(space, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_space(%Space{} = space, attrs) do
     space
-    |> Space.changeset(attrs)
-    |> Repo.update()
+      |> Space.changeset(attrs)
+      |> Repo.update()
   end
 
-  @doc """
-  Deletes a Space.
-
-  ## Examples
-
-      iex> delete_space(space)
-      {:ok, %Space{}}
-
-      iex> delete_space(space)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_space(%Space{} = space) do
     Repo.delete(space)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking space changes.
-
-  ## Examples
-
-      iex> change_space(space)
-      %Ecto.Changeset{source: %Space{}}
-
-  """
   def change_space(%Space{} = space) do
     Space.changeset(space, %{})
+  end
+
+
+  ## Space Opening Hour
+  alias Breakbench.Places.SpaceOpeningHour
+
+
+  def list_space_opening_hours do
+    Repo.all(SpaceOpeningHour)
+  end
+
+  def get_space_opening_hour!(id), do: Repo.get!(SpaceOpeningHour, id)
+
+  def create_space_opening_hour(attrs \\ %{}) do
+    %SpaceOpeningHour{}
+      |> SpaceOpeningHour.changeset(attrs)
+      |> Repo.insert()
+  end
+
+  def intersect_space_opening_hours(%Space{} = space, attrs) do
+    alias Breakbench.Timesheets.TimeBlock
+
+    space
+      |> Ecto.assoc(:opening_hours)
+      |> join(:inner, [s], t in TimeBlock, s.time_block_id == t.id)
+      |> where([_, t], t.day_of_week == ^attrs[:day_of_week])
+      |> where([_, t], fragment("is_time_span_intersect((?,?),(?,?))",
+         t.start_at, t.end_at, ^attrs[:start_at], ^attrs[:end_at]))
+      |> where([_, t], fragment("is_valid_period_intersect((?,?),(?,?))",
+         t.valid_from, t.valid_through, ^attrs[:valid_from], ^attrs[:valid_through]))
+      |> Repo.all()
+  end
+
+  def change_space_opening_hour(%SpaceOpeningHour{} = space_opening_hour) do
+    SpaceOpeningHour.changeset(space_opening_hour, %{})
   end
 end

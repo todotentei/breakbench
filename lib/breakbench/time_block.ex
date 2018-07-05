@@ -43,20 +43,20 @@ defmodule Breakbench.TimeBlock do
 
   ## Combination
 
-  def combine(old_time_block, new_time_block) do
+  def merge(old_time_block, new_time_block) do
     try do
       time_blocks = [new_time_block, old_time_block]
-      # Return, if both aren't combinable
-      unless combinable?(old_time_block, old_time_block) do
+      # Return, if both aren't mergeable
+      unless mergeable?(old_time_block, old_time_block) do
         throw time_blocks
       end
       day_of_week = new_time_block.day_of_week
 
       {valid_from, valid_through} =
-        ValidPeriod.combine(new_time_block, old_time_block)
+        ValidPeriod.merge(new_time_block, old_time_block)
 
       {start_at, end_at} =
-        TimeSpan.combine(new_time_block, old_time_block)
+        TimeSpan.merge(new_time_block, old_time_block)
 
       default = [build(day_of_week, start_at, end_at, valid_from, valid_through)]
 
@@ -79,9 +79,9 @@ defmodule Breakbench.TimeBlock do
   end
 
   @doc """
-  Check weather both time blocks are combinable
+  Check weather both time blocks are mergeable
   """
-  def combinable?(time_block0, time_block1) do
+  def mergeable?(time_block0, time_block1) do
     try do
       # Valid only if both time blocks are on the same day
       unless time_block0.day_of_week == time_block1.day_of_week do
@@ -125,18 +125,18 @@ defmodule Breakbench.TimeBlock do
   end
 
 
-  ## Breaking
+  ## Split
 
-  def break(old_time_block, new_time_block) do
+  def split(old_time_block, new_time_block) do
     try do
-      # Return old_time_block, if nothing is breakable
-      unless breakable?(old_time_block, new_time_block) do
+      # Return old_time_block, if nothing is splittable
+      unless splittable?(old_time_block, new_time_block) do
         throw [old_time_block]
       end
       day_of_week = new_time_block.day_of_week
 
       {valid_from, valid_through} =
-        ValidPeriod.break(new_time_block, old_time_block)
+        ValidPeriod.split(new_time_block, old_time_block)
 
       condition1 = Time.compare(new_time_block.start_at, old_time_block.start_at) == :gt
       condition2 = Time.compare(new_time_block.end_at, old_time_block.end_at) == :lt
@@ -160,9 +160,9 @@ defmodule Breakbench.TimeBlock do
   end
 
   @doc """
-  Check if both time blocks are breakable
+  Check if both time blocks are splittable
   """
-  def breakable?(time_block0, time_block1) do
+  def splittable?(time_block0, time_block1) do
     try do
       # Valid only if both time blocks are on the same day
       unless time_block0.day_of_week == time_block1.day_of_week do
