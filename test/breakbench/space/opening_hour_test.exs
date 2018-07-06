@@ -2,12 +2,47 @@ defmodule Breakbench.Space.OpeningHourTest do
   use Breakbench.DataCase
   import Breakbench.Factory
 
-  describe "space_opening_hours" do
-    alias Breakbench.{Places, Timesheets}
-    alias Breakbench.Space.OpeningHour
+  alias Breakbench.{Places, Timesheets}
+  alias Breakbench.Places.SpaceOpeningHour
 
-    @new_time_block %{day_of_week: 1, start_at: ~T[03:00:00], end_at: ~T[05:00:00],
-      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-03 00:00:00]}
+
+  describe "space_opening_hours validation" do
+    setup do
+      space = insert(:space)
+
+      time_block = insert(:time_block, day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[02:00:00],
+        valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-02 00:00:00])
+      insert(:space_opening_hour, space: space, time_block: time_block)
+
+      {:ok, space: space}
+    end
+
+
+    @valid_time_block %{day_of_week: 1, start_at: ~T[02:00:00], end_at: ~T[03:00:00],
+      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-02 00:00:00]}
+
+    test "unique time_block returns space_opening_hour", context do
+      {:ok, time_block} = Timesheets.create_time_block(@valid_time_block)
+      sop_attrs = %{time_block_id: time_block.id, space_id: context[:space].id}
+
+      assert {:ok, %SpaceOpeningHour{}} = Places.create_space_opening_hour(sop_attrs)
+    end
+
+
+    @invalid_time_block %{day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[03:00:00],
+      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-02 00:00:00]}
+
+    test "non unique time_block raises postgrex error", context do
+      {:ok, time_block} = Timesheets.create_time_block(@invalid_time_block)
+      sop_attrs = %{time_block_id: time_block.id, space_id: context[:space].id}
+
+      assert_raise Postgrex.Error, fn -> Places.create_space_opening_hour(sop_attrs) end
+    end
+  end
+
+
+  describe "space_opening_hours" do
+    alias Breakbench.Space.OpeningHour
 
     setup do
       space = insert(:space)
@@ -22,6 +57,10 @@ defmodule Breakbench.Space.OpeningHourTest do
 
       {:ok, space: space, time_block1: time_block1, time_block2: time_block2}
     end
+
+
+    @new_time_block %{day_of_week: 1, start_at: ~T[03:00:00], end_at: ~T[05:00:00],
+      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-03 00:00:00]}
 
     test "insert/2 merges all intersections", context do
       OpeningHour.insert(context[:space], @new_time_block)
