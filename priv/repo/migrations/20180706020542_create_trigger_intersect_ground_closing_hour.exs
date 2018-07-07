@@ -44,7 +44,7 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerIntersectGroundClosingHour do
         ) INTO intersected;
 
         IF intersected THEN
-          RAISE EXCEPTION 'error intersect space opening hour';
+          RAISE EXCEPTION 'error intersect ground opening hour';
         END IF;
 
         RETURN NEW;
