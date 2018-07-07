@@ -10,4 +10,5 @@ defmodule Breakbench.Factory do
   use Breakbench.SpaceFactory
   use Breakbench.TimeBlockFactory
   use Breakbench.GroundFactory
+  use Breakbench.FieldFactory
 end

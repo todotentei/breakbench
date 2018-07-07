@@ -5,13 +5,77 @@ defmodule Breakbench.Places do
 
   import Ecto.Query, warn: false
   alias Breakbench.Repo
+  alias Breakbench.Timesheets.TimeBlock
+
+
+  ## Field
+
+  alias Breakbench.Places.Field
+  alias Breakbench.Places.FieldClosingHour
+  alias Breakbench.Places.FieldDynamicPricing
+
+  def list_fields do
+    Repo.all(Field)
+  end
+
+  def list_field_closing_hours do
+    Repo.all(FieldClosingHour)
+  end
+
+  def list_field_dynamic_pricings do
+    Repo.all(FieldDynamicPricing)
+  end
+
+  def get_field!(id) do
+    Repo.get!(Field, id)
+  end
+
+  def get_field_closing_hour!(id) do
+    Repo.get!(FieldClosingHour, id)
+  end
+
+  def get_field_dynamic_pricing!(id) do
+    Repo.get!(FieldDynamicPricing, id)
+  end
+
+  def create_field(attrs \\ %{}) do
+    %Field{}
+      |> Field.changeset(attrs)
+      |> Repo.insert()
+  end
+
+  def create_field_closing_hour(attrs \\ %{}) do
+    %FieldClosingHour{}
+      |> FieldClosingHour.changeset(attrs)
+      |> Repo.insert()
+  end
+
+  def create_field_dynamic_pricing(attrs \\ %{}) do
+    %FieldDynamicPricing{}
+      |> FieldDynamicPricing.changeset(attrs)
+      |> Repo.insert()
+  end
+
+  def intersect_field_closing_hours(%Field{} = field, attrs) do
+    field
+      |> Ecto.assoc(:closing_hours)
+      |> time_block_intersect_query(attrs)
+      |> Repo.all()
+  end
+
+  def intersect_field_dynamic_pricings(%Field{} = field, price, attrs) do
+    field
+      |> Ecto.assoc(:dynamic_pricings)
+      |> where(price: ^price)
+      |> time_block_intersect_query(attrs)
+      |> Repo.all()
+  end
 
 
   ## Ground
 
   alias Breakbench.Places.Ground
   alias Breakbench.Places.GroundClosingHour
-  alias Breakbench.Timesheets.TimeBlock
 
   def list_grounds do
     Repo.all(Ground)
