@@ -11,4 +11,5 @@ defmodule Breakbench.Factory do
   use Breakbench.TimeBlockFactory
   use Breakbench.GroundFactory
   use Breakbench.FieldFactory
+  use Breakbench.Accounts.BookingFactory
 end
