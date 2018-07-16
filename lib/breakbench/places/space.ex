@@ -10,8 +10,7 @@ defmodule Breakbench.Places.Space do
     field :website, :string
     field :about, :string
     field :address, :string
-    field :latitude, :float
-    field :longitude, :float
+    field :geom, Geo.PostGIS.Geometry
     field :timezone, :string
 
 
@@ -33,7 +32,7 @@ defmodule Breakbench.Places.Space do
   def changeset(space, attrs) do
     space
     |> cast(attrs, [:id, :owner_id, :currency_code, :phone, :email, :website,
-       :about, :address, :latitude, :longitude, :timezone, :locality_id])
+       :about, :address, :geom, :timezone, :locality_id])
     |> validate_required([:id])
   end
 end

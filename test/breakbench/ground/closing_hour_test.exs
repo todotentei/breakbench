@@ -46,7 +46,7 @@ defmodule Breakbench.Ground.ClosingHourTest do
 
     setup do
       ground = insert(:ground)
-      insert_pair(:ground_sport, ground: ground)
+      insert_pair(:ground_game_mode, ground: ground)
 
       time_block1 = insert(:time_block, day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[03:00:00],
         valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-03 00:00:00])

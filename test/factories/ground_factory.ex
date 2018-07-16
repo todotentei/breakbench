@@ -1,7 +1,7 @@
 defmodule Breakbench.GroundFactory do
   defmacro __using__ _ do
     quote do
-      alias Breakbench.Places.{Ground, GroundSport, GroundClosingHour}
+      alias Breakbench.Places.{Ground, GroundGameMode, GroundClosingHour}
 
       def ground_factory do
         %Ground{
@@ -14,10 +14,10 @@ defmodule Breakbench.GroundFactory do
         }
       end
 
-      def ground_sport_factory do
-        %GroundSport{
+      def ground_game_mode_factory do
+        %GroundGameMode{
           ground: build(:ground),
-          sport: build(:sport),
+          game_mode: build(:game_mode),
           inserted_at: NaiveDateTime.utc_now,
           updated_at: NaiveDateTime.utc_now
         }

@@ -57,7 +57,8 @@ defmodule Breakbench.Mixfile do
       {:absinthe_plug, "~> 1.4.0"},
       {:absinthe_ecto, "~> 0.1.0"},
       {:wallaby, "~> 0.20.0", [runtime: false, only: :test]},
-      {:timex, "~> 3.1"}
+      {:timex, "~> 3.1"},
+      {:geo_postgis, "~> 2.0"}
     ]
   end
 

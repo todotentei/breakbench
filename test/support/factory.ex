@@ -12,4 +12,6 @@ defmodule Breakbench.Factory do
   use Breakbench.GroundFactory
   use Breakbench.FieldFactory
   use Breakbench.Accounts.BookingFactory
+  use Breakbench.MatchmakingQueueFactory
+  use Breakbench.GameModeFactory
 end

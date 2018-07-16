@@ -16,6 +16,9 @@ config :breakbench, BreakbenchWeb.Endpoint,
   render_errors: [view: BreakbenchWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Breakbench.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :breakbench, Breakbench.Repo,
+  types: Breakbench.PostgresTypes
+
 config :breakbench, Google,
   endpoint: "https://maps.googleapis.com/maps/api/",
   format: "json", # json only

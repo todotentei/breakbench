@@ -13,8 +13,13 @@ defmodule Breakbench.SpaceFactory do
           website: "website.com",
           about: "About",
           address: "1 Street Name, Suburb, State Country 0001",
-          latitude: 00.000000,
-          longitude: 01.000000,
+          geom: %Geo.Point{
+            coordinates: {
+              (:rand.uniform() * 360 - 180),
+              (:rand.uniform() * 180 - 90)
+            },
+            srid: 4326
+          },
           timezone: "Australia/Melbourne",
           locality: build(:locality)
         }

@@ -13,7 +13,7 @@ defmodule Breakbench.Places.Ground do
       type: :string
 
 
-    has_many :grounds_sports, Breakbench.Places.GroundSport
+    has_many :grounds_game_modes, Breakbench.Places.GroundGameMode
     has_many :closing_hours, Breakbench.Places.GroundClosingHour
 
 
