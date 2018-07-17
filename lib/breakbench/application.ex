@@ -10,8 +10,6 @@ defmodule Breakbench.Application do
     children = [
       # Start the Ecto repository
       supervisor(Breakbench.Repo, []),
-      # Start the Geocoding module
-      supervisor(Breakbench.Geocode, []),
       # Start the Stripe module
       supervisor(Breakbench.Stripe, []),
       # Start the TimeBlock module

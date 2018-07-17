@@ -1,7 +1,7 @@
-defmodule Breakbench.AddressComponents.CountryFactory do
+defmodule Breakbench.CountryFactory do
   defmacro __using__ _ do
     quote do
-      alias Breakbench.AddressComponents.Country
+      alias Breakbench.Places.Country
 
       def country_factory do
         %Country{

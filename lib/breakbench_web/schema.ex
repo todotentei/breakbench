@@ -2,7 +2,7 @@ defmodule BreakbenchWeb.Schema do
   use Absinthe.Schema
 
   alias BreakbenchWeb.AccountsResolver
-  alias BreakbenchWeb.AddressComponentsResolver
+  alias BreakbenchWeb.PlacesResolver
   alias BreakbenchWeb.ExchangesResolver
 
   import_types Absinthe.Type.Custom
@@ -39,7 +39,7 @@ defmodule BreakbenchWeb.Schema do
   query do
     # Country
     field :all_countries, list_of(:country) do
-      resolve &AddressComponentsResolver.all_countries/3
+      resolve &PlacesResolver.all_countries/3
     end
 
     # Currency

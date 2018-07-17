@@ -5,7 +5,29 @@ defmodule Breakbench.Places do
 
   import Ecto.Query, warn: false
   alias Breakbench.Repo
-  alias Breakbench.Timesheets.TimeBlock
+
+
+  # Country
+
+  alias Breakbench.Places.Country
+
+  def list_countries do
+    Repo.all(Country)
+  end
+
+  def get_country!(short_name) do
+    Repo.get!(Country, short_name)
+  end
+
+  def create_country(attrs \\ %{}) do
+    %Country{}
+      |> Country.changeset(attrs)
+      |> Repo.insert()
+  end
+
+  def delete_country(%Country{} = country) do
+    Repo.delete(country)
+  end
 
 
   ## Field
@@ -175,6 +197,8 @@ defmodule Breakbench.Places do
   ## Private
 
   defp time_block_intersect_query(query, attrs) do
+    alias Breakbench.Timesheets.TimeBlock
+
     query
       |> join(:inner, [s], t in TimeBlock, s.time_block_id == t.id)
       |> where([_, t], t.day_of_week == ^attrs[:day_of_week])

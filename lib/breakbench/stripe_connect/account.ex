@@ -31,7 +31,7 @@ defmodule Breakbench.StripeConnect.Account do
     field :type, :string
     field :verification, :map
 
-    belongs_to :country, Breakbench.AddressComponents.Country, type: :string,
+    belongs_to :country, Breakbench.Places.Country, type: :string,
       foreign_key: :country_short_name, references: :short_name, on_replace: :nilify
     belongs_to :default_currency, Breakbench.Exchanges.Currency, type: :string,
       foreign_key: :default_currency_code, references: :code, on_replace: :nilify

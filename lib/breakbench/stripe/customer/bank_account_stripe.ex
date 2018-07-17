@@ -58,7 +58,7 @@ defmodule Breakbench.Customer.BankAccountStripe do
     end
 
 
-    belongs_to :country, Breakbench.AddressComponents.Country, sync: false
+    belongs_to :country, Breakbench.Places.Country, sync: false
     belongs_to :currency, Breakbench.Exchanges.Currency, sync: false
     belongs_to :customer, Breakbench.CustomerStripe
   end

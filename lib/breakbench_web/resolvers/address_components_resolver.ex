@@ -1,8 +1,8 @@
-defmodule BreakbenchWeb.AddressComponentsResolver do
-  alias Breakbench.AddressComponents
+defmodule BreakbenchWeb.PlacesResolver do
+  alias Breakbench.Places
 
   def all_countries(_root, _args, _info) do
-    countries = AddressComponents.list_countries()
+    countries = Places.list_countries()
     {:ok, countries}
   end
 end

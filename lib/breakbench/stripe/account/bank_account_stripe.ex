@@ -56,7 +56,7 @@ defmodule Breakbench.Account.BankAccountStripe do
     use_default_action :list, data: %{object: "bank_account"}
 
 
-    belongs_to :country, Breakbench.AddressComponents.Country, sync: false
+    belongs_to :country, Breakbench.Places.Country, sync: false
     belongs_to :currency, Breakbench.Exchanges.Currency, sync: false
     belongs_to :account, Breakbench.AccountStripe
   end

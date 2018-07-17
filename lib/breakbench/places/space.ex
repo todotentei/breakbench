@@ -14,8 +14,6 @@ defmodule Breakbench.Places.Space do
     field :timezone, :string
 
 
-    belongs_to :locality, Breakbench.AddressComponents.Locality,
-      on_replace: :nilify
     belongs_to :currency, Breakbench.Exchanges.Currency,
       type: :string, foreign_key: :currency_code, references: :code, on_replace: :nilify
     belongs_to :owner, Breakbench.Accounts.User,
@@ -32,7 +30,7 @@ defmodule Breakbench.Places.Space do
   def changeset(space, attrs) do
     space
     |> cast(attrs, [:id, :owner_id, :currency_code, :phone, :email, :website,
-       :about, :address, :geom, :timezone, :locality_id])
+       :about, :address, :geom, :timezone])
     |> validate_required([:id])
   end
 end

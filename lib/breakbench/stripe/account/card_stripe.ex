@@ -51,7 +51,7 @@ defmodule Breakbench.Account.CardStripe do
     use_default_action :list, data: %{object: "card"}
 
 
-    belongs_to :country, Breakbench.AddressComponents.Country, sync: false
+    belongs_to :country, Breakbench.Places.Country, sync: false
     belongs_to :currency, Breakbench.Exchanges.Currency, sync: false
     belongs_to :account, Breakbench.AccountStripe
   end

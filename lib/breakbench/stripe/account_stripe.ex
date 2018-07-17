@@ -53,7 +53,7 @@ defmodule Breakbench.AccountStripe do
     end
 
 
-    belongs_to :country, Breakbench.AddressComponents.Country, sync: false
+    belongs_to :country, Breakbench.Places.Country, sync: false
     belongs_to :default_currency, Breakbench.Exchanges.Currency, sync: false
   end
 end

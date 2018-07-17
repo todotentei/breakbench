@@ -14,12 +14,10 @@ defmodule Breakbench.Repo.Migrations.CreateSpaces do
       add :latitude, :float
       add :longitude, :float
       add :timezone, :string
-      add :locality_id, references(:localities, on_delete: :nilify_all)
 
       timestamps()
     end
 
-    create index(:spaces, [:locality_id])
     create index(:spaces, [:currency_code])
     create index(:spaces, [:owner_id])
   end

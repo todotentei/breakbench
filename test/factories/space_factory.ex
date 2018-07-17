@@ -20,8 +20,7 @@ defmodule Breakbench.SpaceFactory do
             },
             srid: 4326
           },
-          timezone: "Australia/Melbourne",
-          locality: build(:locality)
+          timezone: "Australia/Melbourne"
         }
       end
 
