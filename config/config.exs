@@ -19,6 +19,13 @@ config :breakbench, BreakbenchWeb.Endpoint,
 config :breakbench, Breakbench.Repo,
   types: Breakbench.PostgresTypes
 
+config :breakbench, Breakbench.GoogleAPIs,
+  endpoint: "https://maps.googleapis.com/",
+  format: "json",
+  language: "en",
+  api_key: "AIzaSyAM3bebNwn1N3RhrE6vjNlTj-g-rRX0Gb8",
+  httpoison: [recv_timeout: 5000, timeout: 8000]
+
 config :breakbench, Stripe,
   endpoint: "https://api.stripe.com/",
   schema: "v1",
