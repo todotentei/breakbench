@@ -18,6 +18,9 @@ config :breakbench, BreakbenchWeb.Endpoint,
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :verk,
+  node_id: {:system, "DYNO", "job.1"}
+
 # Do not print debug messages in production
 config :logger, level: :info
 

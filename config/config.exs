@@ -34,6 +34,16 @@ config :breakbench, Stripe,
   httpoison: [recv_timeout: 5000, timeout: 8000],
   webhook: [tolerance: 300000]
 
+config :verk,
+  queues: [default: 25, priority: 10],
+  max_retry_count: 10,
+  poll_interval: {:system, :integer, "VERK_POLL_INTERVAL", 5000},
+  start_job_log_level: :info,
+  done_job_log_level: :info,
+  fail_job_log_level: :info,
+  node_id: "1",
+  redis_url: {:system, "VERK_REDIS_URL", "redis://127.0.0.1:6379"}
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

@@ -8,6 +8,8 @@ defmodule Breakbench.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      # Add Verk.Supervisor to supervision tree
+      supervisor(Verk.Supervisor, []),
       # Start the Ecto repository
       supervisor(Breakbench.Repo, []),
       # Start the Stripe module
