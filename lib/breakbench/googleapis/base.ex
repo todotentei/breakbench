@@ -30,7 +30,7 @@ defmodule Breakbench.GoogleAPIs.Base do
       api_key = fetch!(config, :api_key)
 
       # Returns default if no configuration was found for the specific keyword
-      endpoint = get(config, :endpoint, "https://maps.googleapis.com/maps/api/")
+      endpoint = get(config, :endpoint, "https://maps.googleapis.com/")
       format = get(config, :format, "json")
       language = get(config, :language, "en")
 
