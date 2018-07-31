@@ -59,7 +59,8 @@ defmodule Breakbench.Mixfile do
       {:wallaby, "~> 0.20.0", [runtime: false, only: :test]},
       {:timex, "~> 3.1"},
       {:geo_postgis, "~> 2.0"},
-      {:verk, "~> 1.0"}
+      {:verk, "~> 1.0"},
+      {:flow, "~> 0.12"}
     ]
   end
 
@@ -71,7 +72,9 @@ defmodule Breakbench.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.build": ["ecto.create", "ecto.migrate"],
+      "ecto.rebuild": ["ecto.drop", "ecto.build"],
+      "ecto.setup": ["ecto.build", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "test": ["ecto.create --quiet", "ecto.migrate", "test"]
     ]

@@ -8,7 +8,7 @@ defmodule Breakbench.Places.Field do
     field :name, :string
 
 
-    belongs_to :ground, Breakbench.Places.Ground,
+    belongs_to :space, Breakbench.Places.Space,
       type: :string
 
 
@@ -22,7 +22,7 @@ defmodule Breakbench.Places.Field do
   @doc false
   def changeset(field, attrs) do
     field
-      |> cast(attrs, [:id, :name, :ground_id])
-      |> validate_required([:id, :ground_id])
+      |> cast(attrs, [:id, :name, :field_id])
+      |> validate_required([:id, :field_id])
   end
 end

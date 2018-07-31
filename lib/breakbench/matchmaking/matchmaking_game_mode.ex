@@ -1,12 +1,13 @@
-defmodule Breakbench.Activities.MatchmakingGameMode do
+defmodule Breakbench.Matchmaking.MatchmakingGameMode do
   use Ecto.Schema
   import Ecto.Changeset
 
 
   @derive {Phoenix.Param, key: :id}
   @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   schema "matchmaking_game_modes" do
-    belongs_to :matchmaking_queue, Breakbench.Activities.MatchmakingQueue,
+    belongs_to :matchmaking_queue, Breakbench.Matchmaking.MatchmakingQueue,
       type: :binary_id
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id

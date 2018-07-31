@@ -8,9 +8,8 @@ defmodule Breakbench.Factory do
   use Breakbench.UserFactory
   use Breakbench.SpaceFactory
   use Breakbench.TimeBlockFactory
-  use Breakbench.GroundFactory
   use Breakbench.FieldFactory
   use Breakbench.Accounts.BookingFactory
-  use Breakbench.MatchmakingQueueFactory
+  use Breakbench.MatchmakingFactory
   use Breakbench.GameModeFactory
 end

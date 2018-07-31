@@ -16,6 +16,8 @@ defmodule Breakbench.Application do
       supervisor(Breakbench.Stripe, []),
       # Start the TimeBlock module
       supervisor(Breakbench.TimeBlock, []),
+      # Start the Matchmaking Queue module
+      supervisor(Breakbench.MatchmakingJob, []),
       # Start the endpoint when the application starts
       supervisor(BreakbenchWeb.Endpoint, [])
     ]

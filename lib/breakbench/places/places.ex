@@ -4,12 +4,16 @@ defmodule Breakbench.Places do
   """
 
   import Ecto.Query, warn: false
+  import Geo.PostGIS, warn: false
   alias Breakbench.Repo
+
+  alias Breakbench.Places.{
+    Country, Field, FieldClosingHour, FieldDynamicPricing, Space,
+    SpaceOpeningHour
+  }
 
 
   # Country
-
-  alias Breakbench.Places.Country
 
   def list_countries do
     Repo.all(Country)
@@ -31,10 +35,6 @@ defmodule Breakbench.Places do
 
 
   ## Field
-
-  alias Breakbench.Places.Field
-  alias Breakbench.Places.FieldClosingHour
-  alias Breakbench.Places.FieldDynamicPricing
 
   def list_fields do
     Repo.all(Field)
@@ -94,54 +94,17 @@ defmodule Breakbench.Places do
   end
 
 
-  ## Ground
-
-  alias Breakbench.Places.Ground
-  alias Breakbench.Places.GroundClosingHour
-
-  def list_grounds do
-    Repo.all(Ground)
-  end
-
-  def list_ground_closing_hours do
-    Repo.all(GroundClosingHour)
-  end
-
-  def get_ground!(id) do
-    Repo.get!(Ground, id)
-  end
-
-  def get_ground_closing_hour!(id) do
-    Repo.get!(GroundClosingHour, id)
-  end
-
-  def create_ground(attrs \\ %{}) do
-    %Ground{}
-      |> Ground.changeset(attrs)
-      |> Repo.insert()
-  end
-
-  def create_ground_closing_hour(attrs \\ %{}) do
-    %GroundClosingHour{}
-      |> GroundClosingHour.changeset(attrs)
-      |> Repo.insert()
-  end
-
-  def intersect_ground_closing_hours(%Ground{} = ground, attrs) do
-    ground
-      |> Ecto.assoc(:closing_hours)
-      |> time_block_intersect_query(attrs)
-      |> Repo.all()
-  end
-
-
   ## Space
-
-  alias Breakbench.Places.Space
-  alias Breakbench.Places.SpaceOpeningHour
 
   def list_spaces do
     Repo.all(Space)
+  end
+
+  def list_spaces(%Geo.Point{} = point, radius) do
+    from(Space)
+      |> where([spc], st_dwithin_in_meters(spc.geom, ^point, ^radius))
+      |> order_by([spc], st_distancesphere(spc.geom, ^point))
+      |> Repo.all()
   end
 
   def list_space_opening_hours do

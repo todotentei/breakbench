@@ -5,12 +5,11 @@ defmodule Breakbench.Repo.Migrations.CreateFields do
     create table(:fields, primary_key: false) do
       add :id, :string, primary_key: true
       add :name, :string
-      add :ground_id, references(:grounds, on_delete: :delete_all, type: :string),
-        null: false
+      add :space_id, references(:spaces, on_delete: :delete_all, type: :string)
 
       timestamps()
     end
 
-    create index(:fields, [:ground_id])
+    create index(:fields, [:space_id])
   end
 end
