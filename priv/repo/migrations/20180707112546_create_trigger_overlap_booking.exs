@@ -1,13 +1,13 @@
-defmodule Breakbench.Repo.Migrations.CreateTriggerIntersectBooking do
+defmodule Breakbench.Repo.Migrations.CreateTriggerOverlapBooking do
   use Ecto.Migration
 
   def up do
     execute """
-      CREATE OR REPLACE FUNCTION intersect_booking()
+      CREATE OR REPLACE FUNCTION overlap_booking()
       RETURNS TRIGGER LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        intersected BOOLEAN;
+        overlapped BOOLEAN;
       BEGIN
         SELECT EXISTS (
           SELECT * FROM bookings AS bkn
@@ -17,10 +17,10 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerIntersectBooking do
               NEW.kickoff >= shift_datetime_by_minutes(bkn.kickoff, bkn.duration) OR
               bkn.kickoff >= shift_datetime_by_minutes(NEW.kickoff, NEW.duration)
             )
-        ) INTO intersected;
+        ) INTO overlapped;
 
-        IF intersected THEN
-          RAISE EXCEPTION 'error intersect booking';
+        IF overlapped THEN
+          RAISE EXCEPTION 'error overlap booking';
         END IF;
 
         RETURN NEW;
@@ -28,19 +28,19 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerIntersectBooking do
     """
 
     execute """
-      CREATE TRIGGER intersect_booking
+      CREATE TRIGGER overlap_booking
       BEFORE
         INSERT OR
         UPDATE
       ON bookings
         FOR EACH ROW
           EXECUTE PROCEDURE
-            intersect_booking();
+            overlap_booking();
     """
   end
 
   def down do
-    execute "DROP TRIGGER intersect_booking ON bookings"
-    execute "DROP FUNCTION intersect_booking ( )"
+    execute "DROP TRIGGER overlap_booking ON bookings"
+    execute "DROP FUNCTION overlap_booking ( )"
   end
 end

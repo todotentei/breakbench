@@ -10,16 +10,16 @@ defmodule Breakbench.Field.ClosingHourTest do
     setup do
       field = insert(:field)
 
-      time_block = insert(:time_block, day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[02:00:00],
-        valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-02 00:00:00])
+      time_block = insert(:time_block, day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[02:00:00],
+        from_date: ~D[2018-07-01], through_date: ~D[2018-07-02])
       insert(:field_closing_hour, field: field, time_block: time_block)
 
       {:ok, field: field}
     end
 
 
-    @valid_time_block %{day_of_week: 1, start_at: ~T[02:00:00], end_at: ~T[03:00:00],
-      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-02 00:00:00]}
+    @valid_time_block %{day_of_week: 1, start_time: ~T[02:00:00], end_time: ~T[03:00:00],
+      from_date: ~D[2018-07-01], through_date: ~D[2018-07-02]}
 
     test "unique time_block returns field_closing_hour", context do
       {:ok, time_block} = Timesheets.create_time_block(@valid_time_block)
@@ -29,8 +29,8 @@ defmodule Breakbench.Field.ClosingHourTest do
     end
 
 
-    @invalid_time_block %{day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[03:00:00],
-      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-02 00:00:00]}
+    @invalid_time_block %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+      from_date: ~D[2018-07-01], through_date: ~D[2018-07-02]}
 
     test "not unique time_block raises postgrex error", context do
       {:ok, time_block} = Timesheets.create_time_block(@invalid_time_block)
@@ -47,10 +47,10 @@ defmodule Breakbench.Field.ClosingHourTest do
     setup do
       field = insert(:field)
 
-      time_block1 = insert(:time_block, day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[03:00:00],
-        valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-03 00:00:00])
-      time_block2 = insert(:time_block, day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[05:00:00],
-        valid_from: ~N[2018-07-03 00:00:00], valid_through: ~N[2018-07-05 00:00:00])
+      time_block1 = insert(:time_block, day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+        from_date: ~D[2018-07-01], through_date: ~D[2018-07-03])
+      time_block2 = insert(:time_block, day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[05:00:00],
+        from_date: ~D[2018-07-03], through_date: ~D[2018-07-05])
 
       insert(:field_closing_hour, field: field, time_block: time_block1)
       insert(:field_closing_hour, field: field, time_block: time_block2)
@@ -59,10 +59,10 @@ defmodule Breakbench.Field.ClosingHourTest do
     end
 
 
-    @new_time_block %{day_of_week: 1, start_at: ~T[03:00:00], end_at: ~T[05:00:00],
-      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-03 00:00:00]}
+    @new_time_block %{day_of_week: 1, start_time: ~T[03:00:00], end_time: ~T[05:00:00],
+      from_date: ~D[2018-07-01], through_date: ~D[2018-07-03]}
 
-    test "insert/2 merges all intersected time_blocks", context do
+    test "insert/2 merges all overlapped time_blocks", context do
       ClosingHour.insert(context[:field], @new_time_block)
 
       assert_raise Ecto.NoResultsError, fn -> Places.get_field_closing_hour!(context[:time_block1].id) end
@@ -75,10 +75,10 @@ defmodule Breakbench.Field.ClosingHourTest do
         |> Repo.preload(:time_block)
       assert Enum.all? field_closing_hours, fn %{time_block: time_block} ->
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[05:00:00]) and
-        datetime_eq(time_block.valid_from, ~N[2018-07-01 00:00:00]) and
-        datetime_eq(time_block.valid_through, ~N[2018-07-05 00:00:00])
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[05:00:00]) and
+        date_eq(time_block.from_date, ~D[2018-07-01]) and
+        date_eq(time_block.through_date, ~D[2018-07-05])
       end
     end
   end
@@ -90,7 +90,7 @@ defmodule Breakbench.Field.ClosingHourTest do
     Time.compare(time0, time1) == :eq
   end
 
-  defp datetime_eq(datetime0, datetime1) do
-    NaiveDateTime.compare(datetime0, datetime1) == :eq
+  defp date_eq(datetime0, datetime1) do
+    Date.compare(datetime0, datetime1) == :eq
   end
 end

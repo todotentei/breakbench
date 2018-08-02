@@ -1,23 +1,25 @@
 defmodule Breakbench.ArrangeTest do
   use Breakbench.DataCase
 
-  alias Breakbench.TimeBlock.Arrange
+  alias Breakbench.TimeBlock.{
+    Arrange, ArrangeState
+  }
 
-  import Breakbench.TimeBlock.ValidPeriod, only:
-    [to_valid_from: 1, to_valid_through: 1]
+  import Breakbench.TimeBlock.DateRange, only:
+    [to_from_date: 1, to_through_date: 1]
 
 
   describe "arrange" do
     @time_blocks [%{
-      day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[03:00:00],
-      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-03 00:00:00]
+      day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+      from_date: ~D[2018-07-01], through_date: ~D[2018-07-03]
     }, %{
-      day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[05:00:00],
-      valid_from: ~N[2018-07-03 00:00:00], valid_through: ~N[2018-07-05 00:00:00]
+      day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[05:00:00],
+      from_date: ~D[2018-07-03], through_date: ~D[2018-07-05]
     }]
 
-    @new_block %{day_of_week: 1, start_at: ~T[03:00:00], end_at: ~T[05:00:00],
-      valid_from: ~N[2018-07-01 00:00:00], valid_through: ~N[2018-07-03 00:00:00]}
+    @new_block %{day_of_week: 1, start_time: ~T[03:00:00], end_time: ~T[05:00:00],
+      from_date: ~D[2018-07-01], through_date: ~D[2018-07-03]}
 
 
     @doc """
@@ -33,40 +35,40 @@ defmodule Breakbench.ArrangeTest do
     test "merge" do
       uid = Arrange.merge(@time_blocks, @new_block)
 
-      insert_state = Arrange.lookup_state(uid, :insert)
-      delete_state = Arrange.lookup_state(uid, :delete)
+      insert_state = ArrangeState.lookup_state(uid, :insert)
+      delete_state = ArrangeState.lookup_state(uid, :delete)
 
       assert Enum.any?(insert_state, fn time_block ->
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[05:00:00]) and
-        datetime_eq(time_block.valid_from, ~N[2018-07-01 00:00:00]) and
-        datetime_eq(time_block.valid_through, ~N[2018-07-05 00:00:00])
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[05:00:00]) and
+        date_eq(time_block.from_date, ~D[2018-07-01]) and
+        date_eq(time_block.through_date, ~D[2018-07-05])
       end)
 
       assert Enum.all?(delete_state, fn time_block -> (
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[03:00:00]) and
-        datetime_eq(time_block.valid_from, ~N[2018-07-01 00:00:00]) and
-        datetime_eq(time_block.valid_through, ~N[2018-07-03 00:00:00])
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[03:00:00]) and
+        date_eq(time_block.from_date, ~D[2018-07-01]) and
+        date_eq(time_block.through_date, ~D[2018-07-03])
       ) or (
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[05:00:00]) and
-        datetime_eq(time_block.valid_from, ~N[2018-07-03 00:00:00]) and
-        datetime_eq(time_block.valid_through, ~N[2018-07-05 00:00:00])
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[05:00:00]) and
+        date_eq(time_block.from_date, ~D[2018-07-03]) and
+        date_eq(time_block.through_date, ~D[2018-07-05])
       ) end)
     end
 
 
     @time_blocks [%{
-      day_of_week: 1, start_at: ~T[01:00:00], end_at: ~T[03:00:00],
-      valid_from: nil, valid_through: nil
+      day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+      from_date: nil, through_date: nil
     }]
 
-    @new_block %{day_of_week: 1, start_at: ~T[02:00:00], end_at: ~T[04:00:00],
-      valid_from: ~N[2018-07-02 00:00:00], valid_through: ~N[2018-07-04 00:00:00]}
+    @new_block %{day_of_week: 1, start_time: ~T[02:00:00], end_time: ~T[04:00:00],
+      from_date: ~D[2018-07-02], through_date: ~D[2018-07-04]}
 
     @doc """
 
@@ -80,41 +82,41 @@ defmodule Breakbench.ArrangeTest do
     test "merge infinite valid period with finite" do
       uid = Arrange.merge(@time_blocks, @new_block)
 
-      insert_state = Arrange.lookup_state(uid, :insert)
-      delete_state = Arrange.lookup_state(uid, :delete)
+      insert_state = ArrangeState.lookup_state(uid, :insert)
+      delete_state = ArrangeState.lookup_state(uid, :delete)
 
       assert Enum.all?(insert_state, fn time_block -> (
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[03:00:00]) and
-        datetime_eq(to_valid_from(time_block.valid_from), to_valid_from(nil)) and
-        datetime_eq(time_block.valid_through, ~N[2018-07-02 00:00:00])
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[03:00:00]) and
+        date_eq(to_from_date(time_block.from_date), to_from_date(nil)) and
+        date_eq(time_block.through_date, ~D[2018-07-02])
       ) or (
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[04:00:00]) and
-        datetime_eq(time_block.valid_from, ~N[2018-07-02 00:00:00]) and
-        datetime_eq(time_block.valid_through, ~N[2018-07-04 00:00:00])
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[04:00:00]) and
+        date_eq(time_block.from_date, ~D[2018-07-02]) and
+        date_eq(time_block.through_date, ~D[2018-07-04])
       ) or (
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[03:00:00]) and
-        datetime_eq(time_block.valid_from, ~N[2018-07-04 00:00:00]) and
-        datetime_eq(to_valid_through(time_block.valid_through), to_valid_through(nil))
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[03:00:00]) and
+        date_eq(time_block.from_date, ~D[2018-07-04]) and
+        date_eq(to_through_date(time_block.through_date), to_through_date(nil))
       ) end)
 
       assert Enum.all?(delete_state, fn time_block -> (
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[01:00:00]) and
-        time_eq(time_block.end_at, ~T[03:00:00]) and
-        datetime_eq(to_valid_from(time_block.valid_from), to_valid_from(nil)) and
-        datetime_eq(to_valid_through(time_block.valid_through), to_valid_through(nil))
+        time_eq(time_block.start_time, ~T[01:00:00]) and
+        time_eq(time_block.end_time, ~T[03:00:00]) and
+        date_eq(to_from_date(time_block.from_date), to_from_date(nil)) and
+        date_eq(to_through_date(time_block.through_date), to_through_date(nil))
       ) or (
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_at, ~T[02:00:00]) and
-        time_eq(time_block.end_at, ~T[04:00:00]) and
-        datetime_eq(time_block.valid_from, ~N[2018-07-02 00:00:00]) and
-        datetime_eq(time_block.valid_through, ~N[2018-07-04 00:00:00])
+        time_eq(time_block.start_time, ~T[02:00:00]) and
+        time_eq(time_block.end_time, ~T[04:00:00]) and
+        date_eq(time_block.from_date, ~D[2018-07-02]) and
+        date_eq(time_block.through_date, ~D[2018-07-04])
       ) end)
     end
   end
@@ -126,7 +128,7 @@ defmodule Breakbench.ArrangeTest do
     Time.compare(time0, time1) == :eq
   end
 
-  defp datetime_eq(datetime0, datetime1) do
-    NaiveDateTime.compare(datetime0, datetime1) == :eq
+  defp date_eq(datetime0, datetime1) do
+    Date.compare(datetime0, datetime1) == :eq
   end
 end

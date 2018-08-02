@@ -5,28 +5,30 @@ defmodule Breakbench.Space.OpeningHour do
   alias Breakbench.{Places, Timesheets}
   alias Breakbench.Places.Space
   alias Breakbench.Timesheets.TimeBlock
-  alias Breakbench.TimeBlock.Arrange
+  alias Breakbench.TimeBlock.{
+    Arrange, ArrangeState
+  }
 
   import Ecto.Query
 
 
   def insert(%Space{} = space, new_time_block) do
-    # Get current time blocks that intersect with new_time_block
-    opening_hours = Places.intersect_space_opening_hours(space, new_time_block)
+    # Get current time blocks that overlap with new_time_block
+    opening_hours = Places.overlap_space_opening_hours(space, new_time_block)
     time_blocks = Enum.map(opening_hours, fn opening_hour ->
       opening_hour
         |> Ecto.assoc(:time_block)
         |> Repo.one
     end)
 
-    # Merge intersected time_blocks with new_time_block
+    # Merge overlapped time_blocks with new_time_block
     uid = Arrange.merge(time_blocks, new_time_block)
 
-    insert_state = Arrange.lookup_state(uid, :insert)
-    delete_state = Arrange.lookup_state(uid, :delete)
+    insert_state = ArrangeState.lookup_state(uid, :insert)
+    delete_state = ArrangeState.lookup_state(uid, :delete)
 
     # Make sure state is deleted after completion
-    Arrange.delete_state(uid)
+    ArrangeState.delete_state(uid)
 
     Repo.transaction fn ->
       # Delete all time_blocks from delete_state

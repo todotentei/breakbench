@@ -4,31 +4,33 @@ defmodule Breakbench.Field.DynamicPricing do
   alias Breakbench.{Repo, Places, Timesheets}
   alias Breakbench.Places.Field
   alias Breakbench.Timesheets.TimeBlock
-  alias Breakbench.TimeBlock.Arrange
+  alias Breakbench.TimeBlock.{
+    Arrange, ArrangeState
+  }
 
   import Ecto.Query
 
 
   def insert(%Field{} = field, price, new_time_block) do
-    # Intersect time block
-    dynamic_pricings = Places.intersect_field_dynamic_pricings(field, price, new_time_block)
+    # Overlap time block
+    dynamic_pricings = Places.overlap_field_dynamic_pricings(field, price, new_time_block)
     time_blocks = Enum.map dynamic_pricings, fn dynamic_pricing ->
       dynamic_pricing
         |> Ecto.assoc(:time_block)
         |> Repo.one
     end
 
-    # Merge intersected time_blocks with new_time_block
+    # Merge overlapped time_blocks with new_time_block
     uid = Arrange.merge(time_blocks, new_time_block)
 
-    insert_state = Arrange.lookup_state(uid, :insert)
-    delete_state = Arrange.lookup_state(uid, :delete)
+    insert_state = ArrangeState.lookup_state(uid, :insert)
+    delete_state = ArrangeState.lookup_state(uid, :delete)
 
     # Make sure state is deleted after completion
-    Arrange.delete_state(uid)
+    ArrangeState.delete_state(uid)
 
     Repo.transaction fn ->
-      # Delete all intersected time_blocks
+      # Delete all overlapped time_blocks
       ids = Enum.map(delete_state, &(&1.id))
       from(TimeBlock)
         |> where([tbk], tbk.id in ^ids)

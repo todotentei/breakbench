@@ -78,18 +78,18 @@ defmodule Breakbench.Places do
       |> Repo.insert()
   end
 
-  def intersect_field_closing_hours(%Field{} = field, attrs) do
+  def overlap_field_closing_hours(%Field{} = field, attrs) do
     field
       |> Ecto.assoc(:closing_hours)
-      |> time_block_intersect_query(attrs)
+      |> time_block_overlap_query(attrs)
       |> Repo.all()
   end
 
-  def intersect_field_dynamic_pricings(%Field{} = field, price, attrs) do
+  def overlap_field_dynamic_pricings(%Field{} = field, price, attrs) do
     field
       |> Ecto.assoc(:dynamic_pricings)
       |> where(price: ^price)
-      |> time_block_intersect_query(attrs)
+      |> time_block_overlap_query(attrs)
       |> Repo.all()
   end
 
@@ -149,25 +149,25 @@ defmodule Breakbench.Places do
     SpaceOpeningHour.changeset(space_opening_hour, %{})
   end
 
-  def intersect_space_opening_hours(%Space{} = space, attrs) do
+  def overlap_space_opening_hours(%Space{} = space, attrs) do
     space
       |> Ecto.assoc(:opening_hours)
-      |> time_block_intersect_query(attrs)
+      |> time_block_overlap_query(attrs)
       |> Repo.all()
   end
 
 
   ## Private
 
-  defp time_block_intersect_query(query, attrs) do
+  defp time_block_overlap_query(query, attrs) do
     alias Breakbench.Timesheets.TimeBlock
 
     query
       |> join(:inner, [s], t in TimeBlock, s.time_block_id == t.id)
       |> where([_, t], t.day_of_week == ^attrs[:day_of_week])
-      |> where([_, t], fragment("is_time_span_intersect((?,?),(?,?))",
-         t.start_at, t.end_at, ^attrs[:start_at], ^attrs[:end_at]))
-      |> where([_, t], fragment("is_valid_period_intersect((?,?),(?,?))",
-         t.valid_from, t.valid_through, ^attrs[:valid_from], ^attrs[:valid_through]))
+      |> where([_, t], fragment("overlap((?,?)::time_range,(?,?)::time_range)",
+         t.start_time, t.end_time, ^attrs[:start_time], ^attrs[:end_time]))
+      |> where([_, t], fragment("overlap((?,?)::date_range,(?,?)::date_range)",
+         t.from_date, t.through_date, ^attrs[:from_date], ^attrs[:through_date]))
   end
 end

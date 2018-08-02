@@ -6,10 +6,10 @@ defmodule Breakbench.TimeBlockFactory do
       def time_block_factory do
         %TimeBlock{
           day_of_week: 1,
-          start_at: Time.utc_now,
-          end_at: Time.utc_now,
-          valid_from: NaiveDateTime.utc_now,
-          valid_through: NaiveDateTime.utc_now
+          start_time: Time.utc_now,
+          end_time: Time.utc_now,
+          from_date: Date.utc_today,
+          through_date: Date.utc_today
         }
       end
     end
