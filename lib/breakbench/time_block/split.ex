@@ -5,7 +5,7 @@ defmodule Breakbench.TimeBlock.Split do
   alias Breakbench.TimeBlock.DateRange
 
   import Breakbench.TimeBlock.DateRange, only:
-    [to_from_date: 1, to_through_date: 1]
+    [valid_from: 1, valid_through: 1]
 
 
   def split(old_time_block, new_time_block) do
@@ -20,10 +20,7 @@ defmodule Breakbench.TimeBlock.Split do
       {from_date, through_date} = DateRange.split(new_time_block, old_time_block)
 
       []
-        |> append_on(Time.compare(
-              new_time_block.start_time,
-              old_time_block.start_time
-            ) == :gt,
+        |> append_on(new_time_block.start_time > old_time_block.start_time,
             TimeBlock.build(%{
               day_of_week: day_of_week,
               start_time: old_time_block.start_time,
@@ -31,10 +28,7 @@ defmodule Breakbench.TimeBlock.Split do
               from_date: from_date,
               through_date: through_date
             }))
-        |> append_on(Time.compare(
-              new_time_block.end_time,
-              old_time_block.end_time
-            ) == :lt,
+        |> append_on(new_time_block.end_time < old_time_block.end_time,
             TimeBlock.build(%{
               day_of_week: day_of_week,
               start_time: new_time_block.end_time,
@@ -43,8 +37,8 @@ defmodule Breakbench.TimeBlock.Split do
               through_date: through_date
             }))
         |> append_on(Date.compare(
-              to_from_date(new_time_block.from_date),
-              to_from_date(old_time_block.from_date)
+              valid_from(new_time_block.from_date),
+              valid_from(old_time_block.from_date)
             ) == :gt,
             TimeBlock.build(%{
               day_of_week: day_of_week,
@@ -54,8 +48,8 @@ defmodule Breakbench.TimeBlock.Split do
               through_date: new_time_block.from_date
             }))
         |> append_on(Date.compare(
-              to_through_date(new_time_block.through_date),
-              to_through_date(old_time_block.through_date)
+              valid_through(new_time_block.through_date),
+              valid_through(old_time_block.through_date)
             ) == :lt,
             TimeBlock.build(%{
               day_of_week: day_of_week,
@@ -78,16 +72,16 @@ defmodule Breakbench.TimeBlock.Split do
 
       # Check if time spans overlap each other, exclude edges
       unless not(
-        Time.compare(time_block0.start_time, time_block1.end_time) != :lt or
-        Time.compare(time_block0.end_time, time_block1.start_time) != :gt
+        time_block0.start_time >= time_block1.end_time or
+        time_block0.end_time <= time_block1.start_time
       ) do
         throw false
       end
 
       # Check if both date ranges overlap each other, include edge
       unless not(
-        Date.compare(to_from_date(time_block0.from_date), to_through_date(time_block1.through_date)) != :lt or
-        Date.compare(to_through_date(time_block0.through_date), to_from_date(time_block1.from_date)) != :gt
+        Date.compare(valid_from(time_block0.from_date), valid_through(time_block1.through_date)) != :lt or
+        Date.compare(valid_through(time_block0.through_date), valid_from(time_block1.from_date)) != :gt
       ) do
         throw false
       end

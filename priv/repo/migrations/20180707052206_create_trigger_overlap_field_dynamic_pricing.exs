@@ -7,44 +7,22 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerOverlapFieldDynamicPricing do
       RETURNS TRIGGER LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        new_time_block time_blocks;
-        new_time_range time_range;
-        new_date_range date_range;
-        overlapped BOOLEAN;
+        _tb time_blocks;
       BEGIN
         SELECT * FROM time_blocks AS tbk
-        INTO new_time_block
-        WHERE tbk.id = NEW.time_block_id;
+        WHERE tbk.id = NEW.time_block_id
+        INTO _tb;
 
-        new_time_range = (new_time_block.start_time, new_time_block.end_time)::time_range;
-        new_date_range = (new_time_block.from_date, new_time_block.through_date)::date_range;
-
-        SELECT EXISTS (
+        IF EXISTS (
           SELECT * FROM field_dynamic_pricings AS fdp
           JOIN time_blocks AS tbk ON tbk.id = fdp.time_block_id
           WHERE
             fdp.field_id = NEW.field_id AND
             fdp.price = NEW.price AND
-            tbk.day_of_week = new_time_block.day_of_week AND
-            overlap(
-              (tbk.start_time, tbk.end_time)::time_range,
-              new_time_range
-            ) AND
-            not(touch (
-              (tbk.start_time, tbk.end_time)::time_range,
-              new_time_range
-            )) AND
-            overlap(
-              (tbk.from_date, tbk.through_date)::date_range,
-              new_date_range
-            ) AND
-            not(touch (
-              (tbk.from_date, tbk.through_date)::date_range,
-              new_date_range
-            ))
-        ) INTO overlapped;
-
-        IF overlapped THEN
+            tbk.day_of_week = _tb.day_of_week AND
+            int4range(_tb.start_time, _tb.end_time, '[)') && int4range(tbk.start_time, tbk.end_time, '[)') AND
+            daterange(_tb.from_date, _tb.through_date, '[)') && daterange(tbk.from_date, tbk.through_date, '[)')
+        ) THEN
           RAISE EXCEPTION 'error overlap field dynamic pricing';
         END IF;
 

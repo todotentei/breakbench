@@ -10,7 +10,7 @@ defmodule Breakbench.Field.DynamicPricingTest do
     setup do
       field = insert(:field)
 
-      time_block = insert(:time_block, day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[02:00:00],
+      time_block = insert(:time_block, day_of_week: 1, start_time: 3600, end_time: 7200,
         from_date: ~D[2018-07-01], through_date: ~D[2018-07-02])
       insert(:field_dynamic_pricing, field: field, time_block: time_block, price: 1000)
 
@@ -18,7 +18,7 @@ defmodule Breakbench.Field.DynamicPricingTest do
     end
 
 
-    @valid_time_block %{day_of_week: 1, start_time: ~T[02:00:00], end_time: ~T[03:00:00],
+    @valid_time_block %{day_of_week: 1, start_time: 7200, end_time: 10800,
       from_date: ~D[2018-07-01], through_date: ~D[2018-07-02]}
 
     test "unique time_block returns field_dynamic_pricing", context do
@@ -29,7 +29,7 @@ defmodule Breakbench.Field.DynamicPricingTest do
     end
 
 
-    @invalid_time_block %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+    @invalid_time_block %{day_of_week: 1, start_time: 3600, end_time: 10800,
       from_date: ~D[2018-07-01], through_date: ~D[2018-07-02]}
 
     test "not unique time_block with different price returns field_dynamic_pricing", context do
@@ -54,9 +54,9 @@ defmodule Breakbench.Field.DynamicPricingTest do
     setup do
       field = insert(:field)
 
-      time_block1 = insert(:time_block, day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+      time_block1 = insert(:time_block, day_of_week: 1, start_time: 3600, end_time: 10800,
         from_date: ~D[2018-07-01], through_date: ~D[2018-07-03])
-      time_block2 = insert(:time_block, day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[05:00:00],
+      time_block2 = insert(:time_block, day_of_week: 1, start_time: 3600, end_time: 18000,
         from_date: ~D[2018-07-03], through_date: ~D[2018-07-05])
 
       insert(:field_dynamic_pricing, field: field, time_block: time_block1)
@@ -66,7 +66,7 @@ defmodule Breakbench.Field.DynamicPricingTest do
     end
 
 
-    @new_time_block %{day_of_week: 1, start_time: ~T[03:00:00], end_time: ~T[05:00:00],
+    @new_time_block %{day_of_week: 1, start_time: 10800, end_time: 18000,
       from_date: ~D[2018-07-01], through_date: ~D[2018-07-03]}
 
     test "insert/2 merges all overlapped time_blocks", context do
@@ -82,8 +82,8 @@ defmodule Breakbench.Field.DynamicPricingTest do
         |> Repo.preload(:time_block)
       assert Enum.all? field_dynamic_pricings, fn %{time_block: time_block} ->
         time_block.day_of_week == 1 and
-        time_eq(time_block.start_time, ~T[01:00:00]) and
-        time_eq(time_block.end_time, ~T[05:00:00]) and
+        time_eq(time_block.start_time, 3600) and
+        time_eq(time_block.end_time, 18000) and
         date_eq(time_block.from_date, ~D[2018-07-01]) and
         date_eq(time_block.through_date, ~D[2018-07-05])
       end
@@ -94,7 +94,7 @@ defmodule Breakbench.Field.DynamicPricingTest do
   ## Private
 
   defp time_eq(time0, time1) do
-    Time.compare(time0, time1) == :eq
+    time0 == time1
   end
 
   defp date_eq(datetime0, datetime1) do

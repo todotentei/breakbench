@@ -7,7 +7,7 @@ defmodule Breakbench.TimeBlock.Merge do
   }
 
   import Breakbench.TimeBlock.DateRange, only: [
-    to_from_date: 1, to_through_date: 1
+    valid_from: 1, valid_through: 1
   ]
 
 
@@ -39,8 +39,8 @@ defmodule Breakbench.TimeBlock.Merge do
       Enum.reduce(time_blocks, default, fn time_block, accumulator ->
         accumulator
           |> append_on(Date.compare(
-                to_from_date(from_date),
-                to_from_date(time_block.from_date)
+                valid_from(from_date),
+                valid_from(time_block.from_date)
               ) == :gt,
               TimeBlock.build(%{
                 day_of_week: day_of_week,
@@ -50,8 +50,8 @@ defmodule Breakbench.TimeBlock.Merge do
                 through_date: from_date
               }))
           |> append_on(Date.compare(
-                to_through_date(through_date),
-                to_through_date(time_block.through_date)
+                valid_through(through_date),
+                valid_through(time_block.through_date)
               ) == :lt,
               TimeBlock.build(%{
                 day_of_week: day_of_week,
@@ -66,25 +66,25 @@ defmodule Breakbench.TimeBlock.Merge do
     end
   end
 
-  def mergeable?(time_block0, time_block1) do
+  def mergeable?(tb0, tb1) do
     try do
       # Valid only if both time blocks are on the same day
-      unless time_block0.day_of_week == time_block1.day_of_week do
+      unless tb0.day_of_week == tb1.day_of_week do
         throw false
       end
 
       # Check if time spans overlap each other, include edges
       unless not(
-        Time.compare(time_block0.start_time, time_block1.end_time) == :gt or
-        Time.compare(time_block0.end_time, time_block1.start_time) == :lt
+        tb0.start_time > tb1.end_time or
+        tb0.end_time < tb1.start_time
       ) do
         throw false
       end
 
       # Check if both date ranges overlap each other, include edge
       unless not(
-        Date.compare(to_from_date(time_block0.from_date), to_through_date(time_block1.through_date)) == :gt or
-        Date.compare(to_through_date(time_block0.through_date), to_from_date(time_block1.from_date)) == :lt
+        Date.compare(valid_from(tb0.from_date), valid_through(tb1.through_date)) == :gt or
+        Date.compare(valid_through(tb0.through_date), valid_from(tb1.from_date)) == :lt
       ) do
         throw false
       end
@@ -92,11 +92,11 @@ defmodule Breakbench.TimeBlock.Merge do
       # If one of the date range edges overlap each other and both of the
       # time span edges aren't overlapping -> false
       if not(
-        Time.compare(time_block0.start_time, time_block1.start_time) == :eq and
-        Time.compare(time_block0.end_time, time_block1.end_time) == :eq
+        tb0.start_time == tb1.start_time and
+        tb0.end_time == tb1.end_time
       ) and (
-        Date.compare(to_from_date(time_block0.from_date), to_through_date(time_block1.through_date)) == :eq or
-        Date.compare(to_through_date(time_block0.through_date), to_from_date(time_block1.from_date)) == :eq
+        Date.compare(valid_from(tb0.from_date), valid_through(tb1.through_date)) == :eq or
+        Date.compare(valid_through(tb0.through_date), valid_from(tb1.from_date)) == :eq
       ) do
         throw false
       end

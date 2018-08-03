@@ -4,25 +4,21 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionDiff do
   def up do
     execute """
       CREATE OR REPLACE FUNCTION diff (
-        _time_range_1 time_range,
-        _time_range_2 time_range
-      ) RETURNS time_range [] LANGUAGE PLPGSQL
+        _time_range_1 int4range,
+        _time_range_2 int4range
+      ) RETURNS int4range[] LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        _time_ranges time_range [];
+        _time_ranges int4range[];
       BEGIN
-        IF overlap(_time_range_1, _time_range_2) THEN
-          IF _time_range_1.start_time < _time_range_2.start_time THEN
-            _time_ranges = ARRAY_APPEND(_time_ranges, (
-              _time_range_1.start_time,
-              _time_range_2.start_time
-            )::time_range);
+        IF _time_range_1 && _time_range_2 THEN
+          IF lower(_time_range_1) < lower(_time_range_2) THEN
+            _time_ranges = ARRAY_APPEND(_time_ranges,
+              int4range(lower(_time_range_1), lower(_time_range_2), '[]'));
           END IF;
-          IF _time_range_1.end_time > _time_range_2.end_time THEN
-            _time_ranges = ARRAY_APPEND(_time_ranges, (
-              _time_range_2.end_time,
-              _time_range_1.end_time
-            )::time_range);
+          IF upper(_time_range_1) > upper(_time_range_2) THEN
+            _time_ranges = ARRAY_APPEND(_time_ranges,
+              int4range(upper(_time_range_2), upper(_time_range_1), '[]'));
           END IF;
         ELSE
           _time_ranges = ARRAY_APPEND(_time_ranges, _time_range_1);
@@ -34,6 +30,6 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionDiff do
   end
 
   def down do
-    execute "DROP FUNCTION diff ( time_range, time_range )"
+    execute "DROP FUNCTION diff ( int4range, int4range )"
   end
 end

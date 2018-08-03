@@ -6,20 +6,20 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionFieldDailyOpeningHours do
       CREATE OR REPLACE FUNCTION daily_opening_hours (
         _field_id CHARACTER VARYING (255),
         _date DATE
-      ) RETURNS time_range [] LANGUAGE PLPGSQL
+      ) RETURNS int4range[] LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        _dowiso INTEGER;
-        _opening_record RECORD;
-        _opening_hour time_range;
-        _closing_hours time_range [];
-        _temp time_range [];
-        _return time_range [];
+        _dow INTEGER;
+        _opr RECORD;
+        _oph int4range;
+        _csh int4range[];
+        _tmp int4range[];
+        _rtn int4range[];
       BEGIN
         SELECT DATE_PART('ISODOW', _date::DATE)
-        INTO _dowiso;
+        INTO _dow;
 
-        FOR _opening_record IN
+        FOR _opr IN
           SELECT
             tbk.start_time,
             tbk.end_time
@@ -30,46 +30,31 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionFieldDailyOpeningHours do
             spc.id = soh.space_id
           LEFT OUTER JOIN time_blocks AS tbk ON
             tbk.id = soh.time_block_id AND
-            tbk.day_of_week = _dowiso AND
-            overlap (
-              (_date, _date)::date_range,
-              (tbk.from_date, tbk.through_date)::date_range
-            )
+            tbk.day_of_week = _dow AND
+            _date <@ daterange(tbk.from_date, tbk.through_date, '[]')
           WHERE
             fld.id = _field_id
         LOOP
-          _opening_hour = (
-            _opening_record.start_time,
-            _opening_record.end_time
-          )::time_range;
-          _temp = ARRAY_APPEND(_temp, _opening_hour::time_range);
+          _oph = int4range(_opr.start_time, _opr.end_time, '[]');
+          _tmp = ARRAY_APPEND(_tmp, _oph);
 
           SELECT
-            ARRAY_AGG((tbk.start_time, tbk.end_time)::time_range)
+            ARRAY_AGG(int4range(tbk.start_time, tbk.end_time, '[]'))
           FROM fields AS fld
           INNER JOIN field_closing_hours AS fch ON
             fld.id = fch.field_id
           LEFT OUTER JOIN time_blocks AS tbk ON
             tbk.id = fch.time_block_id AND
-            tbk.day_of_week = _dowiso AND
-            overlap (
-              (_date, _date)::date_range,
-              (tbk.from_date, tbk.through_date)::date_range
-            ) AND
-            overlap (
-              _opening_hour::time_range,
-              (tbk.start_time, tbk.end_time)::time_range
-            )
+            tbk.day_of_week = _dow AND
+            _date <@ daterange(tbk.from_date, tbk.through_date, '[]') AND
+            _oph && int4range(tbk.start_time, tbk.end_time, '[]')
           WHERE fld.id = _field_id
-          INTO _closing_hours;
+          INTO _csh;
 
-          SELECT split(_temp, _closing_hours)
-          INTO _temp;
-
-          _return = ARRAY_CAT(_return, _temp);
+          _rtn = ARRAY_CAT(_rtn, split(_tmp, _csh));
         END LOOP;
 
-        RETURN _return;
+        RETURN _rtn;
       END $$;
     """
   end

@@ -4,13 +4,13 @@ defmodule Breakbench.TimeBlockTest do
   alias Breakbench.TimeBlock.Merge
 
   import Breakbench.TimeBlock.DateRange, only:
-    [to_from_date: 1, to_through_date: 1]
+    [valid_from: 1, valid_through: 1]
 
 
   describe "merge" do
-    @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+    @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 10800,
       from_date: ~D[2018-07-01], through_date: ~D[2018-07-05]}
-    @time_block2 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[05:00:00],
+    @time_block2 %{day_of_week: 1, start_time: 3600, end_time: 18000,
       from_date: ~D[2018-07-03], through_date: ~D[2018-07-05]}
 
     @doc """
@@ -28,25 +28,25 @@ defmodule Breakbench.TimeBlockTest do
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
-        time_eq(new.start_time, ~T[01:00:00]) and
-        time_eq(new.end_time, ~T[03:00:00]) and
+        time_eq(new.start_time, 3600) and
+        time_eq(new.end_time, 10800) and
         date_eq(new.from_date, ~D[2018-07-01]) and
         date_eq(new.through_date, ~D[2018-07-03])
       end)
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
-        time_eq(new.start_time, ~T[01:00:00]) and
-        time_eq(new.end_time, ~T[05:00:00]) and
+        time_eq(new.start_time, 3600) and
+        time_eq(new.end_time, 18000) and
         date_eq(new.from_date, ~D[2018-07-03]) and
         date_eq(new.through_date, ~D[2018-07-05])
       end)
     end
 
 
-    @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[05:00:00],
+    @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 18000,
       from_date: ~D[2018-07-02], through_date: ~D[2018-07-05]}
-    @time_block2 %{day_of_week: 1, start_time: ~T[02:00:00], end_time: ~T[04:00:00],
+    @time_block2 %{day_of_week: 1, start_time: 7200, end_time: 14400,
       from_date: ~D[2018-07-01], through_date: ~D[2018-07-06]}
 
     @doc """
@@ -64,33 +64,33 @@ defmodule Breakbench.TimeBlockTest do
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
-        time_eq(new.start_time, ~T[02:00:00]) and
-        time_eq(new.end_time, ~T[04:00:00]) and
+        time_eq(new.start_time, 7200) and
+        time_eq(new.end_time, 14400) and
         date_eq(new.from_date, ~D[2018-07-01]) and
         date_eq(new.through_date, ~D[2018-07-02])
       end)
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
-        time_eq(new.start_time, ~T[02:00:00]) and
-        time_eq(new.end_time, ~T[04:00:00]) and
+        time_eq(new.start_time, 7200) and
+        time_eq(new.end_time, 14400) and
         date_eq(new.from_date, ~D[2018-07-05]) and
         date_eq(new.through_date, ~D[2018-07-06])
       end)
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
-        time_eq(new.start_time, ~T[01:00:00]) and
-        time_eq(new.end_time, ~T[05:00:00]) and
+        time_eq(new.start_time, 3600) and
+        time_eq(new.end_time, 18000) and
         date_eq(new.from_date, ~D[2018-07-02]) and
         date_eq(new.through_date, ~D[2018-07-05])
       end)
     end
 
 
-    @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+    @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 10800,
       from_date: ~D[2018-07-01], through_date: ~D[2018-07-02]}
-    @time_block2 %{day_of_week: 1, start_time: ~T[03:00:00], end_time: ~T[05:00:00],
+    @time_block2 %{day_of_week: 1, start_time: 10800, end_time: 18000,
       from_date: ~D[2018-07-01], through_date: ~D[2018-07-02]}
 
     @doc """
@@ -108,8 +108,8 @@ defmodule Breakbench.TimeBlockTest do
 
       assert Enum.any?(new_combination, fn new ->
         new.day_of_week == 1 and
-        time_eq(new.start_time, ~T[01:00:00]) and
-        time_eq(new.end_time, ~T[05:00:00]) and
+        time_eq(new.start_time, 3600) and
+        time_eq(new.end_time, 18000) and
         date_eq(new.from_date, ~D[2018-07-01]) and
         date_eq(new.through_date, ~D[2018-07-02])
       end)
@@ -117,9 +117,9 @@ defmodule Breakbench.TimeBlockTest do
   end
 
 
-  @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[04:00:00],
+  @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 14400,
     from_date: ~D[2018-07-01], through_date: ~D[2018-07-03]}
-  @time_block2 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[04:00:00],
+  @time_block2 %{day_of_week: 1, start_time: 3600, end_time: 14400,
     from_date: ~D[2018-07-03], through_date: ~D[2018-07-05]}
 
   @doc """
@@ -135,17 +135,17 @@ defmodule Breakbench.TimeBlockTest do
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[01:00:00]) and
-      time_eq(new.end_time, ~T[04:00:00]) and
+      time_eq(new.start_time, 3600) and
+      time_eq(new.end_time, 14400) and
       date_eq(new.from_date, ~D[2018-07-01]) and
       date_eq(new.through_date, ~D[2018-07-05])
     end)
   end
 
 
-  @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[05:00:00],
+  @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 18000,
     from_date: ~D[2018-07-01], through_date: ~D[2018-07-04]}
-  @time_block2 %{day_of_week: 1, start_time: ~T[02:00:00], end_time: ~T[04:00:00],
+  @time_block2 %{day_of_week: 1, start_time: 7200, end_time: 14400,
     from_date: ~D[2018-07-02], through_date: ~D[2018-07-03]}
 
   @doc """
@@ -163,33 +163,33 @@ defmodule Breakbench.TimeBlockTest do
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[01:00:00]) and
-      time_eq(new.end_time, ~T[05:00:00]) and
+      time_eq(new.start_time, 3600) and
+      time_eq(new.end_time, 18000) and
       date_eq(new.from_date, ~D[2018-07-01]) and
       date_eq(new.through_date, ~D[2018-07-02])
     end)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[01:00:00]) and
-      time_eq(new.end_time, ~T[05:00:00]) and
+      time_eq(new.start_time, 3600) and
+      time_eq(new.end_time, 18000) and
       date_eq(new.from_date, ~D[2018-07-02]) and
       date_eq(new.through_date, ~D[2018-07-03])
     end)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[01:00:00]) and
-      time_eq(new.end_time, ~T[05:00:00]) and
+      time_eq(new.start_time, 3600) and
+      time_eq(new.end_time, 18000) and
       date_eq(new.from_date, ~D[2018-07-03]) and
       date_eq(new.through_date, ~D[2018-07-04])
     end)
   end
 
 
-  @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[05:00:00],
+  @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 18000,
     from_date: ~D[2018-07-03], through_date: ~D[2018-07-05]}
-  @time_block2 %{day_of_week: 1, start_time: ~T[02:00:00], end_time: ~T[04:00:00],
+  @time_block2 %{day_of_week: 1, start_time: 7200, end_time: 14400,
     from_date: nil, through_date: nil}
 
   @doc """
@@ -206,33 +206,33 @@ defmodule Breakbench.TimeBlockTest do
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[02:00:00]) and
-      time_eq(new.end_time, ~T[04:00:00]) and
-      date_eq(to_from_date(new.from_date), to_from_date(nil)) and
-      date_eq(to_through_date(new.through_date), ~D[2018-07-03])
+      time_eq(new.start_time, 7200) and
+      time_eq(new.end_time, 14400) and
+      date_eq(valid_from(new.from_date), valid_from(nil)) and
+      date_eq(valid_through(new.through_date), ~D[2018-07-03])
     end)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[01:00:00]) and
-      time_eq(new.end_time, ~T[05:00:00]) and
-      date_eq(to_from_date(new.from_date), ~D[2018-07-03]) and
-      date_eq(to_through_date(new.through_date), ~D[2018-07-05])
+      time_eq(new.start_time, 3600) and
+      time_eq(new.end_time, 18000) and
+      date_eq(valid_from(new.from_date), ~D[2018-07-03]) and
+      date_eq(valid_through(new.through_date), ~D[2018-07-05])
     end)
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[02:00:00]) and
-      time_eq(new.end_time, ~T[04:00:00]) and
-      date_eq(to_from_date(new.from_date), ~D[2018-07-05]) and
-      date_eq(to_through_date(new.through_date), to_through_date(nil))
+      time_eq(new.start_time, 7200) and
+      time_eq(new.end_time, 14400) and
+      date_eq(valid_from(new.from_date), ~D[2018-07-05]) and
+      date_eq(valid_through(new.through_date), valid_through(nil))
     end)
   end
 
 
-  @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+  @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 10800,
     from_date: nil, through_date: ~D[2018-07-03]}
-  @time_block2 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[03:00:00],
+  @time_block2 %{day_of_week: 1, start_time: 3600, end_time: 10800,
     from_date: ~D[2018-07-03], through_date: nil}
 
   @doc """
@@ -247,17 +247,17 @@ defmodule Breakbench.TimeBlockTest do
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[01:00:00]) and
-      time_eq(new.end_time, ~T[03:00:00]) and
-      date_eq(to_from_date(new.from_date), to_from_date(nil)) and
-      date_eq(to_through_date(new.through_date), to_through_date(nil))
+      time_eq(new.start_time, 3600) and
+      time_eq(new.end_time, 10800) and
+      date_eq(valid_from(new.from_date), valid_from(nil)) and
+      date_eq(valid_through(new.through_date), valid_through(nil))
     end)
   end
 
 
-  @time_block1 %{day_of_week: 1, start_time: ~T[01:00:00], end_time: ~T[04:00:00],
+  @time_block1 %{day_of_week: 1, start_time: 3600, end_time: 14400,
     from_date: nil, through_date: nil}
-  @time_block2 %{day_of_week: 1, start_time: ~T[02:00:00], end_time: ~T[05:00:00],
+  @time_block2 %{day_of_week: 1, start_time: 7200, end_time: 18000,
     from_date: nil, through_date: nil}
 
   @doc """
@@ -275,10 +275,10 @@ defmodule Breakbench.TimeBlockTest do
 
     assert Enum.any?(new_combination, fn new ->
       new.day_of_week == 1 and
-      time_eq(new.start_time, ~T[01:00:00]) and
-      time_eq(new.end_time, ~T[05:00:00]) and
-      date_eq(to_from_date(new.from_date), to_from_date(nil)) and
-      date_eq(to_through_date(new.through_date), to_through_date(nil))
+      time_eq(new.start_time, 3600) and
+      time_eq(new.end_time, 18000) and
+      date_eq(valid_from(new.from_date), valid_from(nil)) and
+      date_eq(valid_through(new.through_date), valid_through(nil))
     end)
   end
 
@@ -286,7 +286,7 @@ defmodule Breakbench.TimeBlockTest do
   ## Private
 
   defp time_eq(time0, time1) do
-    Time.compare(time0, time1) == :eq
+    time0 == time1
   end
 
   defp date_eq(datetime0, datetime1) do

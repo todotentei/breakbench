@@ -4,39 +4,39 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionSplit do
   def up do
     execute """
       CREATE OR REPLACE FUNCTION split (
-        _time_ranges time_range [],
-        _splitters time_range []
-      ) RETURNS time_range [] LANGUAGE PLPGSQL
+        _time_ranges_1 int4range[],
+        _time_ranges_2 int4range[]
+      ) RETURNS int4range[] LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        _time_range time_range;
-        _splitter time_range;
-        _return time_range [];
+        _tr int4range;
+        _st int4range;
+        _rt int4range[];
       BEGIN
-        _return = _time_ranges;
+        _rt = _time_ranges_1;
 
-        FOREACH _splitter IN ARRAY _splitters
+        FOREACH _st IN ARRAY _time_ranges_2
         LOOP
-          FOREACH _time_range IN ARRAY _time_ranges
+          FOREACH _tr IN ARRAY _time_ranges_1
           LOOP
-            IF overlap(_time_range, _splitter) THEN
-              _return = ARRAY_REMOVE(_return, _time_range);
-              _return = ARRAY(SELECT DISTINCT UNNEST(
-                ARRAY_CAT(_return, diff(_time_range, _splitter))
+            IF _tr && _st THEN
+              _rt = ARRAY_REMOVE(_rt, _tr);
+              _rt = ARRAY(SELECT DISTINCT UNNEST(
+                ARRAY_CAT(_rt, diff(_tr, _st))
               ));
 
-              SELECT split(_return, ARRAY_REMOVE(_splitters, _splitter))
-              INTO _return;
+              SELECT split(_rt, ARRAY_REMOVE(_time_ranges_2, _st))
+              INTO _rt;
             END IF;
           END LOOP;
         END LOOP;
 
-        RETURN _return;
+        RETURN _rt;
       END $$;
     """
   end
 
   def down do
-    execute "DROP FUNCTION split ( time_range[], time_range[] )"
+    execute "DROP FUNCTION split ( int4range[], int4range[] )"
   end
 end

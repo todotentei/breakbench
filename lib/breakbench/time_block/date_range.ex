@@ -3,52 +3,50 @@ defmodule Breakbench.TimeBlock.DateRange do
 
 
   # Convert
-  def to_from_date(datetime) do
+  def valid_from(datetime) do
     datetime || ~D[0000-01-01]
   end
 
-  def to_through_date(datetime) do
+  def valid_through(datetime) do
     datetime || ~D[9999-12-31]
   end
 
 
   # merge
-  def merge(time_block0, time_block1) do
-    time_blocks = [time_block0, time_block1]
+  def merge(tb0, tb1) do
+    time_blocks = [tb0, tb1]
 
-    ts_edge_1_overlap? = Time.compare(time_block0.start_time, time_block1.start_time) == :eq
-    ts_edge_2_overlap? = Time.compare(time_block0.end_time, time_block1.end_time) == :eq
+    touch1? = tb0.start_time == tb1.start_time
+    touch2? = tb0.end_time == tb1.end_time
 
     cond do
-      ts_edge_1_overlap? and ts_edge_2_overlap? ->
+      touch1? and touch2? ->
         from_date = time_blocks
-          |> Enum.min_by(&to_from_date(&1.from_date))
+          |> Enum.min_by(&valid_from(&1.from_date))
           |> Map.get(:from_date)
 
         through_date = time_blocks
-          |> Enum.max_by(&to_through_date(&1.through_date))
+          |> Enum.max_by(&valid_through(&1.through_date))
           |> Map.get(:through_date)
 
         {from_date, through_date}
 
-      ts_edge_1_overlap? != ts_edge_2_overlap? ->
-        tb0_diff = Time.diff(time_block0.end_time, time_block0.start_time)
-        tb1_diff = Time.diff(time_block1.end_time, time_block0.start_time)
+      touch1? != touch2? ->
+        tb0_diff = tb0.end_time - tb0.start_time
+        tb1_diff = tb1.end_time - tb0.start_time
 
         cond do
-          tb0_diff > tb1_diff ->
-            {time_block0.from_date, time_block0.through_date}
-          true ->
-            {time_block1.from_date, time_block1.through_date}
+          tb0_diff > tb1_diff -> {tb0.from_date, tb0.through_date}
+          true -> {tb1.from_date, tb1.through_date}
         end
 
-      not(ts_edge_1_overlap? || ts_edge_2_overlap?) ->
+      not(touch1? || touch2?) ->
         from_date = time_blocks
-          |> Enum.max_by(&to_from_date(&1.from_date))
+          |> Enum.max_by(&valid_from(&1.from_date))
           |> Map.get(:from_date)
 
         through_date = time_blocks
-          |> Enum.min_by(&to_through_date(&1.through_date))
+          |> Enum.min_by(&valid_through(&1.through_date))
           |> Map.get(:through_date)
 
         {from_date, through_date}
@@ -57,15 +55,15 @@ defmodule Breakbench.TimeBlock.DateRange do
 
 
   # Split
-  def split(time_block0, time_block1) do
-    time_blocks = [time_block0, time_block1]
+  def split(tb0, tb1) do
+    time_blocks = [tb0, tb1]
 
     from_date = time_blocks
-      |> Enum.max_by(&to_from_date(&1.from_date))
+      |> Enum.max_by(&valid_from(&1.from_date))
       |> Map.get(:from_date)
 
     through_date = time_blocks
-      |> Enum.min_by(&to_through_date(&1.through_date))
+      |> Enum.min_by(&valid_through(&1.through_date))
       |> Map.get(:through_date)
 
     {from_date, through_date}

@@ -165,9 +165,9 @@ defmodule Breakbench.Places do
     query
       |> join(:inner, [s], t in TimeBlock, s.time_block_id == t.id)
       |> where([_, t], t.day_of_week == ^attrs[:day_of_week])
-      |> where([_, t], fragment("overlap((?,?)::time_range,(?,?)::time_range)",
-         t.start_time, t.end_time, ^attrs[:start_time], ^attrs[:end_time]))
-      |> where([_, t], fragment("overlap((?,?)::date_range,(?,?)::date_range)",
-         t.from_date, t.through_date, ^attrs[:from_date], ^attrs[:through_date]))
+      |> where([_, t], fragment("int4range(?,?,'[]') && int4range(?,?,'[]')",
+          t.start_time, t.end_time, ^attrs[:start_time], ^attrs[:end_time]))
+      |> where([_, t], fragment("daterange(?,?,'[]') && daterange(?,?,'[]')",
+          t.from_date, t.through_date, ^attrs[:from_date], ^attrs[:through_date]))
   end
 end
