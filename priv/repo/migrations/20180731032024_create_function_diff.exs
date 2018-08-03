@@ -14,11 +14,11 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionDiff do
         IF _time_range_1 && _time_range_2 THEN
           IF lower(_time_range_1) < lower(_time_range_2) THEN
             _time_ranges = ARRAY_APPEND(_time_ranges,
-              int4range(lower(_time_range_1), lower(_time_range_2), '[]'));
+              int4range(lower(_time_range_1), lower(_time_range_2), '[)'));
           END IF;
           IF upper(_time_range_1) > upper(_time_range_2) THEN
             _time_ranges = ARRAY_APPEND(_time_ranges,
-              int4range(upper(_time_range_2), upper(_time_range_1), '[]'));
+              int4range(upper(_time_range_2), upper(_time_range_1), '[)'));
           END IF;
         ELSE
           _time_ranges = ARRAY_APPEND(_time_ranges, _time_range_1);
