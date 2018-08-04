@@ -78,6 +78,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
         SELECT
           ARRAY_AGG(CASE WHEN _tsrange @> _r THEN _r ELSE _tsrange * _r END)
         FROM UNNEST(_rtn) AS _r
+        WHERE _tsrange && _r
         INTO _rtn;
 
         RETURN tsconnect(_rtn);
