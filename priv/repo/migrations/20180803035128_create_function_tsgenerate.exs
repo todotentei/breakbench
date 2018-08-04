@@ -4,32 +4,36 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionTsgenerate do
   def up do
     execute """
       CREATE OR REPLACE FUNCTION tsgenerate (
-        _lower TIMESTAMP WITHOUT TIME ZONE,
-        _upper TIMESTAMP WITHOUT TIME ZONE,
+        _tsrange tsrange,
         _step INTERVAL DEFAULT '1 DAY'::INTERVAL
       ) RETURNS TABLE(tsrange tsrange) LANGUAGE PLPGSQL
       AS $$
       BEGIN
         RETURN QUERY SELECT
-          tsrange (
-            CASE WHEN stime::DATE = d THEN stime ELSE d END,
-            CASE WHEN etime::DATE = d THEN etime ELSE d + 1 END
-          )
+          tsrange(_dte.start, _dte.end)
         FROM (
-          SELECT stime
-               , etime
-               , GENERATE_SERIES(stime::DATE, etime::DATE, _step::INTERVAL)::DATE AS d
+          SELECT
+            CASE WHEN stime::DATE = d THEN stime ELSE d END AS start,
+            CASE WHEN etime::DATE = d THEN etime ELSE d + 1 END AS end
           FROM (
-            SELECT _lower::TIMESTAMP(0) AS stime
-                 , _upper::TIMESTAMP(0) AS etime
-          ) sub1
-        ) sub0
-        ORDER BY stime;
+            SELECT
+              stime,
+              etime,
+              GENERATE_SERIES(stime::DATE, etime::DATE, _step::INTERVAL)::DATE AS d
+            FROM (
+              SELECT
+                lower(_tsrange)::TIMESTAMP(0) AS stime,
+                upper(_tsrange)::TIMESTAMP(0) AS etime
+            ) sub1
+          ) sub0
+          ORDER BY stime
+        ) AS _dte
+        WHERE _dte.start < _dte.end;
       END $$;
     """
   end
 
   def down do
-    execute "DROP FUNCTION tsgenerate ( TIMESTAMP WITHOUT TIME ZONE, TIMESTAMP WITHOUT TIME ZONE, INTERVAL )"
+    execute "DROP FUNCTION tsgenerate ( tsrange, INTERVAL )"
   end
 end

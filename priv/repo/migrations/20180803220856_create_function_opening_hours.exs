@@ -5,12 +5,11 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
     execute """
       CREATE OR REPLACE FUNCTION opening_hours (
         _field_id CHARACTER VARYING(255),
-        _lower DATE,
-        _upper DATE
+        _tsrange tsrange
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        _dow INTEGER;
+        _dow INTEGER; _lwi INTEGER; _upi INTEGER;
         _dte DATE;
         _oph int4range;
         _tsr tsrange;
@@ -19,11 +18,14 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
       BEGIN
         FOR _tsr IN
           SELECT tsrange
-          FROM tsgenerate(_lower::TIMESTAMP, _upper::TIMESTAMP)
+          FROM tsgenerate(_tsrange)
         LOOP
           _tmp = '{}';
           _dte = lower(_tsr)::DATE;
           _dow = DATE_PART('ISODOW', _dte);
+
+          _lwi = EXTRACT(EPOCH FROM lower(_tsr)::TIME)::INTEGER;
+          _upi = EXTRACT(EPOCH FROM upper(_tsr)::TIME)::INTEGER;
 
           FOR _oph IN
             SELECT
@@ -36,10 +38,8 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
             LEFT OUTER JOIN time_blocks AS tbk ON
               tbk.id = soh.time_block_id AND
               _dte <@ daterange(tbk.from_date, tbk.through_date, '[]') AND
-              int4range(
-                EXTRACT(EPOCH FROM lower(_tsr)::TIME)::INTEGER,
-                EXTRACT(EPOCH FROM upper(_tsr) - lower(_tsr)::DATE)::INTEGER,
-              '[)') && int4range(tbk.start_time, tbk.end_time, '[)')
+              int4range(_lwi, CASE WHEN _upi = 0 THEN 86400 ELSE _upi END, '[)')
+                && int4range(tbk.start_time, tbk.end_time, '[)')
             WHERE
               tbk.day_of_week = _dow AND
               fld.id = _field_id
@@ -75,6 +75,11 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
           END LOOP;
         END LOOP;
 
+        SELECT
+          ARRAY_AGG(CASE WHEN _tsrange @> _r THEN _r ELSE _tsrange * _r END)
+        FROM UNNEST(_rtn) AS _r
+        INTO _rtn;
+
         RETURN tsconnect(_rtn);
       END $$;
     """
@@ -85,8 +90,11 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
         _date DATE
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
+      DECLARE
+        _tsr tsrange;
       BEGIN
-        RETURN opening_hours(_field_id, _date, (_date + INTERVAL '1 DAY')::DATE);
+        _tsr = tsrange(_date::DATE, (_date + INTERVAL '1 DAY')::DATE);
+        RETURN opening_hours(_field_id, _tsr);
       END $$;
     """
 
@@ -96,14 +104,17 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
         _repeat INTERVAL DEFAULT '1 DAY'::INTERVAL
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
+      DECLARE
+        _tsr tsrange;
       BEGIN
-        RETURN opening_hours(_field_id, now()::DATE, (now()::DATE + _repeat)::DATE);
+        _tsr = tsrange(now()::DATE, (now()::DATE + _repeat)::DATE);
+        RETURN opening_hours(_field_id, _tsr);
       END $$;
     """
   end
 
   def down do
-    execute "DROP FUNCTION opening_hours ( CHARACTER VARYING, DATE, DATE )"
+    execute "DROP FUNCTION opening_hours ( CHARACTER VARYING, tsrange )"
     execute "DROP FUNCTION opening_hours ( CHARACTER VARYING, DATE )"
     execute "DROP FUNCTION opening_hours ( CHARACTER VARYING, INTERVAL )"
   end
