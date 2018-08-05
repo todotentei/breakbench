@@ -12,5 +12,7 @@ defmodule Breakbench.Repo.Migrations.CreateBookings do
     end
 
     create index(:bookings, [:field_id])
+    execute "CREATE INDEX bookings_tsrange_until_index ON bookings USING gist (tsrange(kickoff,kickoff + duration * INTERVAL '1 SEC','[)'))",
+      "DROP INDEX bookings_tsrange_until_index"
   end
 end
