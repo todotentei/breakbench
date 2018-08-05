@@ -12,10 +12,14 @@ defmodule Breakbench.Repo.Migrations.CreateTimeBlocks do
     end
 
     create index(:time_blocks, [:day_of_week])
-    execute("CREATE INDEX time_blocks_time_range_through_index ON time_blocks USING gist (int4range(start_time,end_time,'[]'))")
-    execute("CREATE INDEX time_blocks_time_range_until_index ON time_blocks USING gist (int4range(start_time,end_time,'[)'))")
-    execute("CREATE INDEX time_blocks_date_range_through_index ON time_blocks USING gist (daterange(from_date,through_date,'[]'))")
-    execute("CREATE INDEX time_blocks_date_range_until_index ON time_blocks USING gist (daterange(from_date,through_date,'[)'))")
+    execute "CREATE INDEX time_blocks_time_range_through_index ON time_blocks USING gist (int4range(start_time,end_time,'[]'))",
+      "DROP INDEX time_blocks_time_range_through_index"
+    execute "CREATE INDEX time_blocks_time_range_until_index ON time_blocks USING gist (int4range(start_time,end_time,'[)'))",
+      "DROP INDEX time_blocks_time_range_until_index"
+    execute "CREATE INDEX time_blocks_date_range_through_index ON time_blocks USING gist (daterange(from_date,through_date,'[]'))",
+      "DROP INDEX time_blocks_date_range_through_index"
+    execute "CREATE INDEX time_blocks_date_range_until_index ON time_blocks USING gist (daterange(from_date,through_date,'[)'))",
+      "DROP INDEX time_blocks_date_range_until_index"
 
     create constraint(:time_blocks, "valid_start_time", check: "start_time >= 0 AND start_time <= 86400")
     create constraint(:time_blocks, "valid_end_time", check: "end_time >= 0 AND end_time <= 86400")
