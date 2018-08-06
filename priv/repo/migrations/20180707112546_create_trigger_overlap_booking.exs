@@ -6,20 +6,15 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerOverlapBooking do
       CREATE OR REPLACE FUNCTION overlap_booking()
       RETURNS TRIGGER LANGUAGE PLPGSQL
       AS $$
-      DECLARE
-        overlapped BOOLEAN;
       BEGIN
-        SELECT EXISTS (
-          SELECT * FROM bookings AS bkn
+        IF EXISTS (
+          SELECT *
+          FROM bookings AS bkn
           WHERE
             bkn.field_id = NEW.field_id AND
-            NOT (
-              NEW.kickoff >= shift_datetime_by_minutes(bkn.kickoff, bkn.duration) OR
-              bkn.kickoff >= shift_datetime_by_minutes(NEW.kickoff, NEW.duration)
-            )
-        ) INTO overlapped;
-
-        IF overlapped THEN
+            tsrange(NEW.kickoff, NEW.kickoff + NEW.duration * INTERVAL '1 SEC', '[)')
+              && tsrange(bkn.kickoff, bkn.kickoff + bkn.duration * INTERVAL '1 SEC', '[)')
+        ) THEN
           RAISE EXCEPTION 'error overlap booking';
         END IF;
 
@@ -29,9 +24,7 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerOverlapBooking do
 
     execute """
       CREATE TRIGGER overlap_booking
-      BEFORE
-        INSERT OR
-        UPDATE
+      BEFORE INSERT
       ON bookings
         FOR EACH ROW
           EXECUTE PROCEDURE
