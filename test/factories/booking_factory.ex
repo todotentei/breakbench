@@ -6,7 +6,7 @@ defmodule Breakbench.Accounts.BookingFactory do
       def booking_factory do
         %Booking{
           kickoff: NaiveDateTime.utc_now,
-          duration: 60,
+          duration: 3600,
           field: build(:field),
           inserted_at: NaiveDateTime.utc_now,
           updated_at: NaiveDateTime.utc_now

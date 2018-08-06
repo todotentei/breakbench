@@ -49,8 +49,8 @@ defmodule Breakbench.MatchmakingFactory do
 
       def matchmaking_space_distance_matrix_factory do
         %MatchmakingSpaceDistanceMatrix{
-          distance: 100,
-          duration: 100,
+          distance: 3000,
+          duration: 1800,
           space: build(:space),
           matchmaking_queue: build(:matchmaking_queue)
         }
