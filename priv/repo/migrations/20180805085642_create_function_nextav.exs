@@ -35,8 +35,10 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
               ))) AS _opening_hour,
               gmd.duration * INTERVAL '1 SEC' AS _duration
             FROM spaces AS spc
+            INNER JOIN areas ON
+              spc.id = areas.space_id
             INNER JOIN fields AS fld ON
-              spc.id = fld.space_id
+              areas.id = fld.area_id
             INNER JOIN field_game_modes AS fgm ON
               fld.id = fgm.field_id
             INNER JOIN game_modes AS gmd ON
@@ -52,12 +54,25 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
         LOOP
           _oph = ARRAY[_opening_hours.opening_hour];
 
-          SELECT
-            ARRAY_AGG(tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)'))
-          FROM bookings AS bkg
-          WHERE
-            _opening_hours.opening_hour && tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
-          INTO _bookings;
+          SELECT ARRAY_AGG(tsrange)
+          INTO _bookings
+          FROM (
+            SELECT
+              tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
+            FROM bookings as bkg
+            INNER JOIN affected_fields(_opening_hours.field_id) as aff ON
+              bkg.field_id = aff.field_id AND
+              _opening_hours.opening_hour && tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
+
+            UNION
+
+            SELECT
+              tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
+            FROM bookings AS bkg
+            WHERE
+              bkg.field_id = _opening_hours.field_id AND
+              _opening_hours.opening_hour && tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
+          ) AS _bookings;
 
           IF _bookings IS NOT NULL THEN
             _oph = split(_oph, _bookings);

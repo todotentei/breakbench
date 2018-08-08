@@ -8,9 +8,30 @@ defmodule Breakbench.Places do
   alias Breakbench.Repo
 
   alias Breakbench.Places.{
-    Country, Field, FieldClosingHour, FieldDynamicPricing, Space,
+    Area, Country, Field, FieldClosingHour, FieldDynamicPricing, Space,
     SpaceOpeningHour
   }
+
+
+  # Area
+
+  def list_areas do
+    Repo.all(Area)
+  end
+
+  def get_area!(id) do
+    Repo.get!(Area, id)
+  end
+
+  def create_area(attrs \\ %{}) do
+    %Area{}
+    |> Area.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def delete_area(%Area{} = area) do
+    Repo.delete(area)
+  end
 
 
   # Country

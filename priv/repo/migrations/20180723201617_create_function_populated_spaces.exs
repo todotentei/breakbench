@@ -17,8 +17,10 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionPopulatedSpaces do
           spc.id AS space_id,
           fgm.game_mode_id AS game_mode_id
         FROM spaces AS spc
+        INNER JOIN areas ON
+          spc.id = areas.space_id
         INNER JOIN fields AS fld ON
-          spc.id = fld.space_id
+          areas.id = fld.area_id
         INNER JOIN field_game_modes AS fgm ON
           fld.id = fgm.field_id
         INNER JOIN game_modes AS gmd ON

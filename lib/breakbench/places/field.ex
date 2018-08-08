@@ -7,14 +7,11 @@ defmodule Breakbench.Places.Field do
   schema "fields" do
     field :name, :string
 
-
-    belongs_to :space, Breakbench.Places.Space,
-      type: :string
-
+    belongs_to :area, Breakbench.Places.Area,
+      type: :binary_id
 
     has_many :closing_hours, Breakbench.Places.FieldClosingHour
     has_many :dynamic_pricings, Breakbench.Places.FieldDynamicPricing
-
 
     timestamps()
   end
@@ -22,7 +19,7 @@ defmodule Breakbench.Places.Field do
   @doc false
   def changeset(field, attrs) do
     field
-      |> cast(attrs, [:id, :name, :field_id])
-      |> validate_required([:id, :field_id])
+    |> cast(attrs, [:id, :name, :area_id])
+    |> validate_required([:id, :area_id])
   end
 end

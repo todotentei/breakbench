@@ -40,7 +40,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionFurthestQueuer do
             mmq.inserted_at,
             msd.distance
           LIMIT _number_of_players
-        ) _queuers
+        ) AS _queuers
         ORDER BY distance DESC
         LIMIT 1;
       END $$;

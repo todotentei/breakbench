@@ -2,14 +2,22 @@ defmodule Breakbench.FieldFactory do
   defmacro __using__ _ do
     quote do
       alias Breakbench.Places.{
-        Field, FieldClosingHour, FieldDynamicPricing, FieldGameMode
+        AffectedField, Field, FieldClosingHour, FieldDynamicPricing,
+        FieldGameMode
       }
+
+      def affected_field_factory do
+        %AffectedField{
+          field: build(:field),
+          affected: build(:field)
+        }
+      end
 
       def field_factory do
         %Field{
           id: sequence(:id, &"field-#{&1}"),
           name: "name",
-          space: build(:space),
+          area: build(:area),
           inserted_at: NaiveDateTime.utc_now,
           updated_at: NaiveDateTime.utc_now
         }
