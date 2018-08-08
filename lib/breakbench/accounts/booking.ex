@@ -7,10 +7,10 @@ defmodule Breakbench.Accounts.Booking do
     field :kickoff, :naive_datetime
     field :duration, :integer
 
-
     belongs_to :field, Breakbench.Places.Field,
       type: :string
-
+    belongs_to :game_mode, Breakbench.Activities.GameMode,
+      type: :binary_id
 
     timestamps()
   end
@@ -18,7 +18,7 @@ defmodule Breakbench.Accounts.Booking do
   @doc false
   def changeset(booking, attrs) do
     booking
-      |> cast(attrs, [:kickoff, :duration, :field_id])
-      |> validate_required([:kickoff, :duration, :field_id])
+    |> cast(attrs, [:kickoff, :duration, :field_id, :game_mode_id])
+    |> validate_required([:kickoff, :duration, :field_id, :game_mode_id])
   end
 end

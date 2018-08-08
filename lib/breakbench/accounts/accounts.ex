@@ -6,10 +6,12 @@ defmodule Breakbench.Accounts do
   import Ecto.Query, warn: false
   alias Breakbench.Repo
 
+  alias Breakbench.Accounts.{
+    Booking, Match, MatchMember, User
+  }
+
 
   # Booking
-
-  alias Breakbench.Accounts.Booking
 
   def list_bookings do
     Repo.all(Booking)
@@ -38,9 +40,49 @@ defmodule Breakbench.Accounts do
   end
 
 
-  # User
+  # Match
 
-  alias Breakbench.Accounts.User
+  def list_matches do
+    Repo.all Match
+  end
+
+  def get_match!(id) do
+    Repo.get! Match, id
+  end
+
+  def create_match(attrs \\ %{}) do
+    %Match{}
+    |> Match.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def delete_match(%Match{} = match) do
+    Repo.delete match
+  end
+
+
+  # Match Member
+
+  def list_match_members do
+    Repo.all MatchMember
+  end
+
+  def get_match_member!(id) do
+    Repo.get! MatchMember, id
+  end
+
+  def create_match_member(attrs \\ %{}) do
+    %MatchMember{}
+    |> MatchMember.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def delete_match_member(%MatchMember{} = match_member) do
+    Repo.delete match_member
+  end
+
+
+  # User
 
   def list_users do
     Repo.all(User)
