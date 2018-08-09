@@ -11,6 +11,9 @@ defmodule Breakbench.Accounts.Booking do
       type: :string
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id
+    belongs_to :user_id, Breakbench.Accounts.User
+    belongs_to :match_id, Breakbench.Accounts.Match,
+      type: :binary_id
 
     timestamps()
   end
@@ -18,7 +21,7 @@ defmodule Breakbench.Accounts.Booking do
   @doc false
   def changeset(booking, attrs) do
     booking
-    |> cast(attrs, [:kickoff, :duration, :field_id, :game_mode_id])
+    |> cast(attrs, [:kickoff, :duration, :field_id, :game_mode_id, :user_id, :match_id])
     |> validate_required([:kickoff, :duration, :field_id, :game_mode_id])
   end
 end
