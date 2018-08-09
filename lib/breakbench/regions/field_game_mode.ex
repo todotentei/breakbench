@@ -1,10 +1,10 @@
-defmodule Breakbench.Places.FieldGameMode do
+defmodule Breakbench.Regions.FieldGameMode do
   use Ecto.Schema
   import Ecto.Changeset
 
 
   schema "field_game_modes" do
-    belongs_to :field, Breakbench.Places.Field,
+    belongs_to :field, Breakbench.Regions.Field,
       type: :string
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id

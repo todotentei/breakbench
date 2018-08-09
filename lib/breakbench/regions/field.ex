@@ -1,4 +1,4 @@
-defmodule Breakbench.Places.Field do
+defmodule Breakbench.Regions.Field do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,11 +7,11 @@ defmodule Breakbench.Places.Field do
   schema "fields" do
     field :name, :string
 
-    belongs_to :area, Breakbench.Places.Area,
+    belongs_to :area, Breakbench.Regions.Area,
       type: :binary_id
 
-    has_many :closing_hours, Breakbench.Places.FieldClosingHour
-    has_many :dynamic_pricings, Breakbench.Places.FieldDynamicPricing
+    has_many :closing_hours, Breakbench.Regions.FieldClosingHour
+    has_many :dynamic_pricings, Breakbench.Regions.FieldDynamicPricing
 
     timestamps()
   end

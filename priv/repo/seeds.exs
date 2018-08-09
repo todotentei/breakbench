@@ -12,7 +12,7 @@
 
 
 alias Breakbench.Repo
-alias Breakbench.{Places, Activities, Exchanges}
+alias Breakbench.{Regions, Activities, Exchanges}
 
 # Json file reader's helper
 read! = & __DIR__
@@ -22,8 +22,8 @@ read! = & __DIR__
 
 for {short_name, long_name} <- read!.("seeds/countries.json") do
   attrs = %{short_name: short_name, long_name: long_name}
-  Repo.get(Places.Country, short_name)
-    || Places.create_country(attrs)
+  Repo.get(Regions.Country, short_name)
+    || Regions.create_country(attrs)
 end
 
 for {type, sports} <- read!.("seeds/sports.json"), sport <- sports do

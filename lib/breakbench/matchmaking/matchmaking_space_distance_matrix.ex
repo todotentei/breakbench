@@ -9,7 +9,7 @@ defmodule Breakbench.Matchmaking.MatchmakingSpaceDistanceMatrix do
     field :duration, :integer
 
 
-    belongs_to :space, Breakbench.Places.Space,
+    belongs_to :space, Breakbench.Regions.Space,
       type: :string
     belongs_to :matchmaking_queue, Breakbench.Matchmaking.MatchmakingQueue,
       type: :binary_id

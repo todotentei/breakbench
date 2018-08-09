@@ -1,13 +1,13 @@
-defmodule Breakbench.Places do
+defmodule Breakbench.Regions do
   @moduledoc """
-  The Places context.
+  The Regions context.
   """
 
   import Ecto.Query, warn: false
   import Geo.PostGIS, warn: false
   alias Breakbench.Repo
 
-  alias Breakbench.Places.{
+  alias Breakbench.Regions.{
     Area, Country, Field, FieldClosingHour, FieldDynamicPricing, Space,
     SpaceOpeningHour
   }

@@ -1,4 +1,4 @@
-defmodule Breakbench.Places.Space do
+defmodule Breakbench.Regions.Space do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -19,7 +19,7 @@ defmodule Breakbench.Places.Space do
     belongs_to :owner, Breakbench.Accounts.User,
       on_replace: :nilify
 
-    has_many :opening_hours, Breakbench.Places.SpaceOpeningHour
+    has_many :opening_hours, Breakbench.Regions.SpaceOpeningHour
 
     timestamps()
   end

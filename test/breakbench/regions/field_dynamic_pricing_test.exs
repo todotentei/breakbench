@@ -1,9 +1,9 @@
-defmodule Breakbench.Field.DynamicPricingTest do
+defmodule Breakbench.FieldDynamicPricingTest do
   use Breakbench.DataCase
   import Breakbench.Factory
 
-  alias Breakbench.{Places, Timesheets}
-  alias Breakbench.Places.FieldDynamicPricing
+  alias Breakbench.{Regions, Timesheets}
+  alias Breakbench.Regions.FieldDynamicPricing
 
 
   describe "field_dynamic_pricings validation" do
@@ -25,7 +25,7 @@ defmodule Breakbench.Field.DynamicPricingTest do
       {:ok, time_block} = Timesheets.create_time_block(@valid_time_block)
       fdp_attrs = %{time_block_id: time_block.id, field_id: context[:field].id, price: 1000}
 
-      assert {:ok, %FieldDynamicPricing{}} = Places.create_field_dynamic_pricing(fdp_attrs)
+      assert {:ok, %FieldDynamicPricing{}} = Regions.create_field_dynamic_pricing(fdp_attrs)
     end
 
 
@@ -36,14 +36,14 @@ defmodule Breakbench.Field.DynamicPricingTest do
       {:ok, time_block} = Timesheets.create_time_block(@invalid_time_block)
       fdp_attrs = %{time_block_id: time_block.id, field_id: context[:field].id, price: 2000}
 
-      assert {:ok, %FieldDynamicPricing{}} = Places.create_field_dynamic_pricing(fdp_attrs)
+      assert {:ok, %FieldDynamicPricing{}} = Regions.create_field_dynamic_pricing(fdp_attrs)
     end
 
     test "not unique time_block raises postgrex error", context do
       {:ok, time_block} = Timesheets.create_time_block(@invalid_time_block)
       fdp_attrs = %{time_block_id: time_block.id, field_id: context[:field].id, price: 1000}
 
-      assert_raise Postgrex.Error, fn -> Places.create_field_dynamic_pricing(fdp_attrs) end
+      assert_raise Postgrex.Error, fn -> Regions.create_field_dynamic_pricing(fdp_attrs) end
     end
   end
 
@@ -72,13 +72,13 @@ defmodule Breakbench.Field.DynamicPricingTest do
     test "insert/2 merges all overlapped time_blocks", context do
       DynamicPricing.insert(context[:field], 1000, @new_time_block)
 
-      assert_raise Ecto.NoResultsError, fn -> Places.get_field_dynamic_pricing!(context[:time_block1].id) end
-      assert_raise Ecto.NoResultsError, fn -> Places.get_field_dynamic_pricing!(context[:time_block2].id) end
+      assert_raise Ecto.NoResultsError, fn -> Regions.get_field_dynamic_pricing!(context[:time_block1].id) end
+      assert_raise Ecto.NoResultsError, fn -> Regions.get_field_dynamic_pricing!(context[:time_block2].id) end
 
       assert_raise Ecto.NoResultsError, fn -> Timesheets.get_time_block!(context[:time_block1].id) end
       assert_raise Ecto.NoResultsError, fn -> Timesheets.get_time_block!(context[:time_block2].id) end
 
-      field_dynamic_pricings = Places.list_field_dynamic_pricings()
+      field_dynamic_pricings = Regions.list_field_dynamic_pricings()
         |> Repo.preload(:time_block)
       assert Enum.all? field_dynamic_pricings, fn %{time_block: time_block} ->
         time_block.day_of_week == 1 and

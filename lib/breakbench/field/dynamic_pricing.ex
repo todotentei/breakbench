@@ -1,8 +1,8 @@
 defmodule Breakbench.Field.DynamicPricing do
   @moduledoc false
 
-  alias Breakbench.{Repo, Places, Timesheets}
-  alias Breakbench.Places.Field
+  alias Breakbench.{Repo, Regions, Timesheets}
+  alias Breakbench.Regions.Field
   alias Breakbench.Timesheets.TimeBlock
   alias Breakbench.TimeBlock.{
     Arrange, ArrangeState
@@ -13,7 +13,7 @@ defmodule Breakbench.Field.DynamicPricing do
 
   def insert(%Field{} = field, price, new_time_block) do
     # Overlap time block
-    dynamic_pricings = Places.overlap_field_dynamic_pricings(field, price, new_time_block)
+    dynamic_pricings = Regions.overlap_field_dynamic_pricings(field, price, new_time_block)
     time_blocks = Enum.map dynamic_pricings, fn dynamic_pricing ->
       dynamic_pricing
         |> Ecto.assoc(:time_block)
@@ -40,7 +40,7 @@ defmodule Breakbench.Field.DynamicPricing do
       Enum.each insert_state, fn insert_attrs ->
         with {:ok, time_block} <- Timesheets.create_time_block(insert_attrs) do
           fch_attrs = %{time_block_id: time_block.id, field_id: field.id, price: price}
-          Places.create_field_dynamic_pricing(fch_attrs)
+          Regions.create_field_dynamic_pricing(fch_attrs)
         end
       end
     end

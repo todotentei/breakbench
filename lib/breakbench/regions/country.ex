@@ -1,4 +1,4 @@
-defmodule Breakbench.Places.Country do
+defmodule Breakbench.Regions.Country do
   use Ecto.Schema
   import Ecto.Changeset
 

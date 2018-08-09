@@ -7,7 +7,7 @@ defmodule Breakbench.MatchmakingJob.RadiusBuilder do
     Repo, MathHelper
   }
 
-  alias Breakbench.Places.Space
+  alias Breakbench.Regions.Space
   alias Breakbench.Matchmaking.MatchmakingQueue
 
   import Ecto.Query

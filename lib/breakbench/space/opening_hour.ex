@@ -2,8 +2,8 @@ defmodule Breakbench.Space.OpeningHour do
   @moduledoc false
 
   alias Breakbench.Repo
-  alias Breakbench.{Places, Timesheets}
-  alias Breakbench.Places.Space
+  alias Breakbench.{Regions, Timesheets}
+  alias Breakbench.Regions.Space
   alias Breakbench.Timesheets.TimeBlock
   alias Breakbench.TimeBlock.{
     Arrange, ArrangeState
@@ -14,7 +14,7 @@ defmodule Breakbench.Space.OpeningHour do
 
   def insert(%Space{} = space, new_time_block) do
     # Get current time blocks that overlap with new_time_block
-    opening_hours = Places.overlap_space_opening_hours(space, new_time_block)
+    opening_hours = Regions.overlap_space_opening_hours(space, new_time_block)
     time_blocks = Enum.map(opening_hours, fn opening_hour ->
       opening_hour
         |> Ecto.assoc(:time_block)
@@ -42,7 +42,7 @@ defmodule Breakbench.Space.OpeningHour do
       for insert_attrs <- insert_state do
         with {:ok, time_block} = Timesheets.create_time_block(insert_attrs) do
           sop_attrs = %{time_block_id: time_block.id, space_id: space.id}
-          Places.create_space_opening_hour(sop_attrs)
+          Regions.create_space_opening_hour(sop_attrs)
         end
       end
     end

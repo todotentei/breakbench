@@ -8,7 +8,7 @@ defmodule Breakbench.Matchmaking do
   alias Breakbench.Repo
 
   alias Breakbench.Activities.GameMode
-  alias Breakbench.Places.Space
+  alias Breakbench.Regions.Space
   alias Breakbench.Matchmaking.{
     MatchmakingAvailabilityMode, MatchmakingGameMode, MatchmakingQueue,
     MatchmakingRule, MatchmakingSpaceDistanceMatrix, MatchmakingTravelMode
