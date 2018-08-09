@@ -13,6 +13,7 @@ defmodule Breakbench.Accounts.User do
     field :profile, :string
     field :password_hash, :string
     field :password, :string, virtual: true
+    field :stripe_customer, :string
 
     timestamps()
   end
@@ -30,7 +31,7 @@ defmodule Breakbench.Accounts.User do
   def changeset(struct, attrs) do
     struct
       |> cast(attrs, [:full_name, :given_name, :email, :date_of_birth, :gender,
-         :username, :profile])
+         :username, :profile, :stripe_customer])
       |> validate_required([:email, :username])
       |> validate_length(:username, min: 1, max: 20)
       |> unique_constraint(:username)

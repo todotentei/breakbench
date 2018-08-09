@@ -12,16 +12,14 @@ defmodule Breakbench.Places.Space do
     field :address, :string
     field :geom, Geo.PostGIS.Geometry
     field :timezone, :string
-
+    field :stripe_account, :string
 
     belongs_to :currency, Breakbench.Exchanges.Currency,
       type: :string, foreign_key: :currency_code, references: :code, on_replace: :nilify
     belongs_to :owner, Breakbench.Accounts.User,
       on_replace: :nilify
 
-
     has_many :opening_hours, Breakbench.Places.SpaceOpeningHour
-
 
     timestamps()
   end
@@ -30,7 +28,7 @@ defmodule Breakbench.Places.Space do
   def changeset(space, attrs) do
     space
     |> cast(attrs, [:id, :owner_id, :currency_code, :phone, :email, :website,
-       :about, :address, :geom, :timezone])
+       :about, :address, :geom, :timezone, :stripe_account])
     |> validate_required([:id])
   end
 end
