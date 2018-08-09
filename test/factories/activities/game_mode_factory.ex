@@ -1,4 +1,4 @@
-defmodule Breakbench.GameModeFactory do
+defmodule Breakbench.Activities.GameModeFactory do
   defmacro __using__ _ do
     quote do
       alias Breakbench.Activities.GameMode

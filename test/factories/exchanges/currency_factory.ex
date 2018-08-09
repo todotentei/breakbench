@@ -1,4 +1,4 @@
-defmodule Breakbench.CurrencyFactory do
+defmodule Breakbench.Exchanges.CurrencyFactory do
   defmacro __using__ _ do
     quote do
       alias Breakbench.Exchanges.Currency

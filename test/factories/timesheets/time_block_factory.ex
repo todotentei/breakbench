@@ -1,4 +1,4 @@
-defmodule Breakbench.TimeBlockFactory do
+defmodule Breakbench.Timesheets.TimeBlockFactory do
   defmacro __using__ _ do
     quote do
       alias Breakbench.Timesheets.TimeBlock

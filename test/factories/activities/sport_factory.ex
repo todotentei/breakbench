@@ -1,4 +1,4 @@
-defmodule Breakbench.SportFactory do
+defmodule Breakbench.Activities.SportFactory do
   defmacro __using__ _ do
     quote do
       alias Breakbench.Activities.Sport

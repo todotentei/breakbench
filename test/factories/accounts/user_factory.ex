@@ -1,4 +1,4 @@
-defmodule Breakbench.UserFactory do
+defmodule Breakbench.Accounts.UserFactory do
   defmacro __using__ _ do
     quote do
       alias Breakbench.Accounts.User
