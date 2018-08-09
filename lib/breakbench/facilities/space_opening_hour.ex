@@ -1,4 +1,4 @@
-defmodule Breakbench.Regions.SpaceOpeningHour do
+defmodule Breakbench.Facilities.SpaceOpeningHour do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule Breakbench.Regions.SpaceOpeningHour do
   schema "space_opening_hours" do
     belongs_to :time_block, Breakbench.Timesheets.TimeBlock,
       primary_key: true, type: :binary_id
-    belongs_to :space, Breakbench.Regions.Space,
+    belongs_to :space, Breakbench.Facilities.Space,
       type: :string
   end
 

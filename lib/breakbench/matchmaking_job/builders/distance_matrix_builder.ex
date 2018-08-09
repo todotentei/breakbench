@@ -2,7 +2,7 @@ defmodule Breakbench.MatchmakingJob.DistanceMatrixBuilder do
   @moduledoc false
 
   alias Breakbench.Repo
-  alias Breakbench.Regions
+  alias Breakbench.Facilities
   alias Breakbench.GeoHelper
 
   alias Breakbench.Matchmaking.MatchmakingQueue
@@ -13,7 +13,7 @@ defmodule Breakbench.MatchmakingJob.DistanceMatrixBuilder do
     rule = assoc_rule(queue)
 
     # Nearby spaces
-    spaces = Regions.list_spaces(queue.geom, queue.radius)
+    spaces = Facilities.list_spaces(queue.geom, queue.radius)
 
     # Use geom as origin and spaces as destinations
     origin = GeoHelper.point_to_latlng(queue.geom)

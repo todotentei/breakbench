@@ -7,7 +7,7 @@ defmodule Breakbench.Accounts.Booking do
     field :kickoff, :naive_datetime
     field :duration, :integer
 
-    belongs_to :field, Breakbench.Regions.Field,
+    belongs_to :field, Breakbench.Facilities.Field,
       type: :string
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id

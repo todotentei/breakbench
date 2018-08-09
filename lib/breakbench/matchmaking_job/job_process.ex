@@ -1,7 +1,7 @@
 defmodule Breakbench.MatchmakingJob.JobProcess do
   @moduledoc false
 
-  alias Breakbench.Regions.Space
+  alias Breakbench.Facilities.Space
   alias Breakbench.Activities.GameMode
 
 

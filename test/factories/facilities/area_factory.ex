@@ -1,7 +1,7 @@
-defmodule Breakbench.AreaFactory do
+defmodule Breakbench.Facilities.AreaFactory do
   defmacro __using__ _ do
     quote do
-      alias Breakbench.Regions.{
+      alias Breakbench.Facilities.{
         Area, AreaClosingHour
       }
 

@@ -1,7 +1,7 @@
-defmodule Breakbench.SpaceFactory do
+defmodule Breakbench.Facilities.SpaceFactory do
   defmacro __using__ _ do
     quote do
-      alias Breakbench.Regions.{Space, SpaceOpeningHour}
+      alias Breakbench.Facilities.{Space, SpaceOpeningHour}
 
       def space_factory do
         %Space{

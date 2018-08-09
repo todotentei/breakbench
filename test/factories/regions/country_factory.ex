@@ -1,4 +1,4 @@
-defmodule Breakbench.CountryFactory do
+defmodule Breakbench.Regions.CountryFactory do
   defmacro __using__ _ do
     quote do
       alias Breakbench.Regions.Country

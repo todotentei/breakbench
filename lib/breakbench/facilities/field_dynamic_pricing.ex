@@ -1,4 +1,4 @@
-defmodule Breakbench.Regions.FieldDynamicPricing do
+defmodule Breakbench.Facilities.FieldDynamicPricing do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -10,7 +10,7 @@ defmodule Breakbench.Regions.FieldDynamicPricing do
 
     belongs_to :time_block, Breakbench.Timesheets.TimeBlock,
       primary_key: :true, type: :binary_id
-    belongs_to :field, Breakbench.Regions.Field,
+    belongs_to :field, Breakbench.Facilities.Field,
       type: :string
   end
 

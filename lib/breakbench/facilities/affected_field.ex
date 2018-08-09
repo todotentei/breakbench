@@ -1,13 +1,13 @@
-defmodule Breakbench.Regions.AffectedField do
+defmodule Breakbench.Facilities.AffectedField do
   use Ecto.Schema
   import Ecto.Changeset
 
 
   @primary_key false
   schema "affected_fields" do
-    belongs_to :field, Breakbench.Regions.Field,
+    belongs_to :field, Breakbench.Facilities.Field,
       type: :string, primary_key: true
-    belongs_to :affected, Breakbench.Regions.Field,
+    belongs_to :affected, Breakbench.Facilities.Field,
       type: :string, primary_key: true
   end
 

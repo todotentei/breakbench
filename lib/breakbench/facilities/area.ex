@@ -1,4 +1,4 @@
-defmodule Breakbench.Regions.Area do
+defmodule Breakbench.Facilities.Area do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,7 +6,7 @@ defmodule Breakbench.Regions.Area do
   @derive {Phoenix.Param, key: :id}
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "areas" do
-    belongs_to :space, Breakbench.Regions.Space,
+    belongs_to :space, Breakbench.Facilities.Space,
       type: :string
   end
 

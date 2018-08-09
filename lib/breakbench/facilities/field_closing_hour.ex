@@ -1,4 +1,4 @@
-defmodule Breakbench.Regions.FieldClosingHour do
+defmodule Breakbench.Facilities.FieldClosingHour do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule Breakbench.Regions.FieldClosingHour do
   schema "field_closing_hours" do
     belongs_to :time_block, Breakbench.Timesheets.TimeBlock,
       primary_key: :true, type: :binary_id
-    belongs_to :field, Breakbench.Regions.Field,
+    belongs_to :field, Breakbench.Facilities.Field,
       type: :string
   end
 

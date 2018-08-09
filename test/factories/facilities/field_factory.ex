@@ -1,7 +1,7 @@
-defmodule Breakbench.FieldFactory do
+defmodule Breakbench.Facilities.FieldFactory do
   defmacro __using__ _ do
     quote do
-      alias Breakbench.Regions.{
+      alias Breakbench.Facilities.{
         AffectedField, Field, FieldClosingHour, FieldDynamicPricing,
         FieldGameMode
       }

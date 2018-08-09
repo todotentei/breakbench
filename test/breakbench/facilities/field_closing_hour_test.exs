@@ -1,9 +1,9 @@
-defmodule Breakbench.FieldClosingHourTest do
+defmodule Breakbench.Facilities.FieldClosingHourTest do
   use Breakbench.DataCase
   import Breakbench.Factory
 
-  alias Breakbench.{Regions, Timesheets}
-  alias Breakbench.Regions.FieldClosingHour
+  alias Breakbench.{Facilities, Timesheets}
+  alias Breakbench.Facilities.FieldClosingHour
 
 
   describe "field_closing_hours validation" do
@@ -25,7 +25,7 @@ defmodule Breakbench.FieldClosingHourTest do
       {:ok, time_block} = Timesheets.create_time_block(@valid_time_block)
       fch_attrs = %{time_block_id: time_block.id, field_id: context[:field].id}
 
-      assert {:ok, %FieldClosingHour{}} = Regions.create_field_closing_hour(fch_attrs)
+      assert {:ok, %FieldClosingHour{}} = Facilities.create_field_closing_hour(fch_attrs)
     end
 
 
@@ -36,7 +36,7 @@ defmodule Breakbench.FieldClosingHourTest do
       {:ok, time_block} = Timesheets.create_time_block(@invalid_time_block)
       fch_attrs = %{time_block_id: time_block.id, field_id: context[:field].id}
 
-      assert_raise Postgrex.Error, fn -> Regions.create_field_closing_hour(fch_attrs) end
+      assert_raise Postgrex.Error, fn -> Facilities.create_field_closing_hour(fch_attrs) end
     end
   end
 
@@ -65,13 +65,13 @@ defmodule Breakbench.FieldClosingHourTest do
     test "insert/2 merges all overlapped time_blocks", context do
       ClosingHour.insert(context[:field], @new_time_block)
 
-      assert_raise Ecto.NoResultsError, fn -> Regions.get_field_closing_hour!(context[:time_block1].id) end
-      assert_raise Ecto.NoResultsError, fn -> Regions.get_field_closing_hour!(context[:time_block2].id) end
+      assert_raise Ecto.NoResultsError, fn -> Facilities.get_field_closing_hour!(context[:time_block1].id) end
+      assert_raise Ecto.NoResultsError, fn -> Facilities.get_field_closing_hour!(context[:time_block2].id) end
 
       assert_raise Ecto.NoResultsError, fn -> Timesheets.get_time_block!(context[:time_block1].id) end
       assert_raise Ecto.NoResultsError, fn -> Timesheets.get_time_block!(context[:time_block2].id) end
 
-      field_closing_hours = Regions.list_field_closing_hours()
+      field_closing_hours = Facilities.list_field_closing_hours()
         |> Repo.preload(:time_block)
       assert Enum.all? field_closing_hours, fn %{time_block: time_block} ->
         time_block.day_of_week == 1 and

@@ -1,26 +1,24 @@
-defmodule Breakbench.Regions do
-  @moduledoc """
-  The Regions context.
-  """
+defmodule Breakbench.Facilities do
+  @moduledoc "The Facilities context"
 
   import Ecto.Query, warn: false
   import Geo.PostGIS, warn: false
   alias Breakbench.Repo
 
-  alias Breakbench.Regions.{
-    Area, Country, Field, FieldClosingHour, FieldDynamicPricing, Space,
+  alias Breakbench.Facilities.{
+    Area, Field, FieldClosingHour, FieldDynamicPricing, Space,
     SpaceOpeningHour
   }
 
 
-  # Area
+  ## Area
 
   def list_areas do
-    Repo.all(Area)
+    Repo.all Area
   end
 
   def get_area!(id) do
-    Repo.get!(Area, id)
+    Repo.get! Area, id
   end
 
   def create_area(attrs \\ %{}) do
@@ -30,55 +28,34 @@ defmodule Breakbench.Regions do
   end
 
   def delete_area(%Area{} = area) do
-    Repo.delete(area)
-  end
-
-
-  # Country
-
-  def list_countries do
-    Repo.all(Country)
-  end
-
-  def get_country!(short_name) do
-    Repo.get!(Country, short_name)
-  end
-
-  def create_country(attrs \\ %{}) do
-    %Country{}
-      |> Country.changeset(attrs)
-      |> Repo.insert()
-  end
-
-  def delete_country(%Country{} = country) do
-    Repo.delete(country)
+    Repo.delete area
   end
 
 
   ## Field
 
   def list_fields do
-    Repo.all(Field)
+    Repo.all Field
   end
 
   def list_field_closing_hours do
-    Repo.all(FieldClosingHour)
+    Repo.all FieldClosingHour
   end
 
   def list_field_dynamic_pricings do
-    Repo.all(FieldDynamicPricing)
+    Repo.all FieldDynamicPricing
   end
 
   def get_field!(id) do
-    Repo.get!(Field, id)
+    Repo.get! Field, id
   end
 
   def get_field_closing_hour!(id) do
-    Repo.get!(FieldClosingHour, id)
+    Repo.get! FieldClosingHour, id
   end
 
   def get_field_dynamic_pricing!(id) do
-    Repo.get!(FieldDynamicPricing, id)
+    Repo.get! FieldDynamicPricing, id
   end
 
   def create_field(attrs \\ %{}) do
@@ -118,7 +95,7 @@ defmodule Breakbench.Regions do
   ## Space
 
   def list_spaces do
-    Repo.all(Space)
+    Repo.all Space
   end
 
   def list_spaces(%Geo.Point{} = point, radius) do
@@ -129,15 +106,15 @@ defmodule Breakbench.Regions do
   end
 
   def list_space_opening_hours do
-    Repo.all(SpaceOpeningHour)
+    Repo.all SpaceOpeningHour
   end
 
   def get_space!(id) do
-    Repo.get!(Space, id)
+    Repo.get! Space, id
   end
 
   def get_space_opening_hour!(id) do
-    Repo.get!(SpaceOpeningHour, id)
+    Repo.get! SpaceOpeningHour, id
   end
 
   def create_space(attrs \\ %{}) do
@@ -159,15 +136,15 @@ defmodule Breakbench.Regions do
   end
 
   def delete_space(%Space{} = space) do
-    Repo.delete(space)
+    Repo.delete space
   end
 
   def change_space(%Space{} = space) do
-    Space.changeset(space, %{})
+    Space.changeset space, %{}
   end
 
   def change_space_opening_hour(%SpaceOpeningHour{} = space_opening_hour) do
-    SpaceOpeningHour.changeset(space_opening_hour, %{})
+    SpaceOpeningHour.changeset space_opening_hour, %{}
   end
 
   def overlap_space_opening_hours(%Space{} = space, attrs) do

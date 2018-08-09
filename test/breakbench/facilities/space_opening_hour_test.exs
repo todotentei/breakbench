@@ -1,9 +1,9 @@
-defmodule Breakbench.SpaceOpeningHourTest do
+defmodule Breakbench.Facilities.SpaceOpeningHourTest do
   use Breakbench.DataCase
   import Breakbench.Factory
 
-  alias Breakbench.{Regions, Timesheets}
-  alias Breakbench.Regions.SpaceOpeningHour
+  alias Breakbench.{Facilities, Timesheets}
+  alias Breakbench.Facilities.SpaceOpeningHour
 
 
   describe "space_opening_hours validation" do
@@ -25,7 +25,7 @@ defmodule Breakbench.SpaceOpeningHourTest do
       {:ok, time_block} = Timesheets.create_time_block(@valid_time_block)
       sop_attrs = %{time_block_id: time_block.id, space_id: context[:space].id}
 
-      assert {:ok, %SpaceOpeningHour{}} = Regions.create_space_opening_hour(sop_attrs)
+      assert {:ok, %SpaceOpeningHour{}} = Facilities.create_space_opening_hour(sop_attrs)
     end
 
 
@@ -36,7 +36,7 @@ defmodule Breakbench.SpaceOpeningHourTest do
       {:ok, time_block} = Timesheets.create_time_block(@invalid_time_block)
       sop_attrs = %{time_block_id: time_block.id, space_id: context[:space].id}
 
-      assert_raise Postgrex.Error, fn -> Regions.create_space_opening_hour(sop_attrs) end
+      assert_raise Postgrex.Error, fn -> Facilities.create_space_opening_hour(sop_attrs) end
     end
   end
 
@@ -65,13 +65,13 @@ defmodule Breakbench.SpaceOpeningHourTest do
     test "insert/2 merges all overlappings", context do
       OpeningHour.insert(context[:space], @new_time_block)
 
-      assert_raise Ecto.NoResultsError, fn -> Regions.get_space_opening_hour!(context[:time_block1].id) end
-      assert_raise Ecto.NoResultsError, fn -> Regions.get_space_opening_hour!(context[:time_block2].id) end
+      assert_raise Ecto.NoResultsError, fn -> Facilities.get_space_opening_hour!(context[:time_block1].id) end
+      assert_raise Ecto.NoResultsError, fn -> Facilities.get_space_opening_hour!(context[:time_block2].id) end
 
       assert_raise Ecto.NoResultsError, fn -> Timesheets.get_time_block!(context[:time_block1].id) end
       assert_raise Ecto.NoResultsError, fn -> Timesheets.get_time_block!(context[:time_block2].id) end
 
-      space_opening_hours = Repo.preload(Regions.list_space_opening_hours(), :time_block)
+      space_opening_hours = Repo.preload(Facilities.list_space_opening_hours(), :time_block)
       assert Enum.all? space_opening_hours, fn %{time_block: time_block} ->
         time_block.day_of_week == 1 and
         time_eq(time_block.start_time, 3600) and

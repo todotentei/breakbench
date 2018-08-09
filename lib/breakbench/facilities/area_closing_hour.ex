@@ -1,4 +1,4 @@
-defmodule Breakbench.Regions.AreaClosingHour do
+defmodule Breakbench.Facilities.AreaClosingHour do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule Breakbench.Regions.AreaClosingHour do
   schema "area_closing_hours" do
     belongs_to :time_block, Breakbench.Timesheets.TimeBlock,
       primary_key: true, type: :binary_id
-    belongs_to :area, Breakbench.Regions.Area,
+    belongs_to :area, Breakbench.Facilities.Area,
       type: :binary_id
   end
 
