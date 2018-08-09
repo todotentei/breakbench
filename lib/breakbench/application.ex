@@ -12,8 +12,6 @@ defmodule Breakbench.Application do
       supervisor(Verk.Supervisor, []),
       # Start the Ecto repository
       supervisor(Breakbench.Repo, []),
-      # Start the Stripe module
-      supervisor(Breakbench.Stripe, []),
       # Start the TimeBlock module
       supervisor(Breakbench.TimeBlock, []),
       # Start the Matchmaking Queue module

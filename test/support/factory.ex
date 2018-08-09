@@ -11,7 +11,6 @@ defmodule Breakbench.Factory do
   use Breakbench.MatchmakingFactory
   use Breakbench.SpaceFactory
   use Breakbench.SportFactory
-  use Breakbench.StripeFactory
   use Breakbench.TimeBlockFactory
   use Breakbench.UserFactory
 end
