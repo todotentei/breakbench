@@ -11,8 +11,8 @@ defmodule Breakbench.Accounts.Booking do
       type: :string
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id
-    belongs_to :user_id, Breakbench.Accounts.User
-    belongs_to :match_id, Breakbench.Accounts.Match,
+    belongs_to :user, Breakbench.Accounts.User
+    belongs_to :match, Breakbench.Accounts.Match,
       type: :binary_id
 
     timestamps()
