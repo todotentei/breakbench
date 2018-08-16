@@ -1,23 +1,23 @@
-defmodule Breakbench.MatchmakingJob.DistanceMatrixBuilder do
+defmodule Breakbench.MMOperator.DistanceMatrixBuilder do
   @moduledoc false
 
   alias Breakbench.Repo
   alias Breakbench.Facilities
   alias Breakbench.GeoHelper
 
-  alias Breakbench.Matchmaking.MatchmakingQueue
+  alias Breakbench.Matchmaking.MatchmakingQueue, as: Queue
 
 
-  def build(%MatchmakingQueue{} = queue) do
+  def build(%Queue{} = queue) do
     # Associated rule
     rule = assoc_rule(queue)
 
     # Nearby spaces
-    spaces = Facilities.list_spaces(queue.geom, queue.radius)
+    spaces = Facilities.list_spaces(queue.geom, rule.radius)
 
     # Use geom as origin and spaces as destinations
-    origin = GeoHelper.point_to_latlng(queue.geom)
-    destinations = Enum.map(spaces, &GeoHelper.point_to_latlng(&1.geom))
+    origin = GeoHelper.to_string(queue.geom)
+    destinations = Enum.map(spaces, &GeoHelper.to_string(&1.geom))
     matrix_params = %{
       mode: rule.travel_mode_type,
       origins: origin,
@@ -32,9 +32,9 @@ defmodule Breakbench.MatchmakingJob.DistanceMatrixBuilder do
     # Filter out element that has no results
     # Then, map it into space distance matrix attrs
     [spaces, elements]
-      |> Enum.zip()
-      |> Enum.filter(fn {_, %{status: status}} -> status == "OK" end)
-      |> Enum.map(&space_distance_matrix_attrs(queue, &1))
+    |> Enum.zip()
+    |> Enum.filter(fn {_, %{status: status}} -> status == "OK" end)
+    |> Enum.map(&space_distance_matrix_attrs(queue, &1))
   end
 
 
@@ -51,7 +51,7 @@ defmodule Breakbench.MatchmakingJob.DistanceMatrixBuilder do
 
   defp assoc_rule(queue) do
     queue
-      |> Ecto.assoc(:rule)
-      |> Repo.one
+    |> Ecto.assoc(:rule)
+    |> Repo.one
   end
 end

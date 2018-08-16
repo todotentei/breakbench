@@ -6,7 +6,6 @@ defmodule Breakbench.Repo.Migrations.CreateMatchmakingQueues do
       add :id, :uuid, primary_key: true
       add :geom, :"geometry(point,4326)"
       add :status, :string
-      add :radius, :integer
       add :lock_version, :integer, default: 1
 
       timestamps()

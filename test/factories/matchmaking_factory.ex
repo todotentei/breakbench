@@ -31,8 +31,8 @@ defmodule Breakbench.MatchmakingFactory do
             srid: 4326
           },
           rule: build(:matchmaking_rule),
-          radius: sequence(:radius, [500, 1000, 2000]),
           status: "queued",
+          user: build(:user),
           inserted_at: NaiveDateTime.utc_now,
           updated_at: NaiveDateTime.utc_now
         }
@@ -42,8 +42,7 @@ defmodule Breakbench.MatchmakingFactory do
         %MatchmakingRule{
           travel_mode: build(:matchmaking_travel_mode),
           availability_mode: build(:matchmaking_availability_mode),
-          max_radius: sequence(:max_radius, [1000, 2000]),
-          radius_expansion_rate: 500
+          radius: sequence(:radius, [1000, 2000, 3000])
         }
       end
 

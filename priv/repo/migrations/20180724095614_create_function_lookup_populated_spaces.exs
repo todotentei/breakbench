@@ -1,9 +1,9 @@
-defmodule Breakbench.Repo.Migrations.CreateFunctionMatchLookup do
+defmodule Breakbench.Repo.Migrations.CreateFunctionLookupPopulatedSpaces do
   use Ecto.Migration
 
   def up do
     execute """
-      CREATE OR REPLACE FUNCTION match_lookup (
+      CREATE OR REPLACE FUNCTION lookup_populated_spaces (
         _geom geometry(Point,4326),
         _radius INTEGER
       ) RETURNS VOID LANGUAGE PLPGSQL
@@ -19,13 +19,13 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionMatchLookup do
         INTO populated_spaces;
 
         IF populated_spaces IS NOT NULL THEN
-          PERFORM pg_notify('match', populated_spaces::TEXT);
+          PERFORM pg_notify('populated_spaces', populated_spaces::TEXT);
         END IF;
       END $$;
     """
   end
 
   def down do
-    execute "DROP FUNCTION match_lookup ( geometry, integer )"
+    execute "DROP FUNCTION lookup_populated_spaces ( geometry, integer )"
   end
 end

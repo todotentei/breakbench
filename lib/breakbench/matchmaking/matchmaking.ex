@@ -53,9 +53,9 @@ defmodule Breakbench.Matchmaking do
 
   def list_queues(%Space{} = space, %GameMode{} = game_mode) do
     from(MatchmakingQueue)
-      |> where([mmq], mmq.id in fragment("SELECT queuers(?, ?)",
-          ^space.id, type(^game_mode.id, :binary_id)))
-      |> Repo.all
+    |> where([mmq], mmq.id in fragment("SELECT queuers(?, ?)",
+        ^space.id, type(^game_mode.id, :binary_id)))
+    |> Repo.all
   end
 
   def list_queue_game_modes(%MatchmakingQueue{} = matchmaking_queue) do

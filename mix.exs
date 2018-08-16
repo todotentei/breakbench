@@ -60,7 +60,9 @@ defmodule Breakbench.Mixfile do
       {:timex, "~> 3.1"},
       {:geo_postgis, "~> 2.0"},
       {:verk, "~> 1.0"},
-      {:flow, "~> 0.12"}
+      {:flow, "~> 0.12"},
+      {:benchee, "~> 0.11", only: :dev},
+      {:timex_ecto, "~> 3.0"}
     ]
   end
 

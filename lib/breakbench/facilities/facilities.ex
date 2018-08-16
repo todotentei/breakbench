@@ -9,6 +9,7 @@ defmodule Breakbench.Facilities do
     Area, Field, FieldClosingHour, FieldDynamicPricing, Space,
     SpaceOpeningHour
   }
+  alias Breakbench.Activities.GameMode
 
 
   ## Area
@@ -152,6 +153,9 @@ defmodule Breakbench.Facilities do
       |> Ecto.assoc(:opening_hours)
       |> time_block_overlap_query(attrs)
       |> Repo.all()
+  end
+
+  def next_availables(%Space{} = space, %GameMode{} = game_mode) do
   end
 
 

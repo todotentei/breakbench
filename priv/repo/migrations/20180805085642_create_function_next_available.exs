@@ -3,11 +3,10 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
 
   def up do
     execute """
-      CREATE OR REPLACE FUNCTION nextav (
+      CREATE OR REPLACE FUNCTION next_available(
         _space_id CHARACTER VARYING(255),
         _game_mode_id UUID,
-        _delay INTERVAL DEFAULT '15 MIN'::INTERVAL,
-        _margin INTERVAL DEFAULT '45 MIN'::INTERVAL
+        _searchrange tsrange
       ) RETURNS TABLE (
         field_id CHARACTER VARYING(255),
         available tsrange
@@ -27,12 +26,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
           FROM (
             SELECT
               fld.id AS _field_id,
-              -- now + the furthest queuer travel duration
-              UNNEST(opening_hours(fld.id, searchrange(
-                now() AT TIME ZONE spc.timezone + msd.duration * INTERVAL '1 SEC',
-                gmd.duration * INTERVAL '1 SEC',
-                _delay => _delay, _margin => _margin
-              ))) AS _opening_hour,
+              UNNEST(opening_hours(fld.id, _searchrange)) AS _opening_hour,
               gmd.duration * INTERVAL '1 SEC' AS _duration
             FROM spaces AS spc
             INNER JOIN areas ON
@@ -43,9 +37,6 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
               fld.id = fgm.field_id
             INNER JOIN game_modes AS gmd ON
               gmd.id = fgm.game_mode_id
-            FULL JOIN matchmaking_space_distance_matrices AS msd ON
-              msd.space_id = _space_id AND
-              msd.matchmaking_queue_id = furthest_queuer(_space_id, _game_mode_id)
             WHERE
               spc.id = _space_id AND
               gmd.id = _game_mode_id
@@ -102,6 +93,6 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
   end
 
   def down do
-    execute "DROP FUNCTION nextav ( CHARACTER VARYING, UUID, INTERVAL, INTERVAL )"
+    execute "DROP FUNCTION next_available ( CHARACTER VARYING, UUID, tsrange )"
   end
 end

@@ -11,28 +11,44 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionQueuers do
       ) LANGUAGE PLPGSQL
       AS $$
       BEGIN
-        RETURN QUERY SELECT DISTINCT ON (gmd.id, mmq.id)
-          gmd.id AS game_mode_id,
-          mmq.id AS matchmaking_queue_id
-        FROM matchmaking_queues AS mmq
-        RIGHT OUTER JOIN spaces AS spc ON
-          ST_DWithin(mmq.geom::geography, spc.geom::geography, mmq.radius)
-        INNER JOIN areas ON
-          spc.id = areas.space_id
-        INNER JOIN fields AS fld ON
-          areas.id = fld.area_id
-        RIGHT OUTER JOIN field_game_modes AS fgm ON
-          fld.id = fgm.field_id
-        RIGHT OUTER JOIN matchmaking_game_modes AS mgm ON
-          mmq.id = mgm.matchmaking_queue_id
-        INNER JOIN game_modes AS gmd ON
-          gmd.id = fgm.game_mode_id AND
-          gmd.id = mgm.game_mode_id
-        RIGHT OUTER JOIN matchmaking_space_distance_matrices AS msd ON
-          spc.id = msd.space_id AND
-          mmq.id = msd.matchmaking_queue_id
-        WHERE
-          spc.id = _space_id;
+        RETURN QUERY SELECT
+          _queuers.game_mode_id,
+          _queuers.matchmaking_queue_id
+        FROM (
+          WITH space_game_modes AS (
+            SELECT DISTINCT
+              fgm.game_mode_id AS id
+            FROM areas AS aaa
+            INNER JOIN fields AS fld ON
+              aaa.id = fld.area_id
+            INNER JOIN field_game_modes AS fgm ON
+              fld.id = fgm.field_id
+            WHERE aaa.space_id = _space_id
+          )
+          SELECT
+            sgm.id AS game_mode_id,
+            mmq.id AS matchmaking_queue_id
+          FROM spaces AS spc
+          LEFT OUTER JOIN matchmaking_queues AS mmq ON
+            ST_DWithin(spc.geom::geography, mmq.geom::geography, rle.radius)
+          INNER JOIN matchmaking_rules AS rle ON
+            rle.id = mmq.rule_id
+          INNER JOIN matchmaking_game_modes AS mgm ON
+            mmq.id = mgm.matchmaking_queue_id
+          INNER JOIN space_game_modes AS sgm ON
+            mgm.game_mode_id = sgm.id
+          RIGHT OUTER JOIN matchmaking_space_distance_matrices AS msd ON
+            spc.id = msd.space_id AND
+            mmq.id = msd.matchmaking_queue_id
+          WHERE
+            spc.id = _space_id AND
+            mmq.status = 'queued'
+          ORDER BY
+            CASE WHEN AGE(now() AT TIME ZONE 'UTC', mmq.inserted_at) > INTERVAL '5 MIN'
+            THEN 0 ELSE 1 END,
+            msd.duration,
+            mmq.inserted_at
+        ) _queuers;
       END $$;
     """
 

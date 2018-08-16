@@ -7,9 +7,7 @@ defmodule Breakbench.Matchmaking.MatchmakingRule do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "matchmaking_rules" do
-    field :max_radius, :integer
-    field :radius_expansion_rate, :integer
-
+    field :radius, :integer
 
     belongs_to :travel_mode, Breakbench.Matchmaking.MatchmakingTravelMode,
       type: :string, foreign_key: :travel_mode_type, references: :type
@@ -20,9 +18,7 @@ defmodule Breakbench.Matchmaking.MatchmakingRule do
   @doc false
   def changeset(rule, attrs) do
     rule
-      |> cast(attrs, [:max_radius, :radius_expansion_rate, :travel_mode_type,
-         :availability_mode_type])
-      |> validate_required([:max_radius, :radius_expansion_rate, :travel_mode_type,
-         :availability_mode_type])
+      |> cast(attrs, [:radius, :travel_mode_type, :availability_mode_type])
+      |> validate_required([:radius, :travel_mode_type, :availability_mode_type])
   end
 end

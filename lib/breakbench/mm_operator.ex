@@ -1,4 +1,6 @@
-defmodule Breakbench.MatchmakingJob do
+defmodule Breakbench.MMOperator do
+  @moduledoc "Matchmaking Operator"
+
   use Application
 
   import Supervisor.Spec
@@ -12,7 +14,7 @@ defmodule Breakbench.MatchmakingJob do
 
   def start_link do
     children = [
-      worker(Breakbench.MatchmakingJob.MatchListener, [])
+      worker(Breakbench.MMOperator.PopulatedSpacesListener, [])
     ]
 
     Supervisor.start_link(children, [

@@ -6,8 +6,7 @@ defmodule Breakbench.Repo.Migrations.CreateMatchmaking.Rules do
       add :id, :uuid, primary_key: true
       add :travel_mode_type, references(:matchmaking_travel_modes, column: :type, type: :citext)
       add :availability_mode_type, references(:matchmaking_availability_modes, column: :type, type: :citext)
-      add :max_radius, :integer
-      add :radius_expansion_rate, :integer
+      add :radius, :integer
     end
 
     create index(:matchmaking_rules, [:travel_mode_type])
