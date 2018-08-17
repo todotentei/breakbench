@@ -4,7 +4,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
   def up do
     execute """
       CREATE OR REPLACE FUNCTION opening_hours (
-        _field_id CHARACTER VARYING(255),
+        _game_area_id CHARACTER VARYING(255),
         _tsrange tsrange
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
@@ -37,8 +37,8 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
             FROM spaces AS spc
             INNER JOIN areas ON
               spc.id = areas.space_id
-            INNER JOIN fields AS fld ON
-              areas.id = fld.area_id
+            INNER JOIN game_areas AS gar ON
+              areas.id = gar.area_id
             INNER JOIN space_opening_hours AS soh ON
               spc.id = soh.space_id
             LEFT OUTER JOIN time_blocks AS tbk ON
@@ -48,7 +48,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
                 && int4range(tbk.start_time, tbk.end_time, '[)')
             WHERE
               tbk.day_of_week = _day_of_week AND
-              fld.id = _field_id
+              gar.id = _game_area_id
           LOOP
             _temp = ARRAY_APPEND(_temp, _opening_hour);
 
@@ -58,8 +58,8 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
               SELECT
                 int4range(tbk.start_time, tbk.end_time, '[)')
               FROM areas
-              INNER JOIN fields AS fld ON
-                areas.id = fld.area_id
+              INNER JOIN game_areas AS gar ON
+                areas.id = gar.area_id
               INNER JOIN area_closing_hours AS ach ON
                 areas.id = ach.area_id
               LEFT OUTER JOIN time_blocks AS tbk ON
@@ -68,22 +68,22 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
                 _opening_hour && int4range(tbk.start_time, tbk.end_time, '[)')
               WHERE
                 tbk.day_of_week = _day_of_week AND
-                fld.id = _field_id
+                gar.id = _game_area_id
 
               UNION
 
               SELECT
                 int4range(tbk.start_time, tbk.end_time, '[)')
-              FROM fields AS fld
-              INNER JOIN field_closing_hours AS fch ON
-                fld.id = fch.field_id
+              FROM game_areas AS gar
+              INNER JOIN game_area_closing_hours AS gac ON
+                gar.id = gac.game_area_id
               LEFT OUTER JOIN time_blocks AS tbk ON
-                tbk.id = fch.time_block_id AND
+                tbk.id = gac.time_block_id AND
                 _date <@ daterange(tbk.from_date, tbk.through_date, '[]') AND
                 _opening_hour && int4range(tbk.start_time, tbk.end_time, '[)')
               WHERE
                 tbk.day_of_week = _day_of_week AND
-                fld.id = _field_id
+                gar.id = _game_area_id
             ) AS _all_closing_hours;
 
             IF _closing_hours IS NOT NULL THEN
@@ -115,7 +115,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
 
     execute """
       CREATE OR REPLACE FUNCTION opening_hours (
-        _field_id CHARACTER VARYING(255),
+        _game_area_id CHARACTER VARYING(255),
         _date DATE
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
@@ -123,13 +123,13 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
         _tschunk tsrange;
       BEGIN
         _tschunk = tsrange(_date::DATE, (_date + INTERVAL '1 DAY')::DATE);
-        RETURN opening_hours(_field_id, _tschunk);
+        RETURN opening_hours(_game_area_id, _tschunk);
       END $$;
     """
 
     execute """
       CREATE OR REPLACE FUNCTION opening_hours (
-        _field_id CHARACTER VARYING(255),
+        _game_area_id CHARACTER VARYING(255),
         _repeat INTERVAL DEFAULT '1 DAY'::INTERVAL
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
@@ -137,7 +137,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
         _tschunk tsrange;
       BEGIN
         _tschunk = tsrange(now()::DATE, (now()::DATE + _repeat)::DATE);
-        RETURN opening_hours(_field_id, _tschunk);
+        RETURN opening_hours(_game_area_id, _tschunk);
       END $$;
     """
   end

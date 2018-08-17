@@ -1,8 +1,8 @@
-defmodule Breakbench.Repo.Migrations.CreateFields do
+defmodule Breakbench.Repo.Migrations.CreateGameAreas do
   use Ecto.Migration
 
   def change do
-    create table(:fields, primary_key: false) do
+    create table(:game_areas, primary_key: false) do
       add :id, :string, primary_key: true
       add :name, :string
       add :space_id, references(:spaces, on_delete: :delete_all, type: :string)
@@ -10,6 +10,6 @@ defmodule Breakbench.Repo.Migrations.CreateFields do
       timestamps()
     end
 
-    create index(:fields, [:space_id])
+    create index(:game_areas, [:space_id])
   end
 end

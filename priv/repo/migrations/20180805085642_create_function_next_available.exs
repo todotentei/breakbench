@@ -8,7 +8,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
         _game_mode_id UUID,
         _searchrange tsrange
       ) RETURNS TABLE (
-        field_id CHARACTER VARYING(255),
+        game_area_id CHARACTER VARYING(255),
         available tsrange
       ) LANGUAGE PLPGSQL
       AS $$
@@ -21,22 +21,22 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
       BEGIN
         FOR _opening_hours IN
           SELECT
-            _field_id AS field_id,
+            _game_area_id AS game_area_id,
             _opening_hour AS opening_hour
           FROM (
             SELECT
-              fld.id AS _field_id,
+              fld.id AS _game_area_id,
               UNNEST(opening_hours(fld.id, _searchrange)) AS _opening_hour,
               gmd.duration * INTERVAL '1 SEC' AS _duration
             FROM spaces AS spc
             INNER JOIN areas ON
               spc.id = areas.space_id
-            INNER JOIN fields AS fld ON
+            INNER JOIN game_areas AS fld ON
               areas.id = fld.area_id
-            INNER JOIN field_game_modes AS fgm ON
-              fld.id = fgm.field_id
+            INNER JOIN game_area_modes AS gam ON
+              fld.id = gam.game_area_id
             INNER JOIN game_modes AS gmd ON
-              gmd.id = fgm.game_mode_id
+              gmd.id = gam.game_mode_id
             WHERE
               spc.id = _space_id AND
               gmd.id = _game_mode_id
@@ -51,8 +51,8 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
             SELECT
               tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
             FROM bookings as bkg
-            INNER JOIN affected_fields(_opening_hours.field_id) as aff ON
-              bkg.field_id = aff.field_id AND
+            INNER JOIN affected_game_areas(_opening_hours.game_area_id) as aff ON
+              bkg.game_area_id = aff.game_area_id AND
               _opening_hours.opening_hour && tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
 
             UNION
@@ -61,7 +61,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
               tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
             FROM bookings AS bkg
             WHERE
-              bkg.field_id = _opening_hours.field_id AND
+              bkg.game_area_id = _opening_hours.game_area_id AND
               _opening_hours.opening_hour && tsrange(kickoff, kickoff + duration * INTERVAL '1 SEC', '[)')
           ) AS _bookings;
 
@@ -71,12 +71,12 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
 
           SELECT
             ARRAY_AGG(JSON_BUILD_OBJECT(
-              'field_id', _av.field_id,
+              'game_area_id', _av.game_area_id,
               'available', _av.available
             ))
           FROM (
             SELECT
-              _opening_hours.field_id AS field_id,
+              _opening_hours.game_area_id AS game_area_id,
               UNNEST(_oph) AS available
           ) AS _av
           INTO _temp;
@@ -87,7 +87,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
         RETURN QUERY SELECT
           *
         FROM json_to_recordset(array_to_json(_return)) AS _rtn
-          ("field_id" CHARACTER VARYING(255), available tsrange);
+          ("game_area_id" CHARACTER VARYING(255), available tsrange);
       END $$;
     """
   end

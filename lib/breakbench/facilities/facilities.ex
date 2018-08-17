@@ -6,7 +6,7 @@ defmodule Breakbench.Facilities do
   alias Breakbench.Repo
 
   alias Breakbench.Facilities.{
-    Area, Field, FieldClosingHour, FieldDynamicPricing, Space,
+    Area, GameArea, GameAreaClosingHour, GameAreaDynamicPricing, Space,
     SpaceOpeningHour
   }
 
@@ -32,47 +32,47 @@ defmodule Breakbench.Facilities do
   end
 
 
-  ## Field
+  ## Game Area
 
-  def list_fields do
-    Repo.all Field
+  def list_game_areas do
+    Repo.all GameArea
   end
 
-  def list_field_closing_hours do
-    Repo.all FieldClosingHour
+  def list_game_area_closing_hours do
+    Repo.all GameAreaClosingHour
   end
 
-  def list_field_dynamic_pricings do
-    Repo.all FieldDynamicPricing
+  def list_game_area_dynamic_pricings do
+    Repo.all GameAreaDynamicPricing
   end
 
-  def get_field!(id) do
-    Repo.get! Field, id
+  def get_game_area!(id) do
+    Repo.get! GameArea, id
   end
 
-  def get_field_closing_hour!(id) do
-    Repo.get! FieldClosingHour, id
+  def get_game_area_closing_hour!(id) do
+    Repo.get! GameAreaClosingHour, id
   end
 
-  def get_field_dynamic_pricing!(id) do
-    Repo.get! FieldDynamicPricing, id
+  def get_game_area_dynamic_pricing!(id) do
+    Repo.get! GameAreaDynamicPricing, id
   end
 
-  def create_field(attrs \\ %{}) do
-    %Field{}
-    |> Field.changeset(attrs)
+  def create_game_area(attrs \\ %{}) do
+    %GameArea{}
+    |> GameArea.changeset(attrs)
     |> Repo.insert()
   end
 
-  def create_field_closing_hour(attrs \\ %{}) do
-    %FieldClosingHour{}
-    |> FieldClosingHour.changeset(attrs)
+  def create_game_area_closing_hour(attrs \\ %{}) do
+    %GameAreaClosingHour{}
+    |> GameAreaClosingHour.changeset(attrs)
     |> Repo.insert()
   end
 
-  def create_field_dynamic_pricing(attrs \\ %{}) do
-    %FieldDynamicPricing{}
-    |> FieldDynamicPricing.changeset(attrs)
+  def create_game_area_dynamic_pricing(attrs \\ %{}) do
+    %GameAreaDynamicPricing{}
+    |> GameAreaDynamicPricing.changeset(attrs)
     |> Repo.insert()
   end
 

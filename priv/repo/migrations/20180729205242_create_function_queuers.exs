@@ -17,12 +17,12 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionQueuers do
         FROM (
           WITH space_game_modes AS (
             SELECT DISTINCT
-              fgm.game_mode_id AS id
+              gam.game_mode_id AS id
             FROM areas AS aaa
-            INNER JOIN fields AS fld ON
-              aaa.id = fld.area_id
-            INNER JOIN field_game_modes AS fgm ON
-              fld.id = fgm.field_id
+            INNER JOIN game_areas AS gar ON
+              aaa.id = gar.area_id
+            INNER JOIN game_area_modes AS gam ON
+              gar.id = gam.game_area_id
             WHERE aaa.space_id = _space_id
           )
           SELECT

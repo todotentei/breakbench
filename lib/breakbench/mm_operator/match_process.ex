@@ -50,7 +50,7 @@ defmodule Breakbench.MMOperator.MatchProcess do
       |> SearchRangeBuilder.build(duration, delay)
 
       case PlayTimeUtil.next_available(space, game_mode, searchrange) do
-        [%{field: field, available: available} | _] ->
+        [%{game_area: game_area, available: available} | _] ->
           with {:ok, %Match{} = match} <- game_mode
                |> MatchBuilder.build()
                |> Accounts.create_match(),
@@ -66,7 +66,7 @@ defmodule Breakbench.MMOperator.MatchProcess do
               kickoff: hd(available),
               duration: game_mode.duration,
               game_mode_id: game_mode.id,
-              field_id: field.id,
+              game_area_id: game_area.id,
               match_id: match.id
             }
             case Accounts.create_booking(booking_attrs) do

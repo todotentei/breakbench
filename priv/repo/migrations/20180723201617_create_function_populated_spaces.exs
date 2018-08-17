@@ -18,7 +18,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionPopulatedSpaces do
         FROM (
           SELECT
             spc.id AS space_id,
-            fgm.game_mode_id AS game_mode_id,
+            gam.game_mode_id AS game_mode_id,
             searchrange(
               now() AT TIME ZONE spc.timezone,
               gmd.duration * INTERVAL '1 SEC',
@@ -27,12 +27,12 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionPopulatedSpaces do
           FROM spaces AS spc
           INNER JOIN areas ON
             spc.id = areas.space_id
-          INNER JOIN fields AS fld ON
-            areas.id = fld.area_id
-          INNER JOIN field_game_modes AS fgm ON
-            fld.id = fgm.field_id
+          INNER JOIN game_areas AS gar ON
+            areas.id = gar.area_id
+          INNER JOIN game_area_modes AS gam ON
+            gar.id = gam.game_area_id
           INNER JOIN game_modes AS gmd ON
-            gmd.id = fgm.game_mode_id
+            gmd.id = gam.game_mode_id
           LEFT OUTER JOIN matchmaking_queues AS mmq ON
             ST_DWithin(mmq.geom::geography, spc.geom::geography, rle.radius)
           INNER JOIN matchmaking_rules AS rle ON
@@ -48,7 +48,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionPopulatedSpaces do
             msd.duration <= _duration
           GROUP BY
             spc.id,
-            fgm.game_mode_id,
+            gam.game_mode_id,
             gmd.id
           HAVING
             COUNT(mmq.id) >= gmd.number_of_players

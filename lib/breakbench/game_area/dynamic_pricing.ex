@@ -1,4 +1,4 @@
-defmodule Breakbench.Field.ClosingHour do
+defmodule Breakbench.GameArea.DynamicPricing do
   @moduledoc false
 
   import Ecto.Query
@@ -8,19 +8,19 @@ defmodule Breakbench.Field.ClosingHour do
     Facilities, Timesheets
   }
 
-  alias Breakbench.Facilities.Field
+  alias Breakbench.Facilities.GameAreaMode
   alias Breakbench.Timesheets.TimeBlock
   alias Breakbench.TimeBlock.{
     Arrange, ArrangeState
   }
 
 
-  def insert(%Field{} = field, time_block) do
+  def insert(%GameAreaMode{} = game_area_mode, price, time_block) do
     # Overlap time block
-    time_blocks = field
-    |> overlap(time_block)
-    |> Enum.map(fn closing_hour ->
-      closing_hour
+    time_blocks = game_area_mode
+    |> overlap(price, time_block)
+    |> Enum.map(fn dynamic_pricing ->
+      dynamic_pricing
       |> Ecto.assoc(:time_block)
       |> Repo.one
     end)
@@ -42,25 +42,27 @@ defmodule Breakbench.Field.ClosingHour do
       |> Repo.delete_all()
 
       # Insert new time_block
-      Enum.each insert_state, fn insert_attrs ->
+      Enum.each(insert_state, fn insert_attrs ->
         with {:ok, time_block} <- Timesheets.create_time_block(insert_attrs) do
-          Facilities.create_field_closing_hour(%{
+          Facilities.create_game_area_dynamic_pricing(%{
             time_block_id: time_block.id,
-            field_id: field.id
+            game_area_mode_id: game_area_mode.id,
+            price: price
           })
         else
           _ -> Repo.rollback(:invalid_time_block)
         end
-      end
+      end)
     end
   end
 
-  def overlap(%Field{} = field, time_block) do
-    field
-    |> Ecto.assoc(:closing_hours)
-    |> join(:inner, [fch], tbk in fragment("SELECT id FROM overlap_time_blocks(?,?,?,?,?)",
+  def overlap(%GameAreaMode{} = game_area_mode, price, time_block) do
+    game_area_mode
+    |> Ecto.assoc(:dynamic_pricings)
+    |> where(price: ^price)
+    |> join(:inner, [fdp], tbk in fragment("SELECT id FROM overlap_time_blocks(?,?,?,?,?)",
       ^time_block.day_of_week, ^time_block.start_time, ^time_block.end_time,
-      ^time_block.from_date, ^time_block.through_date), tbk.id == fch.time_block_id)
+      ^time_block.from_date, ^time_block.through_date), tbk.id == fdp.time_block_id)
     |> Repo.all()
   end
 end

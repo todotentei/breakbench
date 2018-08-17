@@ -10,8 +10,8 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerOverlapBooking do
         IF EXISTS (
           SELECT TRUE
           FROM bookings as bkn
-          INNER JOIN affected_fields(NEW.field_id) as aff ON
-            bkn.field_id = aff.field_id AND
+          INNER JOIN affected_game_areas(NEW.game_area_id) as aff ON
+            bkn.game_area_id = aff.game_area_id AND
             tsrange(NEW.kickoff, NEW.kickoff + NEW.duration * INTERVAL '1 SEC', '[)')
               && tsrange(bkn.kickoff, bkn.kickoff + bkn.duration * INTERVAL '1 SEC', '[)')
 
@@ -20,7 +20,7 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerOverlapBooking do
           SELECT TRUE
           FROM bookings AS bkn
           WHERE
-            bkn.field_id = NEW.field_id AND
+            bkn.game_area_id = NEW.game_area_id AND
             tsrange(NEW.kickoff, NEW.kickoff + NEW.duration * INTERVAL '1 SEC', '[)')
               && tsrange(bkn.kickoff, bkn.kickoff + bkn.duration * INTERVAL '1 SEC', '[)')
         ) THEN
