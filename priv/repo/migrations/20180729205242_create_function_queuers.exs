@@ -29,10 +29,15 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionQueuers do
             sgm.id AS game_mode_id,
             mmq.id AS matchmaking_queue_id
           FROM spaces AS spc
-          LEFT OUTER JOIN matchmaking_queues AS mmq ON
-            ST_DWithin(spc.geom::geography, mmq.geom::geography, rle.radius)
-          INNER JOIN matchmaking_rules AS rle ON
-            rle.id = mmq.rule_id
+          LEFT OUTER JOIN (
+            SELECT
+              mmq.*,
+              mmr.radius AS radius
+            FROM matchmaking_queues AS mmq
+            INNER JOIN matchmaking_rules AS mmr ON
+              mmr.id = mmq.rule_id
+          ) AS mmq ON
+            ST_DWithin(mmq.geom::geography, spc.geom::geography, mmq.radius)
           INNER JOIN matchmaking_game_modes AS mgm ON
             mmq.id = mgm.matchmaking_queue_id
           INNER JOIN space_game_modes AS sgm ON

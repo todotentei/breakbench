@@ -31,8 +31,6 @@ defmodule Breakbench.MMOperator.PopulatedSpacesListener do
     |> AtomicMap.convert(safe: false)
 
     try do
-      Enum.each populated_spaces, & MatchProcess.run/1
-
       Enum.each populated_spaces, fn ps ->
         case MatchProcess.run(ps) do
           {:ok, _} -> throw :match

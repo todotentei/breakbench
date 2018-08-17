@@ -33,10 +33,15 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionPopulatedSpaces do
             gar.id = gam.game_area_id
           INNER JOIN game_modes AS gmd ON
             gmd.id = gam.game_mode_id
-          LEFT OUTER JOIN matchmaking_queues AS mmq ON
-            ST_DWithin(mmq.geom::geography, spc.geom::geography, rle.radius)
-          INNER JOIN matchmaking_rules AS rle ON
-            rle.id = mmq.rule_id
+          LEFT OUTER JOIN (
+            SELECT
+              mmq.*,
+              mmr.radius AS radius
+            FROM matchmaking_queues AS mmq
+            INNER JOIN matchmaking_rules AS mmr ON
+              mmr.id = mmq.rule_id
+          ) AS mmq ON
+            ST_DWithin(mmq.geom::geography, spc.geom::geography, mmq.radius)
           INNER JOIN matchmaking_game_modes AS mgm ON
             mmq.id = mgm.matchmaking_queue_id
           INNER JOIN matchmaking_space_distance_matrices AS msd ON
