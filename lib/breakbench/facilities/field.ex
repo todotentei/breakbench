@@ -11,7 +11,6 @@ defmodule Breakbench.Facilities.Field do
       type: :binary_id
 
     has_many :closing_hours, Breakbench.Facilities.FieldClosingHour
-    has_many :dynamic_pricings, Breakbench.Facilities.FieldDynamicPricing
 
     timestamps()
   end

@@ -2,7 +2,7 @@ defmodule Breakbench.Field.DynamicPricing do
   @moduledoc false
 
   alias Breakbench.{Repo, Facilities, Timesheets}
-  alias Breakbench.Facilities.Field
+  alias Breakbench.Facilities.FieldGameMode
   alias Breakbench.Timesheets.TimeBlock
   alias Breakbench.TimeBlock.{
     Arrange, ArrangeState
@@ -11,9 +11,9 @@ defmodule Breakbench.Field.DynamicPricing do
   import Ecto.Query
 
 
-  def insert(%Field{} = field, price, new_time_block) do
+  def insert(%FieldGameMode{} = fgm, price, new_time_block) do
     # Overlap time block
-    dynamic_pricings = Facilities.overlap_field_dynamic_pricings(field, price, new_time_block)
+    dynamic_pricings = Facilities.overlap_field_dynamic_pricings(fgm, price, new_time_block)
     time_blocks = Enum.map dynamic_pricings, fn dynamic_pricing ->
       dynamic_pricing
         |> Ecto.assoc(:time_block)
@@ -39,7 +39,7 @@ defmodule Breakbench.Field.DynamicPricing do
       # Insert new time_block
       Enum.each insert_state, fn insert_attrs ->
         with {:ok, time_block} <- Timesheets.create_time_block(insert_attrs) do
-          fch_attrs = %{time_block_id: time_block.id, field_id: field.id, price: price}
+          fch_attrs = %{time_block_id: time_block.id, field_id: fgm.id, price: price}
           Facilities.create_field_dynamic_pricing(fch_attrs)
         end
       end

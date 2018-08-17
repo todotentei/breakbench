@@ -33,7 +33,7 @@ defmodule Breakbench.Facilities.FieldFactory do
       def field_dynamic_pricing_factory do
         %FieldDynamicPricing{
           time_block: build(:time_block),
-          field: build(:field),
+          field_game_mode: build(:field_game_mode),
           price: 1000
         }
       end

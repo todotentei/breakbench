@@ -6,10 +6,9 @@ defmodule Breakbench.Facilities do
   alias Breakbench.Repo
 
   alias Breakbench.Facilities.{
-    Area, Field, FieldClosingHour, FieldDynamicPricing, Space,
+    Area, Field, FieldClosingHour, FieldDynamicPricing, FieldGameMode, Space,
     SpaceOpeningHour
   }
-  alias Breakbench.Activities.GameMode
 
 
   ## Area
@@ -84,12 +83,12 @@ defmodule Breakbench.Facilities do
       |> Repo.all()
   end
 
-  def overlap_field_dynamic_pricings(%Field{} = field, price, attrs) do
-    field
-      |> Ecto.assoc(:dynamic_pricings)
-      |> where(price: ^price)
-      |> time_block_overlap_query(attrs)
-      |> Repo.all()
+  def overlap_field_dynamic_pricings(%FieldGameMode{} = fgm, price, attrs) do
+    fgm
+    |> Ecto.assoc(:dynamic_pricings)
+    |> where(price: ^price)
+    |> time_block_overlap_query(attrs)
+    |> Repo.all()
   end
 
 
@@ -153,9 +152,6 @@ defmodule Breakbench.Facilities do
       |> Ecto.assoc(:opening_hours)
       |> time_block_overlap_query(attrs)
       |> Repo.all()
-  end
-
-  def next_availables(%Space{} = space, %GameMode{} = game_mode) do
   end
 
 

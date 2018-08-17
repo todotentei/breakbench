@@ -2,7 +2,8 @@ defmodule Breakbench.Repo.Migrations.CreateFieldGameModes do
   use Ecto.Migration
 
   def change do
-    create table(:field_game_modes) do
+    create table(:field_game_modes, primary_key: false) do
+      add :id, :uuid, primary_key: true
       add :field_id, references(:fields, on_delete: :delete_all, type: :string),
         null: false
       add :game_mode_id, references(:game_modes, on_delete: :delete_all, type: :uuid),
