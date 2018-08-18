@@ -5,30 +5,41 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionTschunk do
     execute """
       CREATE OR REPLACE FUNCTION tschunk (
         _tsrange tsrange,
-        _step INTERVAL DEFAULT '1 DAY'::INTERVAL
+        _size INTERVAL DEFAULT '1 DAY'::INTERVAL
       ) RETURNS TABLE(tsrange tsrange) LANGUAGE PLPGSQL
       AS $$
       BEGIN
         RETURN QUERY SELECT
-          tsrange(_dte.start, _dte.end)
+          tsrange(_tsrange.start, _tsrange.end)
         FROM (
           SELECT
-            CASE WHEN stime::DATE = d THEN stime ELSE d END AS start,
-            CASE WHEN etime::DATE = d THEN etime ELSE d + 1 END AS end
+            CASE WHEN stimestamp = _timestamp THEN
+              stimestamp
+            ELSE
+              _timestamp
+            END AS start,
+            CASE WHEN etimestamp <= _timestamp + _size::INTERVAL THEN
+              etimestamp
+            ELSE
+              _timestamp + _size::INTERVAL
+            END AS end
           FROM (
             SELECT
-              stime,
-              etime,
-              GENERATE_SERIES(stime::DATE, etime::DATE, _step::INTERVAL)::DATE AS d
+              stimestamp,
+              etimestamp,
+              GENERATE_SERIES(
+                stimestamp::TIMESTAMP(0), etimestamp::TIMESTAMP(0),
+                _size::INTERVAL
+              )::TIMESTAMP(0) AS _timestamp
             FROM (
               SELECT
-                lower(_tsrange)::TIMESTAMP(0) AS stime,
-                upper(_tsrange)::TIMESTAMP(0) AS etime
-            ) sub1
-          ) sub0
-          ORDER BY stime
-        ) AS _dte
-        WHERE _dte.start < _dte.end;
+                lower(_tsrange)::TIMESTAMP(0) AS stimestamp,
+                upper(_tsrange)::TIMESTAMP(0) AS etimestamp
+            ) AS _series
+          ) AS _start_end
+          ORDER BY stimestamp
+        ) AS _tsrange
+        WHERE _tsrange.start < _tsrange.end;
       END $$;
     """
   end
