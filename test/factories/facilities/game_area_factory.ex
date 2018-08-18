@@ -15,7 +15,6 @@ defmodule Breakbench.Facilities.GameAreaFactory do
 
       def game_area_factory do
         %GameArea{
-          id: sequence(:id, &"game_area-#{&1}"),
           name: "name",
           area: build(:area),
           inserted_at: NaiveDateTime.utc_now,
@@ -33,7 +32,7 @@ defmodule Breakbench.Facilities.GameAreaFactory do
       def game_area_dynamic_pricing_factory do
         %GameAreaDynamicPricing{
           time_block: build(:time_block),
-          game_area_mode: build(:game_area_mode),
+          game_area: build(:game_area),
           price: 1000
         }
       end

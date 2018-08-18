@@ -3,7 +3,8 @@ defmodule Breakbench.Facilities.GameArea do
   import Ecto.Changeset
 
 
-  @primary_key {:id, :string, []}
+  @derive {Phoenix.Param, key: :id}
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "game_areas" do
     field :name, :string
 
@@ -11,6 +12,7 @@ defmodule Breakbench.Facilities.GameArea do
       type: :binary_id
 
     has_many :closing_hours, Breakbench.Facilities.GameAreaClosingHour
+    has_many :dynamic_pricings, Breakbench.Facilities.GameAreaDynamicPricing
 
     timestamps()
   end

@@ -4,7 +4,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
   def up do
     execute """
       CREATE OR REPLACE FUNCTION opening_hours (
-        _game_area_id CHARACTER VARYING(255),
+        _game_area_id UUID,
         _tsrange tsrange
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
@@ -115,7 +115,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
 
     execute """
       CREATE OR REPLACE FUNCTION opening_hours (
-        _game_area_id CHARACTER VARYING(255),
+        _game_area_id UUID,
         _date DATE
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
@@ -129,7 +129,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
 
     execute """
       CREATE OR REPLACE FUNCTION opening_hours (
-        _game_area_id CHARACTER VARYING(255),
+        _game_area_id UUID,
         _repeat INTERVAL DEFAULT '1 DAY'::INTERVAL
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$

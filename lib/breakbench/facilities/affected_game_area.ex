@@ -6,9 +6,9 @@ defmodule Breakbench.Facilities.AffectedGameArea do
   @primary_key false
   schema "affected_game_areas" do
     belongs_to :game_area, Breakbench.Facilities.GameArea,
-      type: :string, primary_key: true
+      type: :binary_id, primary_key: true
     belongs_to :affected, Breakbench.Facilities.GameArea,
-      type: :string, primary_key: true
+      type: :binary_id, primary_key: true
   end
 
   @doc false

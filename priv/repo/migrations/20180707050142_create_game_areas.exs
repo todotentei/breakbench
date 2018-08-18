@@ -3,7 +3,7 @@ defmodule Breakbench.Repo.Migrations.CreateGameAreas do
 
   def change do
     create table(:game_areas, primary_key: false) do
-      add :id, :string, primary_key: true
+      add :id, :uuid, primary_key: true
       add :name, :string
       add :space_id, references(:spaces, on_delete: :delete_all, type: :string)
 

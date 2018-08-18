@@ -8,16 +8,16 @@ defmodule Breakbench.GameArea.DynamicPricing do
     Facilities, Timesheets
   }
 
-  alias Breakbench.Facilities.GameAreaMode
+  alias Breakbench.Facilities.GameArea
   alias Breakbench.Timesheets.TimeBlock
   alias Breakbench.TimeBlock.{
     Arrange, ArrangeState
   }
 
 
-  def insert(%GameAreaMode{} = game_area_mode, price, time_block) do
+  def insert(%GameArea{} = game_area, price, time_block) do
     # Overlap time block
-    time_blocks = game_area_mode
+    time_blocks = game_area
     |> overlap(price, time_block)
     |> Enum.map(fn dynamic_pricing ->
       dynamic_pricing
@@ -46,7 +46,7 @@ defmodule Breakbench.GameArea.DynamicPricing do
         with {:ok, time_block} <- Timesheets.create_time_block(insert_attrs) do
           Facilities.create_game_area_dynamic_pricing(%{
             time_block_id: time_block.id,
-            game_area_mode_id: game_area_mode.id,
+            game_area_id: game_area.id,
             price: price
           })
         else
@@ -56,8 +56,8 @@ defmodule Breakbench.GameArea.DynamicPricing do
     end
   end
 
-  def overlap(%GameAreaMode{} = game_area_mode, price, time_block) do
-    game_area_mode
+  def overlap(%GameArea{} = game_area, price, time_block) do
+    game_area
     |> Ecto.assoc(:dynamic_pricings)
     |> where(price: ^price)
     |> join(:inner, [fdp], tbk in fragment("SELECT id FROM overlap_time_blocks(?,?,?,?,?)",

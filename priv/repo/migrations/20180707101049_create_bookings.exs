@@ -5,7 +5,7 @@ defmodule Breakbench.Repo.Migrations.CreateBookings do
     create table(:bookings) do
       add :kickoff, :naive_datetime, null: false
       add :duration, :integer, null: false
-      add :game_area_id, references(:game_areas, on_delete: :nothing, type: :string),
+      add :game_area_id, references(:game_areas, on_delete: :nothing, type: :uuid),
         null: false
 
       timestamps()

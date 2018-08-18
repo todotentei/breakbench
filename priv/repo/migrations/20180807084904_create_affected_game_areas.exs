@@ -3,9 +3,9 @@ defmodule Breakbench.Repo.Migrations.CreateAffectedGameAreas do
 
   def change do
     create table(:affected_game_areas, primary_key: false) do
-      add :game_area_id, references(:game_areas, on_delete: :delete_all, type: :string),
+      add :game_area_id, references(:game_areas, on_delete: :delete_all, type: :uuid),
         primary_key: true
-      add :affected_id, references(:game_areas, on_delete: :delete_all, type: :string),
+      add :affected_id, references(:game_areas, on_delete: :delete_all, type: :uuid),
         primary_key: true
     end
 

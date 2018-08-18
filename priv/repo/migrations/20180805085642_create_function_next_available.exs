@@ -8,7 +8,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
         _game_mode_id UUID,
         _searchrange tsrange
       ) RETURNS TABLE (
-        game_area_id CHARACTER VARYING(255),
+        game_area_id UUID,
         available tsrange
       ) LANGUAGE PLPGSQL
       AS $$

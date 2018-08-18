@@ -8,7 +8,7 @@ defmodule Breakbench.Accounts.Booking do
     field :duration, :integer
 
     belongs_to :game_area, Breakbench.Facilities.GameArea,
-      type: :string
+      type: :binary_id
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id
     belongs_to :user, Breakbench.Accounts.User

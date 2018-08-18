@@ -4,9 +4,9 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionAffectedGameAreas do
   def up do
     execute """
       CREATE OR REPLACE FUNCTION affected_game_areas (
-        _game_area_id CHARACTER VARYING(255)
+        _game_area_id UUID
       ) RETURNS TABLE (
-        game_area_id CHARACTER VARYING(255)
+        game_area_id UUID
       ) LANGUAGE PLPGSQL
       AS $$
       BEGIN

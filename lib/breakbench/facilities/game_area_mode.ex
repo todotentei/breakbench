@@ -7,11 +7,9 @@ defmodule Breakbench.Facilities.GameAreaMode do
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "game_area_modes" do
     belongs_to :game_area, Breakbench.Facilities.GameArea,
-      type: :string
+      type: :binary_id
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id
-
-    has_many :dynamic_pricings, Breakbench.Facilities.GameAreaDynamicPricing
   end
 
   @doc false

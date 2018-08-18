@@ -8,7 +8,7 @@ defmodule Breakbench.Facilities.GameAreaClosingHour do
     belongs_to :time_block, Breakbench.Timesheets.TimeBlock,
       primary_key: :true, type: :binary_id
     belongs_to :game_area, Breakbench.Facilities.GameArea,
-      type: :string
+      type: :binary_id
   end
 
   @doc false

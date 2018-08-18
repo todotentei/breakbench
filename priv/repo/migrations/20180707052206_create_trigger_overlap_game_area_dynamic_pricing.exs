@@ -17,7 +17,7 @@ defmodule Breakbench.Repo.Migrations.CreateTriggerOverlapGameAreaDynamicPricing 
           SELECT * FROM game_area_dynamic_pricings AS gad
           JOIN time_blocks AS tbk ON tbk.id = gad.time_block_id
           WHERE
-            gad.game_area_mode_id = NEW.game_area_mode_id AND
+            gad.game_area_id = NEW.game_area_id AND
             gad.price = NEW.price AND
             tbk.day_of_week = _tb.day_of_week AND
             int4range(_tb.start_time, _tb.end_time, '[)') && int4range(tbk.start_time, tbk.end_time, '[)') AND
