@@ -1,9 +1,9 @@
-defmodule Breakbench.Repo.Migrations.CreateFunctionTsgenerate do
+defmodule Breakbench.Repo.Migrations.CreateFunctionTschunk do
   use Ecto.Migration
 
   def up do
     execute """
-      CREATE OR REPLACE FUNCTION tsgenerate (
+      CREATE OR REPLACE FUNCTION tschunk (
         _tsrange tsrange,
         _step INTERVAL DEFAULT '1 DAY'::INTERVAL
       ) RETURNS TABLE(tsrange tsrange) LANGUAGE PLPGSQL
@@ -34,6 +34,6 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionTsgenerate do
   end
 
   def down do
-    execute "DROP FUNCTION tsgenerate ( tsrange, INTERVAL )"
+    execute "DROP FUNCTION tschunk ( tsrange, INTERVAL )"
   end
 end

@@ -22,7 +22,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
       BEGIN
         FOR _tschunk IN
           SELECT tsrange
-          FROM tsgenerate(_tsrange)
+          FROM tschunk(_tsrange)
         LOOP
           _temp = '{}';
           _date = lower(_tschunk)::DATE;
