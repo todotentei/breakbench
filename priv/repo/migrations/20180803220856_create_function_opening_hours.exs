@@ -11,7 +11,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
       DECLARE
         _date DATE;
         _day_of_week INTEGER;
-        _tschunk tsrange;
+        _tsdaily tsrange;
         _lower_chunk INTEGER;
         _upper_chunk INTEGER;
         _opening_hour int4range;
@@ -20,16 +20,16 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
         _pre_return tsrange[];
         _return tsrange[];
       BEGIN
-        FOR _tschunk IN
+        FOR _tsdaily IN
           SELECT tsrange
-          FROM tschunk(_tsrange)
+          FROM tsdaily(_tsrange)
         LOOP
           _temp = '{}';
-          _date = lower(_tschunk)::DATE;
+          _date = lower(_tsdaily)::DATE;
           _day_of_week = DATE_PART('ISODOW', _date);
 
-          _lower_chunk = EXTRACT(EPOCH FROM lower(_tschunk)::TIME)::INTEGER;
-          _upper_chunk = EXTRACT(EPOCH FROM upper(_tschunk)::TIME)::INTEGER;
+          _lower_chunk = EXTRACT(EPOCH FROM lower(_tsdaily)::TIME)::INTEGER;
+          _upper_chunk = EXTRACT(EPOCH FROM upper(_tsdaily)::TIME)::INTEGER;
 
           FOR _opening_hour IN
             SELECT
@@ -120,10 +120,10 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        _tschunk tsrange;
+        _tsdaily tsrange;
       BEGIN
-        _tschunk = tsrange(_date::DATE, (_date + INTERVAL '1 DAY')::DATE);
-        RETURN opening_hours(_game_area_id, _tschunk);
+        _tsdaily = tsrange(_date::DATE, (_date + INTERVAL '1 DAY')::DATE);
+        RETURN opening_hours(_game_area_id, _tsdaily);
       END $$;
     """
 
@@ -134,10 +134,10 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionOpeningHours do
       ) RETURNS tsrange[] LANGUAGE PLPGSQL
       AS $$
       DECLARE
-        _tschunk tsrange;
+        _tsdaily tsrange;
       BEGIN
-        _tschunk = tsrange(now()::DATE, (now()::DATE + _repeat)::DATE);
-        RETURN opening_hours(_game_area_id, _tschunk);
+        _tsdaily = tsrange(now()::DATE, (now()::DATE + _repeat)::DATE);
+        RETURN opening_hours(_game_area_id, _tsdaily);
       END $$;
     """
   end
