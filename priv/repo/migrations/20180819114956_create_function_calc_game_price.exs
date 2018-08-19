@@ -46,15 +46,17 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionCalcGamePrice do
             ) AS tsdaily
           ) AS tscur
         LOOP
-          temp_dynamic = '{}';
-          temp_default = '{}';
+          temp_dynamic = array[]::pricerange[];
+          temp_default = array[]::pricerange[];
 
           SELECT ARRAY_AGG(_d)
           FROM (
             SELECT
               dailychunk.date AS date,
-              dailychunk.timerange * int4range(tbk.start_time, tbk.end_time, '[)') as timerange,
-              gad.price AS price_per_hour
+              dailychunk.timerange * int4range(
+                tbk.start_time, tbk.end_time, '[)'
+              ) AS timerange,
+              gad.price AS price
             FROM game_area_dynamic_pricings AS gad
             INNER JOIN time_blocks AS tbk ON
               tbk.id = gad.time_block_id
@@ -70,12 +72,16 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionCalcGamePrice do
             SELECT
               dailychunk.date AS date,
               _d._split AS timerange,
-              default_price AS price_per_hour
+              default_price AS price
             FROM (
               SELECT
                 UNNEST(split(array[dailychunk.timerange], array_agg(_d.timerange::int4range))) AS _split
-              FROM json_to_recordset(array_to_json(temp_dynamic)) as _d
-                ("timerange" int4range)
+              FROM json_to_recordset(
+                COALESCE(
+                  array_to_json(temp_dynamic),
+                  array_to_json(array[json_build_object('timerange', int4range(0,0))])
+                )
+              ) as _d ("timerange" int4range)
             ) AS _d
           ) AS _d
           INTO temp_default;
