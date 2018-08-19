@@ -16,6 +16,7 @@ defmodule Breakbench.Facilities.GameAreaFactory do
       def game_area_factory do
         %GameArea{
           name: "name",
+          default_price: sequence(:default_price, [1000, 2000, 3000]),
           area: build(:area),
           inserted_at: NaiveDateTime.utc_now,
           updated_at: NaiveDateTime.utc_now
