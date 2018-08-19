@@ -92,9 +92,9 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionCalcGamePrice do
         RETURN QUERY SELECT
           _d.date,
           _d.timerange,
-          _d.price_per_hour
+          _d.price
         FROM json_to_recordset(array_to_json(priceranges)) AS _d
-          ("date" DATE, "timerange" int4range, "price_per_hour" INTEGER);
+          ("date" DATE, "timerange" int4range, "price" INTEGER);
       END $$;
     """
   end

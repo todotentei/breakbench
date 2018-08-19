@@ -6,7 +6,7 @@ defmodule Breakbench.Repo.Migrations.CreateTypePricerange do
       CREATE TYPE pricerange AS (
         date DATE,
         timerange int4range,
-        price_per_hour integer
+        price integer
       )
     """
   end
