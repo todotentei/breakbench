@@ -94,7 +94,10 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionCalcGamePrice do
           _d.timerange,
           _d.price
         FROM json_to_recordset(array_to_json(priceranges)) AS _d
-          ("date" DATE, "timerange" int4range, "price" INTEGER);
+          ("date" DATE, "timerange" int4range, "price" INTEGER)
+        ORDER BY
+          _d.date,
+          _d.timerange;
       END $$;
     """
   end
