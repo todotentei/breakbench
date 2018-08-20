@@ -6,10 +6,10 @@ defmodule Breakbench.Timesheets.TimeBlockFactory do
       def time_block_factory do
         %TimeBlock{
           day_of_week: 1,
-          start_time: :calendar.time_to_seconds(:erlang.time),
-          end_time: :calendar.time_to_seconds(:erlang.time),
-          from_date: Date.utc_today,
-          through_date: Date.utc_today
+          start_time: 0,
+          end_time: 86400,
+          from_date: nil,
+          through_date: nil
         }
       end
     end
