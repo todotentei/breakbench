@@ -87,7 +87,7 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionNextAv do
         RETURN QUERY SELECT
           *
         FROM json_to_recordset(array_to_json(_return)) AS _rtn
-          ("game_area_id" CHARACTER VARYING(255), available tsrange);
+          ("game_area_id" UUID, available tsrange);
       END $$;
     """
   end
