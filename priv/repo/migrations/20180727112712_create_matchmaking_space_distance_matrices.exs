@@ -11,5 +11,7 @@ defmodule Breakbench.Repo.Migrations.CreateMatchmakingSpaceDistanceMatrices do
 
     create index(:matchmaking_space_distance_matrices, [:space_id])
     create index(:matchmaking_space_distance_matrices, [:matchmaking_queue_id])
+
+    create unique_index(:matchmaking_space_distance_matrices, [:space_id, :matchmaking_queue_id])
   end
 end
