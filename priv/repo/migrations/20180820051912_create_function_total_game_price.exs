@@ -17,13 +17,8 @@ defmodule Breakbench.Repo.Migrations.CreateFunctionTotalGamePrice do
             (upper(_breakdown.timerange) - lower(_breakdown.timerange)) AS duration,
             _breakdown.price AS price_per_hour
           FROM (
-            SELECT
-              date, timerange, price
-            FROM calc_game_price(
-              'cf233e83-a186-42d4-a81d-e6068b7ff905',
-              '2018-08-18 23:30:00'::TIMESTAMP,
-              7600
-            )
+            SELECT date, timerange, price
+            FROM calc_game_price(_game_area_id, _kickoff, _duration)
           ) AS _breakdown
         ) AS _bd;
       END $$;
