@@ -7,6 +7,8 @@ defmodule Breakbench.Accounts.BookingFactory do
         %Booking{
           kickoff: NaiveDateTime.utc_now,
           duration: 3600,
+          price: 1000,
+          currency: build(:currency),
           game_area: build(:game_area),
           game_mode: build(:game_mode),
           user: build(:user),
