@@ -83,13 +83,6 @@ defmodule Breakbench.Facilities do
     Repo.all Space
   end
 
-  def list_spaces(%Geo.Point{} = point, radius) do
-    from(Space)
-    |> where([spc], st_dwithin_in_meters(spc.geom, ^point, ^radius))
-    |> order_by([spc], st_distancesphere(spc.geom, ^point))
-    |> Repo.all()
-  end
-
   def list_space_opening_hours do
     Repo.all SpaceOpeningHour
   end

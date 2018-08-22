@@ -2,22 +2,19 @@ defmodule Breakbench.MMOperator.DistanceMatrixBuilder do
   @moduledoc false
 
   alias Breakbench.Repo
-  alias Breakbench.Facilities
   alias Breakbench.GeoHelper
 
   alias Breakbench.Matchmaking.MatchmakingQueue, as: Queue
+  alias Breakbench.Facilities.Space
 
 
-  def build(%Queue{} = queue) do
+  def build(%Queue{} = queue, spaces) do
     # Associated rule
     rule = assoc_rule(queue)
 
-    # Nearby spaces
-    spaces = Facilities.list_spaces(queue.geom, rule.radius)
-
-    # Use geom as origin and spaces as destinations
+    # Use queue as origin and spaces as destinations
     origin = GeoHelper.to_string(queue.geom)
-    destinations = Enum.map(spaces, &GeoHelper.to_string(&1.geom))
+    destinations = Enum.map(spaces, & extract_location/1)
     matrix_params = %{
       mode: rule.travel_mode_type,
       origins: origin,
@@ -39,6 +36,10 @@ defmodule Breakbench.MMOperator.DistanceMatrixBuilder do
 
 
   ## Private
+
+  defp extract_location(%Space{geom: geom}) do
+    GeoHelper.to_string(geom)
+  end
 
   defp space_distance_matrix_attrs(queue, {space, elements}) do
     %{

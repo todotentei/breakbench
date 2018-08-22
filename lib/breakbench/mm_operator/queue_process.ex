@@ -2,43 +2,40 @@ defmodule Breakbench.MMOperator.QueueProcess do
   @moduledoc false
 
   alias Breakbench.Repo
-  alias Breakbench.GeoHelper
 
-  alias Breakbench.{
-    Accounts, Activities, Matchmaking
-  }
+  alias Breakbench.Matchmaking
+  alias Breakbench.SpaceUtil
 
+  alias Breakbench.Accounts.User
+  alias Breakbench.Matchmaking.MatchmakingRule, as: Rule
   alias Breakbench.Matchmaking.{
     MatchmakingGameMode, MatchmakingSpaceDistanceMatrix
   }
-  alias Breakbench.MMOperator.QueueValidator
   alias Breakbench.MMOperator.{
     DistanceMatrixBuilder, GameModeBuilder, QueueBuilder
   }
 
-  def run(attrs) do
+  def run(%User{} = user, %Rule{} = rule, %Geo.Point{} = geom, game_modes) do
     Repo.transaction fn ->
-      {:ok, attrs} = QueueValidator.validate(attrs)
+      with spaces when length(spaces) > 0 <- geom
+        |> SpaceUtil.list(rule.radius, game_modes)
+      do
+        case user
+          |> QueueBuilder.build(rule, geom)
+          |> Matchmaking.create_queue()
+        do
+          {:ok, queue} ->
+            MatchmakingGameMode
+            |> Repo.insert_all(GameModeBuilder.build(queue, game_modes))
 
-      user = Accounts.get_user!(attrs.user_id)
-      rule = Matchmaking.get_rule!(attrs.rule_id)
-      geom = GeoHelper.latlng_to_point(attrs.location)
+            MatchmakingSpaceDistanceMatrix
+            |> Repo.insert_all(DistanceMatrixBuilder.build(queue, spaces))
 
-      case user
-      |> QueueBuilder.build(rule, geom)
-      |> Matchmaking.create_queue() do
-        {:ok, queue} ->
-          game_modes = attrs.game_modes
-          |> Enum.map(& Activities.get_game_mode!(&1))
-
-          gm_attrs = GameModeBuilder.build(queue, game_modes)
-          Repo.insert_all(MatchmakingGameMode, gm_attrs)
-
-          dm_attrs = DistanceMatrixBuilder.build(queue)
-          Repo.insert_all(MatchmakingSpaceDistanceMatrix, dm_attrs)
-
-          queue
-        {:error, _} -> Repo.rollback(:new_queue_error)
+            queue
+          {:error, _} -> Repo.rollback(:new_queue_error)
+        end
+      else
+        _ -> Repo.rollback(:no_nearby_spaces)
       end
     end
   end

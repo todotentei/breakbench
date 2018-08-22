@@ -14,7 +14,7 @@ defmodule Breakbench.MMOperator do
 
   def start_link do
     children = [
-      worker(Breakbench.MMOperator.PopulatedSpacesListener, [])
+      worker(Breakbench.MMOperator.MatchUp, [])
     ]
 
     Supervisor.start_link(children, [

@@ -2,33 +2,27 @@ defmodule Breakbench.MMOperator.MatchProcess do
   @moduledoc false
 
   alias Breakbench.Repo
-  alias Breakbench.{
-    Accounts, Activities, Facilities
-  }
+  alias Breakbench.Accounts
 
   alias Breakbench.Accounts.{
     Match, MatchMember
   }
+  alias Breakbench.Facilities.Space
+  alias Breakbench.Activities.GameMode
 
-  alias Breakbench.MMOperator.MatchManager
+  alias Breakbench.MMOperator.QueueStats
   alias Breakbench.MMOperator.{
     DelayBuilder, MatchBuilder, MatchMemberBuilder, SearchRangeBuilder
   }
   alias Breakbench.MMOperator.{
     PlayTimeUtil, QueueUtil
   }
-  alias Breakbench.MMOperator.PopulatedSpaceValidator
 
   import Breakbench.PostgrexHelper, only: [to_secs_interval: 1]
 
 
-  def run(attrs) do
+  def run(%Space{} = space, %GameMode{} = game_mode) do
     Repo.transaction fn ->
-      {:ok, attrs} = PopulatedSpaceValidator.validate(attrs)
-
-      space = Facilities.get_space!(attrs.space_id)
-      game_mode = Activities.get_game_mode!(attrs.game_mode_id)
-
       # Get all queuers of a specific game mode from a space
       queuers = QueueUtil.queuers(space, game_mode)
       unless length(queuers) == game_mode.number_of_players do
@@ -54,7 +48,7 @@ defmodule Breakbench.MMOperator.MatchProcess do
           with {:ok, %Match{} = match} <- game_mode
                |> MatchBuilder.build()
                |> Accounts.create_match(),
-               {:ok, _} <- MatchManager.matched(queuers)
+               {:ok, _} <- QueueStats.set(:matched, queuers)
           do
             users = queuers
             |> Enum.map(& Accounts.get_user!(&1.user_id))
@@ -74,7 +68,12 @@ defmodule Breakbench.MMOperator.MatchProcess do
               {:error, _} -> Repo.rollback(:booking_error)
             end
           else
-            {:error, _} -> Repo.rollback(:new_match_error)
+            {:error, error_type} when error_type in [
+              :queue_status_error, :stale_queue_error
+            ] ->
+              Repo.rollback(error_type)
+            {:error, _} ->
+              Repo.rollback(:new_match_error)
           end
         [] -> Repo.rollback(:availability_error)
       end
