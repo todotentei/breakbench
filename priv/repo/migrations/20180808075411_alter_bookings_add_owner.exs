@@ -8,7 +8,7 @@ defmodule Breakbench.Repo.Migrations.AlterBookingsAddOwner do
     end
 
     create index(:bookings, [:user_id])
-    create index(:bookings, [:match_id])
+    create unique_index(:bookings, [:match_id])
 
     create constraint(:bookings, "one_owner_is_present",
       check: "(user_id IS NULL) != (match_id IS NULL)")
