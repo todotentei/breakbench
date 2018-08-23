@@ -17,18 +17,25 @@ defmodule Breakbench.Accounts do
     Repo.all(Booking)
   end
 
-  def get_booking!(id), do: Repo.get!(Booking, id)
+  def get_booking!(%Match{} = match) do
+    match
+    |> Ecto.assoc(:booking)
+    |> Repo.one!()
+  end
+  def get_booking!(id) do
+    Repo.get!(Booking, id)
+  end
 
   def create_booking(attrs \\ %{}) do
     %Booking{}
-      |> Booking.changeset(attrs)
-      |> Repo.insert()
+    |> Booking.changeset(attrs)
+    |> Repo.insert()
   end
 
   def update_booking(%Booking{} = booking, attrs) do
     booking
-      |> Booking.changeset(attrs)
-      |> Repo.update()
+    |> Booking.changeset(attrs)
+    |> Repo.update()
   end
 
   def delete_booking(%Booking{} = booking) do
@@ -46,6 +53,11 @@ defmodule Breakbench.Accounts do
     Repo.all Match
   end
 
+  def get_match!(%MatchMember{} = member) do
+    member
+    |> Ecto.assoc(:match)
+    |> Repo.one!()
+  end
   def get_match!(id) do
     Repo.get! Match, id
   end
@@ -66,6 +78,11 @@ defmodule Breakbench.Accounts do
   def list_match_members do
     Repo.all MatchMember
   end
+  def list_match_members(%Match{} = match) do
+    match
+    |> Ecto.assoc(:members)
+    |> Repo.all()
+  end
 
   def get_match_member!(id) do
     Repo.get! MatchMember, id
@@ -75,6 +92,12 @@ defmodule Breakbench.Accounts do
     %MatchMember{}
     |> MatchMember.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def update_match_member(%MatchMember{} = member, attrs) do
+    member
+    |> MatchMember.changeset(attrs)
+    |> Repo.update()
   end
 
   def delete_match_member(%MatchMember{} = match_member) do
@@ -88,18 +111,23 @@ defmodule Breakbench.Accounts do
     Repo.all(User)
   end
 
+  def get_user!(%MatchMember{} = member) do
+    member
+    |> Ecto.assoc(:user)
+    |> Repo.one!()
+  end
   def get_user!(id), do: Repo.get!(User, id)
 
   def create_user(attrs \\ %{}) do
     %User{}
-      |> User.registration_changeset(attrs)
-      |> Repo.insert()
+    |> User.registration_changeset(attrs)
+    |> Repo.insert()
   end
 
   def update_user(%User{} = user, attrs) do
     user
-      |> User.changeset(attrs)
-      |> Repo.update()
+    |> User.changeset(attrs)
+    |> Repo.update()
   end
 
   def delete_user(%User{} = user) do

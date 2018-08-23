@@ -1,14 +1,14 @@
-defmodule Breakbench.MatchProcessTest do
+defmodule Breakbench.MatchCoreTest do
   use Breakbench.DataCase
   import Breakbench.Factory
 
   alias Breakbench.GeoHelper
   alias Breakbench.Accounts.Match
 
-  alias Breakbench.MMOperator.MatchProcess
+  alias Breakbench.MMOperator.MatchCore
 
 
-  describe "mm_operator match process" do
+  describe "mm_operator match core" do
     @location %{lat: -37.845565, lng: 145.117179}
 
     setup do
@@ -43,7 +43,7 @@ defmodule Breakbench.MatchProcessTest do
 
     test "run/2 with valid attrs returns a match",
          %{space: space, game_mode: game_mode} do
-      assert {:ok, %Match{}} = MatchProcess.run(space, game_mode)
+      assert {:ok, %Match{}} = MatchCore.run(space, game_mode)
     end
   end
 end

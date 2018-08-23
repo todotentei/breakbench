@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.QueueProcess do
+defmodule Breakbench.MMOperator.QueueCore do
   @moduledoc false
 
   alias Breakbench.Repo

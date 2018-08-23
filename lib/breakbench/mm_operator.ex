@@ -14,7 +14,8 @@ defmodule Breakbench.MMOperator do
 
   def start_link do
     children = [
-      worker(Breakbench.MMOperator.MatchUp, [])
+      worker(Breakbench.MMOperator.MatchUp, []),
+      worker(Breakbench.MMOperator.Payment, [])
     ]
 
     Supervisor.start_link(children, [

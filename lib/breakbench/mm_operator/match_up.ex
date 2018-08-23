@@ -2,8 +2,10 @@ defmodule Breakbench.MMOperator.MatchUp do
   @moduledoc false
   use GenServer
 
+  alias Breakbench.Accounts.Match
+
   alias Breakbench.MMOperator.{
-    MatchProcess, MatchUpUtil
+    MatchCore, MatchUpUtil, Payment
   }
 
 
@@ -30,12 +32,12 @@ defmodule Breakbench.MMOperator.MatchUp do
       geometry
       |> MatchUpUtil.populated_spaces(radius)
       |> Enum.each(fn %{space: space, game_mode: game_mode} ->
-        with {:ok, _} <- MatchProcess.run(space, game_mode) do
-          throw :match
+        with {:ok, match} <- MatchCore.run(space, game_mode) do
+          throw match
         end
       end)
     catch
-      :match -> :ok
+      %Match{} = match -> Payment.charge(match)
     end
 
     {:noreply, state}

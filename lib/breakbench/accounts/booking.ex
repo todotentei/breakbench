@@ -9,7 +9,7 @@ defmodule Breakbench.Accounts.Booking do
     field :price, :integer
 
     belongs_to :currency, Breakbench.Exchanges.Currency,
-      primary_key: true, type: :string, foreign_key: :currency_code, references: :code
+      type: :string, foreign_key: :currency_code, references: :code
     belongs_to :game_area, Breakbench.Facilities.GameArea,
       type: :binary_id
     belongs_to :game_mode, Breakbench.Activities.GameMode,

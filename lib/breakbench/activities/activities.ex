@@ -9,6 +9,7 @@ defmodule Breakbench.Activities do
   alias Breakbench.Activities.{
     GameMode, Sport
   }
+  alias Breakbench.Accounts.Match
 
 
   # Game modes
@@ -17,6 +18,11 @@ defmodule Breakbench.Activities do
     Repo.all(GameMode)
   end
 
+  def get_game_mode!(%Match{} = match) do
+    match
+    |> Ecto.assoc(:game_mode)
+    |> Repo.one!()
+  end
   def get_game_mode!(id) do
     Repo.get!(GameMode, id)
   end

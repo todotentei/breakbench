@@ -11,6 +11,8 @@ defmodule Breakbench.Accounts.Match do
     belongs_to :game_mode, Breakbench.Activities.GameMode,
       type: :binary_id
 
+    has_one :booking, Breakbench.Accounts.Booking
+
     has_many :members, Breakbench.Accounts.MatchMember
 
     timestamps()

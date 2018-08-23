@@ -50,8 +50,8 @@ defmodule Breakbench.StripeAPIs.Base do
         url = url(endpoint, schema, path, data)
 
         method
-          |> HTTPoison.request(url, "", headers, options)
-          |> parse_http_response
+        |> HTTPoison.request(url, "", headers, options)
+        |> parse_http_response
       else
         mock_server = fetch!(config, :mock_server)
         mock_server.request(method, path, data)
