@@ -3,6 +3,7 @@ defmodule Breakbench.Factory do
 
   use Breakbench.AccountsFactory
   use Breakbench.ActivitiesFactory
+  use Breakbench.BalancesFactory
   use Breakbench.ExchangesFactory
   use Breakbench.FacilitiesFactory
   use Breakbench.MatchmakingFactory
