@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.QueueCore do
+defmodule Breakbench.MMOperator.Cores.QueueCore do
   @moduledoc false
 
   alias Breakbench.Repo
@@ -11,7 +11,7 @@ defmodule Breakbench.MMOperator.QueueCore do
   alias Breakbench.Matchmaking.{
     MatchmakingGameMode, MatchmakingSpaceDistanceMatrix
   }
-  alias Breakbench.MMOperator.{
+  alias Breakbench.MMOperator.Builders.{
     DistanceMatrixBuilder, GameModeBuilder, QueueBuilder
   }
 

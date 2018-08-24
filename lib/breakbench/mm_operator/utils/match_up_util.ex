@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.MatchUpUtil do
+defmodule Breakbench.MMOperator.Utils.MatchUpUtil do
   @moduledoc false
 
   import Ecto.Query

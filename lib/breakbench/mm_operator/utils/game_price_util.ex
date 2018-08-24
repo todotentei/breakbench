@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.GamePriceUtil do
+defmodule Breakbench.MMOperator.Utils.GamePriceUtil do
   @moduledoc false
 
   import Ecto.Query

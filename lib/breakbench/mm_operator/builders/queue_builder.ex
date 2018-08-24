@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.QueueBuilder do
+defmodule Breakbench.MMOperator.Builders.QueueBuilder do
   @moduledoc false
 
   alias Breakbench.Accounts.User

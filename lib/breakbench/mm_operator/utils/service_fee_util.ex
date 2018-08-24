@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.ServiceFeeUtil do
+defmodule Breakbench.MMOperator.Utils.ServiceFeeUtil do
   @moduledoc false
 
   alias Breakbench.Facilities

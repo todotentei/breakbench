@@ -2,7 +2,7 @@ defmodule Breakbench.TransferCoreTest do
   use Breakbench.DataCase
   import Breakbench.Factory
 
-  alias Breakbench.MMOperator.TransferCore
+  alias Breakbench.MMOperator.Cores.TransferCore
 
 
   describe "mm_operator transfer core" do

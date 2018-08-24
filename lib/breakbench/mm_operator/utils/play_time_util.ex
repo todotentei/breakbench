@@ -1,9 +1,11 @@
-defmodule Breakbench.MMOperator.PlayTimeUtil do
+defmodule Breakbench.MMOperator.Utils.PlayTimeUtil do
   @moduledoc false
 
   import Ecto.Query
-  alias Postgrex.Range
   alias Breakbench.Repo
+  alias Postgrex.{
+    Interval, Range
+  }
 
   alias Breakbench.PostgrexTypes.TsRange
   alias Breakbench.Facilities.{
@@ -19,5 +21,11 @@ defmodule Breakbench.MMOperator.PlayTimeUtil do
         ^space.id, type(^game_mode.id, :binary_id), ^searchrange), fld.id == nav.game_area_id)
     |> select([fld, nav], %{game_area: fld, available: type(nav.available, TsRange)})
     |> Repo.all
+  end
+
+  def searchrange(init, %Interval{} = duration, delay \\ %Interval{secs: 900}) do
+    "SELECT searchrange FROM searchrange($1::TIMESTAMP, $2, $3)"
+    |> Repo.query_one([init, duration, delay])
+    |> Map.get(:searchrange)
   end
 end

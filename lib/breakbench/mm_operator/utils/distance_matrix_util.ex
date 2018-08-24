@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.DistanceMatrixUtil do
+defmodule Breakbench.MMOperator.Utils.DistanceMatrixUtil do
   @moduledoc false
 
   import Ecto.Query

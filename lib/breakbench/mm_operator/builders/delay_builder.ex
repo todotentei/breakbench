@@ -1,10 +1,10 @@
-defmodule Breakbench.MMOperator.DelayBuilder do
+defmodule Breakbench.MMOperator.Builders.DelayBuilder do
   @moduledoc false
 
   alias Breakbench.Matchmaking.MatchmakingQueue, as: Queue
   alias Breakbench.Facilities.Space
 
-  alias Breakbench.MMOperator.DistanceMatrixUtil
+  alias Breakbench.MMOperator.Utils.DistanceMatrixUtil
 
   import Breakbench.PostgrexHelper, only: [to_secs_interval: 1]
 

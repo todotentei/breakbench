@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.MatchCore do
+defmodule Breakbench.MMOperator.Cores.MatchCore do
   @moduledoc false
 
   alias Breakbench.Repo
@@ -11,10 +11,10 @@ defmodule Breakbench.MMOperator.MatchCore do
   alias Breakbench.Activities.GameMode
 
   alias Breakbench.MMOperator.QueueStats
-  alias Breakbench.MMOperator.{
-    DelayBuilder, MatchBuilder, MatchMemberBuilder, SearchRangeBuilder
+  alias Breakbench.MMOperator.Builders.{
+    DelayBuilder, MatchBuilder, MatchMemberBuilder
   }
-  alias Breakbench.MMOperator.{
+  alias Breakbench.MMOperator.Utils.{
     GamePriceUtil, PlayTimeUtil, QueueUtil
   }
 
@@ -44,7 +44,7 @@ defmodule Breakbench.MMOperator.MatchCore do
       searchrange = Timex.now(space.timezone)
       |> Timex.to_erl()
       |> NaiveDateTime.from_erl!()
-      |> SearchRangeBuilder.build(duration, delay)
+      |> PlayTimeUtil.searchrange(duration, delay)
 
       # Search for next available play time
       %{game_area: game_area, available: available} = space

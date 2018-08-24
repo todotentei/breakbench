@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.ChargeCore do
+defmodule Breakbench.MMOperator.Cores.ChargeCore do
   @moduledoc false
 
   alias Breakbench.Repo

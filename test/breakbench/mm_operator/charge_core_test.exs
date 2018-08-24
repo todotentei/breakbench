@@ -2,7 +2,7 @@ defmodule Breakbench.ChargeCoreTest do
   use Breakbench.DataCase
   import Breakbench.Factory
 
-  alias Breakbench.MMOperator.ChargeCore
+  alias Breakbench.MMOperator.Cores.ChargeCore
 
   alias Breakbench.Accounts.MatchMember
   alias Breakbench.Balances.OutstandingBalance

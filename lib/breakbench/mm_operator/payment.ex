@@ -8,10 +8,10 @@ defmodule Breakbench.MMOperator.Payment do
 
   alias Breakbench.Accounts.Match
 
-  alias Breakbench.MMOperator.{
+  alias Breakbench.MMOperator.Cores.{
     ChargeCore, TransferCore
   }
-  alias Breakbench.MMOperator.GamePriceUtil
+  alias Breakbench.MMOperator.Utils.GamePriceUtil
 
 
   @doc false

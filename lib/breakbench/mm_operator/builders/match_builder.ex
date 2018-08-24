@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.MatchBuilder do
+defmodule Breakbench.MMOperator.Builders.MatchBuilder do
   @moduledoc false
 
   alias Breakbench.StripeES

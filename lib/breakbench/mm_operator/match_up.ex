@@ -4,9 +4,9 @@ defmodule Breakbench.MMOperator.MatchUp do
 
   alias Breakbench.Accounts.Match
 
-  alias Breakbench.MMOperator.{
-    MatchCore, MatchUpUtil, Payment
-  }
+  alias Breakbench.MMOperator.Payment
+  alias Breakbench.MMOperator.Utils.MatchUpUtil
+  alias Breakbench.MMOperator.Cores.MatchCore
 
 
   @doc false

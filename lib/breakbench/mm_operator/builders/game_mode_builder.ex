@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.GameModeBuilder do
+defmodule Breakbench.MMOperator.Builders.GameModeBuilder do
   @moduledoc false
 
   alias Breakbench.Matchmaking.MatchmakingQueue, as: Queue

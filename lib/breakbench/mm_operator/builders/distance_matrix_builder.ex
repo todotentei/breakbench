@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.DistanceMatrixBuilder do
+defmodule Breakbench.MMOperator.Builders.DistanceMatrixBuilder do
   @moduledoc false
 
   alias Breakbench.Repo

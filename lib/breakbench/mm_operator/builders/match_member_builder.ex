@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.MatchMemberBuilder do
+defmodule Breakbench.MMOperator.Builders.MatchMemberBuilder do
   @moduledoc false
 
   alias Breakbench.Accounts.{

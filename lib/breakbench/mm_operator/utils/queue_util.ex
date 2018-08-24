@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.QueueUtil do
+defmodule Breakbench.MMOperator.Utils.QueueUtil do
   @moduledoc false
 
   import Ecto.Query

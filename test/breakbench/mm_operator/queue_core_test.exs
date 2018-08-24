@@ -5,7 +5,7 @@ defmodule Breakbench.QueueCoreTest do
   alias Breakbench.GeoHelper
 
   alias Breakbench.Matchmaking.MatchmakingQueue
-  alias Breakbench.MMOperator.QueueCore
+  alias Breakbench.MMOperator.Cores.QueueCore
 
 
   describe "mm_operator queue core" do

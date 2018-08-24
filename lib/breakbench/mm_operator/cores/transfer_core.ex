@@ -1,4 +1,4 @@
-defmodule Breakbench.MMOperator.TransferCore do
+defmodule Breakbench.MMOperator.Cores.TransferCore do
   @moduledoc false
 
   alias Breakbench.Repo
@@ -6,7 +6,7 @@ defmodule Breakbench.MMOperator.TransferCore do
     Accounts, Exchanges, Facilities
   }
 
-  alias Breakbench.MMOperator.ServiceFeeUtil
+  alias Breakbench.MMOperator.Utils.ServiceFeeUtil
 
   alias Breakbench.Accounts.Match
   alias Breakbench.StripeAPIs.Transfer

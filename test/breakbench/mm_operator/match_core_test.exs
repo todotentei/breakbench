@@ -5,7 +5,7 @@ defmodule Breakbench.MatchCoreTest do
   alias Breakbench.GeoHelper
   alias Breakbench.Accounts.Match
 
-  alias Breakbench.MMOperator.MatchCore
+  alias Breakbench.MMOperator.Cores.MatchCore
 
 
   describe "mm_operator match core" do
