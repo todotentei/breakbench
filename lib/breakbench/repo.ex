@@ -22,9 +22,13 @@ defmodule Breakbench.Repo do
   end
 
   def query_one(sql, attrs) do
-    sql
-    |> query_all(attrs)
-    |> List.first()
+    case query_all(sql, attrs) do
+      [head | []] -> head
+      []          -> nil
+      results     -> raise Ecto.MultipleResultsError,
+                           queryable: sql,
+                           count: length(results)
+    end
   end
 
   def has?(schema, clauses) do
