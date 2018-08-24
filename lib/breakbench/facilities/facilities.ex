@@ -9,6 +9,7 @@ defmodule Breakbench.Facilities do
     Area, GameArea, GameAreaClosingHour, GameAreaDynamicPricing, Space,
     SpaceOpeningHour
   }
+  alias Breakbench.Accounts.Booking
 
 
   ## Area
@@ -87,6 +88,11 @@ defmodule Breakbench.Facilities do
     Repo.all SpaceOpeningHour
   end
 
+  def get_space!(%Booking{} = booking) do
+    booking
+    |> Ecto.assoc([:game_area, :area, :space])
+    |> Repo.one!()
+  end
   def get_space!(id) do
     Repo.get! Space, id
   end

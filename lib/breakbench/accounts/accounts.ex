@@ -53,6 +53,11 @@ defmodule Breakbench.Accounts do
     Repo.all Match
   end
 
+  def get_match!(%Booking{} = booking) do
+    booking
+    |> Ecto.assoc(:match)
+    |> Repo.one!()
+  end
   def get_match!(%MatchMember{} = member) do
     member
     |> Ecto.assoc(:match)

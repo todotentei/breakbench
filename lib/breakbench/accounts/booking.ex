@@ -7,6 +7,7 @@ defmodule Breakbench.Accounts.Booking do
     field :kickoff, :naive_datetime
     field :duration, :integer
     field :price, :integer
+    field :stripe_transfer, :string
 
     belongs_to :currency, Breakbench.Exchanges.Currency,
       type: :string, foreign_key: :currency_code, references: :code
@@ -24,8 +25,8 @@ defmodule Breakbench.Accounts.Booking do
   @doc false
   def changeset(booking, attrs) do
     booking
-    |> cast(attrs, [:kickoff, :duration, :price, :currency_code, :game_area_id,
-      :game_mode_id, :user_id, :match_id])
+    |> cast(attrs, [:kickoff, :duration, :price, :stripe_transfer, :currency_code,
+      :game_area_id, :game_mode_id, :user_id, :match_id])
     |> validate_required([:kickoff, :duration, :price, :currency_code, :game_area_id,
       :game_mode_id])
   end

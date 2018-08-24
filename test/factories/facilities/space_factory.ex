@@ -20,7 +20,8 @@ defmodule Breakbench.Facilities.SpaceFactory do
             },
             srid: 4326
           },
-          timezone: "Australia/Melbourne"
+          timezone: "Australia/Melbourne",
+          service_fee: sequence(:service_fee, [0.03, 0.05, 0.07])
         }
       end
 

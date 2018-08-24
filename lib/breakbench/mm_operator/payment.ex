@@ -9,8 +9,9 @@ defmodule Breakbench.MMOperator.Payment do
   alias Breakbench.Accounts.Match
 
   alias Breakbench.MMOperator.{
-    ChargeCore, GamePriceUtil
+    ChargeCore, TransferCore
   }
+  alias Breakbench.MMOperator.GamePriceUtil
 
 
   @doc false
@@ -23,6 +24,13 @@ defmodule Breakbench.MMOperator.Payment do
   """
   def charge(%Match{} = match) do
     GenServer.cast(__MODULE__, {:charge, match})
+  end
+
+  @doc """
+  Create transfer to destination
+  """
+  def transfer(%Match{} = match) do
+    GenServer.cast(__MODULE__, {:transfer, match})
   end
 
 
@@ -42,6 +50,11 @@ defmodule Breakbench.MMOperator.Payment do
       ChargeCore.run(member, currency, split_amount)
     end
 
+    {:noreply, state}
+  end
+
+  def handle_cast({:transfer, match}, state) do
+    TransferCore.run(match)
     {:noreply, state}
   end
 end

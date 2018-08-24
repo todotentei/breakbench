@@ -13,6 +13,7 @@ defmodule Breakbench.Facilities.Space do
     field :geom, Geo.PostGIS.Geometry
     field :timezone, :string
     field :stripe_account, :string
+    field :service_fee, :float
 
     belongs_to :currency, Breakbench.Exchanges.Currency,
       type: :string, foreign_key: :currency_code, references: :code, on_replace: :nilify
@@ -28,7 +29,8 @@ defmodule Breakbench.Facilities.Space do
   def changeset(space, attrs) do
     space
     |> cast(attrs, [:id, :owner_id, :currency_code, :phone, :email, :website,
-       :about, :address, :geom, :timezone, :stripe_account])
-    |> validate_required([:id])
+       :about, :address, :geom, :timezone, :stripe_account, :service_fee])
+    |> validate_required([:id, :service_fee])
+    |> check_constraint(:service_fee, name: :valid_service_fee)
   end
 end
