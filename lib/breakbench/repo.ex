@@ -1,6 +1,10 @@
 defmodule Breakbench.Repo do
   use Ecto.Repo, otp_app: :breakbench
 
+  import Ecto.Query
+  alias Breakbench.PostgrexHelper
+
+
   @doc """
   Dynamically loads the repository url from the
   DATABASE_URL environment variable.
@@ -9,33 +13,24 @@ defmodule Breakbench.Repo do
     {:ok, Keyword.put(opts, :url, System.get_env("DATABASE_URL"))}
   end
 
-  @doc """
-  Fetch a boolean result from the schema
-  """
+  def query_all(sql, attrs) do
+    with {:ok, %Postgrex.Result{} = result} <- query(sql, attrs) do
+      PostgrexHelper.result_to_map(result)
+    else
+      _ -> raise Protocol.UndefinedError
+    end
+  end
+
+  def query_one(sql, attrs) do
+    sql
+    |> query_all(attrs)
+    |> List.first()
+  end
+
   def has?(schema, clauses) do
-    clauses = Map.new(clauses)
-    # Default query
-    default = "SELECT EXISTS(SELECT * FROM #{schema.__schema__(:source)}"
-
-    raw_query =
-      if map_size(clauses) > 0 do
-        default = default <> " WHERE "
-        # Build where clause function helper
-        build = fn {{k, _}, i}, acc ->
-          acc = acc <> "#{k} = $#{i}"
-          if i < map_size(clauses), do: acc <> " AND ", else: acc <> ")"
-        end
-        # Construct where conditions
-        clauses
-          |> Enum.with_index(1)
-          |> Enum.reduce(default, build)
-      else
-        default
-      end
-
-    case query!(raw_query, Map.values(clauses)) do
-      %Postgrex.Result{num_rows: 1, rows: [[boolean]]} -> boolean
-      _ -> :error
+    case all(from(schema, where: ^Enum.to_list(clauses))) do
+      [_head | _] -> true
+      [] -> false
     end
   end
 end
