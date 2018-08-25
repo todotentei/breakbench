@@ -127,11 +127,11 @@ defmodule Breakbench.Matchmaking do
     Repo.all(MatchmakingTravelMode)
   end
 
-  def get_travel_modes!(type) do
+  def get_travel_mode!(type) do
     Repo.get!(MatchmakingTravelMode, type)
   end
 
-  def create_travel_modes(attrs \\ %{}) do
+  def create_travel_mode(attrs \\ %{}) do
     %MatchmakingTravelMode{}
       |> MatchmakingTravelMode.changeset(attrs)
       |> Repo.insert()

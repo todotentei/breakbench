@@ -12,7 +12,9 @@
 
 
 alias Breakbench.Repo
-alias Breakbench.{Regions, Activities, Exchanges}
+alias Breakbench.{
+  Activities, Exchanges, Matchmaking, Regions
+}
 
 # Json file reader's helper
 read! = & __DIR__
@@ -36,4 +38,9 @@ for currency <- read!.("seeds/currencies.json") do
   currency = AtomicMap.convert(currency, safe: false)
   Repo.get(Exchanges.Currency, currency.code)
     || Repo.insert!(struct(Exchanges.Currency, currency))
+end
+
+for travel_mode <- ~w(Driving Transit Walking Cycling) do
+  Repo.has?(Matchmaking.MatchmakingTravelMode, %{type: travel_mode})
+    || Matchmaking.create_travel_mode(%{type: travel_mode})
 end
