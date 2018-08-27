@@ -1,9 +1,11 @@
 import React from "react";
 
+import { FindMatch } from '../components';
+
 export const HomePage = () => {
   return (
     <div className="home-page">
-      <h1>Homepage</h1>
+      <FindMatch />
     </div>
   )
 };

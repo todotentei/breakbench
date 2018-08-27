@@ -14,6 +14,11 @@ defmodule Breakbench.Activities do
 
   # Game modes
 
+  def list_game_modes(%Sport{} = sport) do
+    sport
+    |> Ecto.assoc(:game_modes)
+    |> Repo.all()
+  end
   def list_game_modes do
     Repo.all(GameMode)
   end

@@ -1,0 +1,64 @@
+@import 'color';
+
+.bb-react-select {
+  .bb-react-select__control,
+  .bb-react-select__menu,
+  .bb-react-select__menu-list,
+  .bb-react-select__option {
+    border-radius: 0px;
+    background-color: $bb-secondary;
+  }
+
+  .bb-react-select__control {
+    &,
+    &:hover {
+      border: 1px solid $bb-dusty-200;
+    }
+
+    .bb-react-select__indicators {
+      .bb-react-select__indicator {
+        color: $bb-dusty-200;
+      }
+
+      .bb-react-select__indicator-separator {
+        background-color: $bb-dusty-200;
+      }
+    }
+
+    &.bb-react-select__control--is-focused {
+      border-color: $bb-primary-900;
+      box-shadow: none;
+
+      .bb-react-select__indicators {
+        .bb-react-select__indicator {
+          color: $bb-primary-900;
+        }
+
+        .bb-react-select__indicator-separator {
+          background-color: $bb-primary-900;
+        }
+      }
+    }
+  }
+
+  .bb-react-select__menu {
+    border: 1px solid $bb-dusty-200;
+    box-shadow: none;
+    margin: 0px;
+  }
+
+  .bb-react-select__menu-list {
+    padding: 0;
+  }
+
+  .bb-react-select__option {
+    &.bb-react-select__option--is-focused {
+      background-color: $bb-dusty-100;
+    }
+
+    &.bb-react-select__option--is-selected {
+      color: $bb-primary-900;
+      font-weight: bold;
+    }
+  }
+}

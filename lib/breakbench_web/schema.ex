@@ -1,9 +1,13 @@
 defmodule BreakbenchWeb.Schema do
   use Absinthe.Schema
 
-  alias BreakbenchWeb.AccountsResolver
-  alias BreakbenchWeb.RegionsResolver
-  alias BreakbenchWeb.ExchangesResolver
+  alias BreakbenchWeb.{
+    ActivitiesResolver,
+    AccountsResolver,
+    ExchangesResolver,
+    MatchmakingResolver,
+    RegionsResolver
+  }
 
   import_types Absinthe.Type.Custom
 
@@ -18,6 +22,21 @@ defmodule BreakbenchWeb.Schema do
     field :name_plural, :string
     field :symbol, :string
     field :symbol_native, :string
+  end
+
+  object :game_mode do
+    field :name, non_null(:string)
+    field :number_of_players, :integer
+    field :duration, :integer
+  end
+
+  object :matchmaking_travel_mode do
+    field :type, non_null(:string)
+  end
+
+  object :sport do
+    field :name, non_null(:string)
+    field :type, :string
   end
 
   object :user do
@@ -37,24 +56,47 @@ defmodule BreakbenchWeb.Schema do
   ## Queries
 
   query do
-    # Country
+    ## Activities
+
+    field :list_sport_game_modes, list_of(:game_mode) do
+      arg :sport, :string
+      resolve &ActivitiesResolver.list_sport_game_modes/3
+    end
+
+    field :list_sports, list_of(:sport) do
+      resolve &ActivitiesResolver.list_sports/3
+    end
+
+
+    ## Country
     field :all_countries, list_of(:country) do
       resolve &RegionsResolver.all_countries/3
     end
 
-    # Currency
+
+    ## Currency
     field :all_currencies, list_of(:currency) do
       resolve &ExchangesResolver.all_currencies/3
     end
 
-    # User
+
+    ## Matchmaking
+
+    field :list_matchmaking_travel_modes, list_of(:matchmaking_travel_mode) do
+      resolve &MatchmakingResolver.list_travel_modes/3
+    end
+
+
+    ## User
     field :all_users, list_of(:user) do
       resolve &AccountsResolver.all_users/3
     end
+
     field :get_user, :user do
       arg :id, :id
       resolve &AccountsResolver.get_user/3
     end
+
     field :has_user, :boolean do
       arg :email, :string
       arg :username, :string

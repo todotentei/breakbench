@@ -7,11 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Breakbench!</title>
+    <title>Breakbench</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUg9WieYmhDWTuNFoORRoJ-gl1gw9X1RQ&libraries=places"></script>
     <div id="breakbench-app"></div>
     <!--
       <main role="main">

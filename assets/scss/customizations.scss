@@ -6,8 +6,20 @@ input.form-control {
   font-size: 14px;
 }
 
+form {
+  .btn,
+  .form-control {
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+}
+
 input.form-control {
   border-color: $bb-dusty-200;
+  &:focus {
+    border-color: $bb-primary-900;
+  }
 }
 
 .form-group.has-error {
