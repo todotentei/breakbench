@@ -10,8 +10,12 @@ defmodule Breakbench.Matchmaking do
   alias Breakbench.Activities.GameMode
   alias Breakbench.Facilities.Space
   alias Breakbench.Matchmaking.{
-    MatchmakingAvailabilityMode, MatchmakingGameMode, MatchmakingQueue,
-    MatchmakingRule, MatchmakingSpaceDistanceMatrix, MatchmakingTravelMode
+    MatchmakingAvailabilityMode,
+    MatchmakingGameMode,
+    MatchmakingQueue,
+    MatchmakingRule,
+    MatchmakingSpaceDistanceMatrix,
+    MatchmakingTravelMode
   }
 
 
@@ -27,8 +31,8 @@ defmodule Breakbench.Matchmaking do
 
   def create_availability_mode(attrs \\ %{}) do
     %MatchmakingAvailabilityMode{}
-      |> MatchmakingAvailabilityMode.changeset(attrs)
-      |> Repo.insert()
+    |> MatchmakingAvailabilityMode.changeset(attrs)
+    |> Repo.insert()
   end
 
 
@@ -36,8 +40,8 @@ defmodule Breakbench.Matchmaking do
 
   def create_game_mode(attrs \\ %{}) do
     %MatchmakingGameMode{}
-      |> MatchmakingGameMode.changeset(attrs)
-      |> Repo.insert()
+    |> MatchmakingGameMode.changeset(attrs)
+    |> Repo.insert()
   end
 
   def delete_game_mode(%MatchmakingGameMode{} = matchmaking_game_mode) do
@@ -54,14 +58,14 @@ defmodule Breakbench.Matchmaking do
   def list_queues(%Space{} = space, %GameMode{} = game_mode) do
     from(MatchmakingQueue)
     |> where([mmq], mmq.id in fragment("SELECT queuers(?, ?)",
-        ^space.id, type(^game_mode.id, :binary_id)))
+      ^space.id, type(^game_mode.id, :binary_id)))
     |> Repo.all
   end
 
   def list_queue_game_modes(%MatchmakingQueue{} = matchmaking_queue) do
     matchmaking_queue
-      |> Ecto.assoc(:game_modes)
-      |> Repo.all
+    |> Ecto.assoc(:game_modes)
+    |> Repo.all
   end
 
   def get_queue!(id) do
@@ -70,14 +74,14 @@ defmodule Breakbench.Matchmaking do
 
   def create_queue(attrs \\ %{}) do
     %MatchmakingQueue{}
-      |> MatchmakingQueue.changeset(attrs)
-      |> Repo.insert()
+    |> MatchmakingQueue.changeset(attrs)
+    |> Repo.insert()
   end
 
   def update_queue(%MatchmakingQueue{} = queue, attrs) do
     queue
-      |> MatchmakingQueue.changeset(attrs)
-      |> Repo.update()
+    |> MatchmakingQueue.changeset(attrs)
+    |> Repo.update()
   end
 
   def delete_queue(%MatchmakingQueue{} = matchmaking_queue) do
@@ -99,16 +103,20 @@ defmodule Breakbench.Matchmaking do
     Repo.get!(MatchmakingRule, id)
   end
 
+  def get_rule_by!(attrs) do
+    Repo.get_by!(MatchmakingRule, attrs)
+  end
+
   def create_rule(attrs \\ %{}) do
     %MatchmakingRule{}
-      |> MatchmakingRule.changeset(attrs)
-      |> Repo.insert()
+    |> MatchmakingRule.changeset(attrs)
+    |> Repo.insert()
   end
 
   def update_rule(%MatchmakingRule{} = rule, attrs) do
     rule
-      |> MatchmakingRule.changeset(attrs)
-      |> Repo.update()
+    |> MatchmakingRule.changeset(attrs)
+    |> Repo.update()
   end
 
 
@@ -116,8 +124,8 @@ defmodule Breakbench.Matchmaking do
 
   def create_space_distance_matrix(attrs \\ %{}) do
     %MatchmakingSpaceDistanceMatrix{}
-      |> MatchmakingSpaceDistanceMatrix.changeset(attrs)
-      |> Repo.update()
+    |> MatchmakingSpaceDistanceMatrix.changeset(attrs)
+    |> Repo.update()
   end
 
 
@@ -133,7 +141,7 @@ defmodule Breakbench.Matchmaking do
 
   def create_travel_mode(attrs \\ %{}) do
     %MatchmakingTravelMode{}
-      |> MatchmakingTravelMode.changeset(attrs)
-      |> Repo.insert()
+    |> MatchmakingTravelMode.changeset(attrs)
+    |> Repo.insert()
   end
 end
