@@ -1,0 +1,25 @@
+@import './colors';
+
+.bb-react-modal__find-match {
+  .bb-react-modal__find-match--content {
+    width: 500px;
+    height: 500px;
+    border: 1px solid $bb-dusty-200;
+    background: $bb-secondary;
+    overflow: auto;
+    outline: none;
+    padding: 20px;
+  }
+
+  .bb-react-modal__find-match--overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.85);
+  }
+}

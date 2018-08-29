@@ -1,4 +1,4 @@
-@import "color";
+@import "colors";
 
 button.btn,
 input.form-control {
@@ -10,7 +10,7 @@ form {
   .btn,
   .form-control {
     &:focus {
-      box-shadow: none !important;
+      box-shadow: none;
     }
   }
 }

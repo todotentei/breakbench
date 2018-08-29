@@ -20,17 +20,29 @@ import "phoenix_html"
 
 import React from "react";
 import ReactDOM from "react-dom";
+import {
+  Router,
+  Route
+} from "react-router-dom";
 import { Provider } from "react-redux";
-
-import { store } from "./helpers";
-import { Header, Content, Footer } from "./components";
+import {
+  history,
+  store
+} from "./helpers";
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage
+} from "./pages";
 
 ReactDOM.render((
   <Provider store={store}>
-    <div>
-      <Header />
-      <Content />
-      <Footer />
-    </div>
+    <Router history={history}>
+      <main id="main" role="main" className="app-content">
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
+      </main>
+    </Router>
   </Provider>
 ), document.getElementById("breakbench-app"))

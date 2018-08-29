@@ -1,10 +1,14 @@
+export { default as ActionsColumn } from './actions-column';
+export { default as BrandLogo } from './brand-logo';
 export * from "./Content";
-export * from './find-match';
+export { default as FindMatch } from './find-match';
 export * from './Flash';
 export * from "./Footer";
 export * from './google-autocomplete';
 export * from "./Header";
+export * from './header-bar';
 export * from './Loading';
+export { default as PlayAction } from './play-action';
 export * from './sport-game-mode-select';
 export * from './sport-select';
 export * from './travel-mode-select';

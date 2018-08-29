@@ -13,12 +13,9 @@
 
   <body>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUg9WieYmhDWTuNFoORRoJ-gl1gw9X1RQ&libraries=places"></script>
-    <div id="breakbench-app"></div>
-    <!--
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-    -->
+
+    <div id="breakbench-app" class="breakbench-app"></div>
+
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <script type="text/javascript">
       window.csrf_token = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;

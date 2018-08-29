@@ -3,14 +3,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
+const defaultState = {
+  selected_game_modes: [],
+  game_modes: []
+};
+
 export class SportGameModeSelect extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selected_game_modes: [],
-      game_modes: []
-    }
+    this.state = {...defaultState}
+    this.signal = Axios.CancelToken.source();
+  }
+
+  resetState = () => {
+    this.setState({...defaultState});
   }
 
   handleChange = (selected_game_modes) => {
@@ -20,40 +27,50 @@ export class SportGameModeSelect extends Component {
     if (onChange) onChange(selected_game_modes);
   }
 
-  getGameModes = (sport) => {
-    Axios({
-      method: 'post',
-      url: '/api/graphiql',
-      data: { query: `
-        query { listSportGameModes(sport: "${sport}") { name } }
-      `}
-    })
-    .then(response => {
-      this.setState({
-        game_modes: response.data.data.listSportGameModes
+  loadGameModes = (sport) => {
+    try {
+      Axios({
+        method: 'post',
+        url: '/api/graphiql',
+        data: { query: `
+          query { listSportGameModes(sport: "${sport}") { id, name } }
+        `},
+        cancelToken: this.signal.token
+      })
+      .then(response => response.data.data.listSportGameModes)
+      .then(data => {
+        this.setState({
+          game_modes: data.map(({id, name}) => ({value: id, label: name}))
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    } catch (err) {
+      if (axios.isCancel(err)) console.log(err.message);
+    }
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     const { sport } = this.props;
-    this.getGameModes(sport)
+    this.loadGameModes(sport)
   }
 
   componentWillReceiveProps = (nextProps) => {
     const { sport } = nextProps;
-    if (sport) this.getGameModes(sport)
+
+    if (sport != this.props.sport) {
+      this.resetState();
+      if (sport) this.loadGameModes(sport);
+    }
+  }
+
+  componentWillUnmount = () => {
+    this.signal.cancel('Sport\'s game mode (select) loading is being canceled');
   }
 
   render() {
-    const { game_modes } = this.state;
-
-    const game_mode_opts = game_modes.map(({name}) => ({
-      value: name, label: name
-    }));
+    const { selected_game_modes, game_modes } = this.state;
 
     return (
       <Select
@@ -63,7 +80,8 @@ export class SportGameModeSelect extends Component {
         classNamePrefix='bb-react-select'
         onChange={this.handleChange}
         placeholder='Choose your game modes'
-        options={game_mode_opts}
+        value={selected_game_modes}
+        options={game_modes}
       />
     );
   }

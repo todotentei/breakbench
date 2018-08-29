@@ -2,6 +2,7 @@ defmodule BreakbenchWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
+  channel "matchmaking:*", BreakbenchWeb.MatchmakingChannel
   # channel "room:*", BreakbenchWeb.RoomChannel
 
   ## Transports

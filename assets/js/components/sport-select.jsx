@@ -10,19 +10,16 @@ export class SportSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected_sport: null,
-      sports: [],
+      sports: []
     };
   }
 
-  handleChange = ({value}) => {
-    this.setState({ selected_sport: value });
-
+  handleChange = (selected_sport) => {
     const { onChange } = this.props;
-    if (onChange) onChange(value);
+    if (onChange) onChange(selected_sport);
   }
 
-  getSports = () => {
+  loadSports = () => {
     Axios({
       method: 'post',
       url: '/api/graphiql',
@@ -30,9 +27,10 @@ export class SportSelect extends Component {
         query { listSports { name } }
       `}
     })
-    .then(response => {
+    .then(response => response.data.data.listSports)
+    .then(data => {
       this.setState({
-        sports: response.data.data.listSports
+        sports: data.map(({name}) => ({ value: name, label: name }))
       });
     })
     .catch(error => {
@@ -41,14 +39,11 @@ export class SportSelect extends Component {
   }
 
   componentDidMount = () => {
-    this.getSports();
+    this.loadSports();
   }
 
   render() {
-    const { sports } = this.state;
-    const sport_opts = sports.map(({name}) => ({
-      value: name, label: name
-    }));
+    const { selected_sport, sports } = this.state;
 
     return (
       <div>
@@ -57,7 +52,8 @@ export class SportSelect extends Component {
           classNamePrefix='bb-react-select'
           onChange={this.handleChange}
           placeholder='Select your desired sport'
-          options={sport_opts}
+          value={selected_sport}
+          options={sports}
         />
       </div>
     );

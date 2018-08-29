@@ -1,0 +1,29 @@
+.home-page {
+  height: 100%;
+  width: 100%;
+
+  .home-page__nav-bar,
+  .home-page__body,
+  .home-page__actions {
+    position: absolute;
+    width: 100%;
+  }
+
+  .home-page__nav-bar,
+  .home-page__actions {
+    height: 50px;
+  }
+
+  .home-page__nav-bar {
+    top: 0px;
+  }
+
+  .home-page__body {
+    top: 0px;
+    bottom: 70px;
+  }
+
+  .home-page__actions {
+    bottom: 0px;
+  }
+}

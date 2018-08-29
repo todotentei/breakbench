@@ -25,6 +25,7 @@ defmodule BreakbenchWeb.Schema do
   end
 
   object :game_mode do
+    field :id, non_null(:string)
     field :name, non_null(:string)
     field :number_of_players, :integer
     field :duration, :integer

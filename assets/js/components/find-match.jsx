@@ -16,13 +16,14 @@ import {
   TravelModeSelect
 } from './';
 
-export class FindMatch extends Component {
+export default class FindMatch extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       location: null,
       travel_mode: null,
+      availability_mode: 'normal',
       sport: null,
       game_modes: []
     }
@@ -44,19 +45,27 @@ export class FindMatch extends Component {
   }
 
   handleSPSChange = (sport) => {
-    this.setState({ sport });
+    this.setState({
+      sport: sport['value']
+    });
   }
 
   handleSGMChange = (game_modes) => {
-    this.setState({ game_modes });
+    this.setState({
+      game_modes: game_modes.map(obj => obj['value'])
+    });
   }
 
   handleFindMatch = (e) => {
     e.preventDefault();
-    console.log(this.state);
+
+    const { onSubmit } = this.props;
+    if (onSubmit) onSubmit(this.state)
   }
 
-  renderSGMSelect = (sport) => {
+  renderSGMSelect = () => {
+    const { sport } = this.state;
+
     if (sport)
       return (
         <FormGroup className='bb-find-match__game-mode'>
@@ -70,8 +79,6 @@ export class FindMatch extends Component {
   }
 
   render() {
-    const { sport } = this.state;
-
     return (
       <Form className='bb-find-match'>
         <FormGroup className='bb-find-match__location'>
@@ -93,7 +100,7 @@ export class FindMatch extends Component {
             onChange={this.handleSPSChange}
           />
         </FormGroup>
-        {this.renderSGMSelect(sport)}
+        {this.renderSGMSelect()}
         <Button
           size='lg'
           onClick={this.handleFindMatch}

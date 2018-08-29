@@ -1,0 +1,10 @@
+@import '../colors';
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid $bb-dusty-200;
+  height: 50px;
+  background-color: white;
+}

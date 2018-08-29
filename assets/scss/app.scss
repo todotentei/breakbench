@@ -2,23 +2,30 @@
 @import 'fa-solid';
 @import 'fa-regular';
 
-@import 'color';
-@import 'components';
+@import 'colors';
+@import 'components/index';
 @import 'forms';
 @import 'google';
 @import 'icons';
-@import 'pages';
+@import 'pages/index';
+@import 'react-modal';
 @import 'react-select';
 
 /* This file is for your main application css. */
+
+html,
+body,
+.breakbench-app,
+.app-content {
+  height: 100%;
+  width: 100%;
+}
 
 body {
   font-size: 14px;
   font-style: normal;
   font-weight: normal;
 }
-
-main { width: 100%; }
 
 .logged-welcoming {
   width: 380px;
