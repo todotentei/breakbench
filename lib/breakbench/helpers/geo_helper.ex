@@ -1,8 +1,16 @@
 defmodule Breakbench.GeoHelper do
   @moduledoc false
 
-  def latlng_to_point(%{lat: lat, lng: lng}, srid \\ 4326) do
-    %Geo.Point{coordinates: {lng, lat}, srid: srid}
+  def latlng_to_point(geom, srid \\ 4326)
+  def latlng_to_point(%{"lat" => lat, "lng" => lng}, srid) do
+    geom = %{lat: lat, lng: lng}
+    latlng_to_point(geom, srid)
+  end
+  def latlng_to_point(%{lat: lat, lng: lng}, srid) do
+    %Geo.Point{
+      coordinates: {lng, lat},
+      srid: srid
+    }
   end
 
   def point_to_latlng(%Geo.Point{} = geom) do
