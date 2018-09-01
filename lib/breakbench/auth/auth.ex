@@ -1,34 +1,34 @@
 defmodule Breakbench.Auth do
-  alias Comeonin.Bcrypt
-  alias Breakbench.Repo
-  alias Breakbench.Accounts.User
+  @moduledoc false
 
   import Ecto.Query
+  alias Breakbench.Repo
 
-  def authenticate_user(username_or_email, password) do
-    username_or_email
-      |> query_by_username_or_email()
-      |> Repo.one()
-      |> check_password(password)
+  alias Breakbench.Accounts
+  alias Breakbench.Accounts.User
+
+  def get(id), do: Repo.get(User, id)
+
+  def get_by(%{"login" => username_or_email}) do
+    from(User)
+    |> where([u], u.username == ^username_or_email)
+    |> or_where([u], u.email == ^username_or_email)
+    |> Repo.one()
   end
 
-  defp check_password(%User{} = user, password) do
-    case Bcrypt.checkpw(password, user.password_hash) do
-      true -> {:ok, user}
-      false -> {:error, "Incorrect username or password"}
-    end
+  def list_sessions(%User{} = user) do
+    user.sessions
   end
 
-  defp check_password(_, _) do
-    {:error, "Incorrect username or password"}
+  def add_session(%User{} = user, session_id, timestamp) do
+    sessions = put_in(user.sessions, [session_id], timestamp)
+
+    Accounts.update_user(user, %{sessions: sessions})
   end
 
+  def delete_session(%User{} = user, session_id) do
+    sessions = Map.delete(user.sessions, session_id)
 
-  ## Private
-
-  defp query_by_username_or_email(login) do
-    from user in User,
-    where: user.username == ^login,
-    or_where: user.email == ^login
+    Accounts.update_user(user, %{sessions: sessions})
   end
 end

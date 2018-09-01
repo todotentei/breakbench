@@ -3,7 +3,6 @@ defmodule BreakbenchWeb.UserController do
 
   alias Breakbench.Accounts
   alias Breakbench.Accounts.User
-  alias Breakbench.Auth
 
   def new(conn, _params) do
     render(conn, "new.html")
@@ -13,10 +12,11 @@ defmodule BreakbenchWeb.UserController do
       "password" => password}}) do
     attrs = %{username: username, email: email, password: password}
     case Accounts.create_user(attrs) do
-      {:ok, %User{id: id}} ->
+      {:ok, %User{}} ->
         conn
-          |> Auth.Actions.login(id)
-          |> json(%{status: "ok", message: "You have been successfully registered and logged in"})
+        # conn
+        #   |> Auth.Actions.login(id)
+        #   |> json(%{status: "ok", message: "You have been successfully registered and logged in"})
       {:error, _} ->
         json(conn, %{status: "error", message: "Failed to create new user"})
     end
