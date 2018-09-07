@@ -8,7 +8,7 @@ const defaultState = {
   game_modes: []
 };
 
-export class SportGameModeSelect extends Component {
+class SportGameModeSelect extends Component {
   constructor(props) {
     super(props);
 
@@ -31,7 +31,7 @@ export class SportGameModeSelect extends Component {
     try {
       Axios({
         method: 'post',
-        url: '/api/graphiql',
+        url: '/graphiql',
         data: { query: `
           query { listSportGameModes(sport: "${sport}") { id, name } }
         `},
@@ -90,3 +90,5 @@ export class SportGameModeSelect extends Component {
 SportGameModeSelect.propTypes = {
   sport: PropTypes.string
 };
+
+export default SportGameModeSelect;

@@ -36,7 +36,8 @@ config :breakbench, Stripe,
 
 config :phauxth,
   token_salt: "7MgjnmF3",
-  endpoint: BreakbenchWeb.Endpoint
+  endpoint: BreakbenchWeb.Endpoint,
+  user_context: Breakbench.Auth
 
 config :verk,
   queues: [default: 25, priority: 10],

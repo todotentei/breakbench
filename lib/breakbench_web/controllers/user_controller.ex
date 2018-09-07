@@ -8,17 +8,18 @@ defmodule BreakbenchWeb.UserController do
     render(conn, "new.html")
   end
 
-  def create(conn, %{"user" => %{"username" => username, "email" => email,
-      "password" => password}}) do
-    attrs = %{username: username, email: email, password: password}
+  def create(conn, %{"user" => attrs}) do
+    attrs = AtomicMap.convert(attrs, safe: false)
+
     case Accounts.create_user(attrs) do
       {:ok, %User{}} ->
         conn
-        # conn
-        #   |> Auth.Actions.login(id)
-        #   |> json(%{status: "ok", message: "You have been successfully registered and logged in"})
+        |> put_status(:created)
+        |> json(%{message: "Register successfully"})
       {:error, _} ->
-        json(conn, %{status: "error", message: "Failed to create new user"})
+        conn
+        |> put_status(:bad_request)
+        |> json(%{message: "Failed to create new user"})
     end
   end
 end

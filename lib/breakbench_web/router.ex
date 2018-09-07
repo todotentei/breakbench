@@ -8,7 +8,7 @@ defmodule BreakbenchWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Phauxth.Authenticate, user_context: Breakbench.Auth
+    plug Phauxth.Authenticate
     plug Phauxth.Remember
   end
 
@@ -29,10 +29,14 @@ defmodule BreakbenchWeb.Router do
     delete "/logout", SessionController, :delete
   end
 
-  scope "/api" do
+  scope "/api", BreakbenchWeb do
+    pipe_through [:api]
+  end
+
+  scope "/graphql" do
     pipe_through [:api]
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
+    forward "/", Absinthe.Plug.GraphiQL,
       schema: BreakbenchWeb.Schema,
       interface: :simple,
       context: %{pubsub: BreakbenchWeb.Endpoint}

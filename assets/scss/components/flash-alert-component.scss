@@ -1,0 +1,43 @@
+@import '../colors';
+
+.flash-alert {
+  display: flex;
+  min-height: 50px;
+  background-color: $bb-dusty-200;
+
+  .flash-alert__body {
+    width: 100%;
+    padding: 15px 0 15px 30px;
+  }
+
+  .flash-alert__close {
+    float: right;
+
+    &, button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      width: 50px;
+      height: 100%;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.flash-alert.success {
+  border: 1px solid $bb-success-400;
+  background-color: $bb-success-100;
+  &, .fa-times { color: $bb-success-900; }
+}
+
+.flash-alert.danger {
+  border: 1px solid $bb-danger-400;
+  background-color: $bb-danger-100;
+  &, .fa-times { color: $bb-danger-900; }
+}

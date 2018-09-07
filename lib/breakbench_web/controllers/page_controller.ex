@@ -5,7 +5,6 @@ defmodule BreakbenchWeb.PageController do
 
   plug :ensure_authenticated when action in [:index]
 
-
   def index(conn, _params) do
     render(conn, "index.html")
   end

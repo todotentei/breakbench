@@ -19,7 +19,7 @@ module.exports = (env, options) => ({
   entry: [
     'babel-polyfill',
     'bootstrap-loader',
-    './js/app.jsx'
+    './js/app.js'
   ],
   output: {
     filename: 'app.js',

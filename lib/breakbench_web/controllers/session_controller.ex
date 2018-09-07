@@ -12,21 +12,27 @@ defmodule BreakbenchWeb.SessionController do
 
 
   def new(conn, _params) do
+    IO.inspect(conn.remote_ip)
     render(conn, "new.html")
   end
 
   def create(conn, %{"session" => params}) do
-    case Login.verify(params, Auth) do
+    case Login.verify(params) do
       {:ok, user} ->
         session_id = Login.gen_session_id("F")
         Auth.add_session(user, session_id, System.system_time(:second))
 
         Login.add_session(conn, session_id, user.id)
         |> add_remember_me(user.id, params)
-        |> login_success(page_path(conn, :index))
+        |> put_status(:ok)
+        |> json(%{message: "Login successfully"})
 
       {:error, message} ->
-        error(conn, message, session_path(conn, :new))
+        message = message || "Unauthorized"
+
+        conn
+        |> put_status(:unauthorized)
+        |> json(%{message: message})
     end
   end
 
@@ -42,8 +48,10 @@ defmodule BreakbenchWeb.SessionController do
 
   ## Private
 
-  defp add_remember_me(conn, user_id, %{"remember_me" => "true"}) do
-    Phauxth.Remember.add_rem_cookie(conn, user_id)
+  defp add_remember_me(conn, user_id, %{"remember_me" => true}) do
+    cookie = Phauxth.Remember.add_rem_cookie(conn, user_id)
+    IO.inspect(cookie)
+    cookie
   end
   defp add_remember_me(conn, _, _), do: conn
 end

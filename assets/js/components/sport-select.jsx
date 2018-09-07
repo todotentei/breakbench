@@ -6,7 +6,7 @@ import {
 } from 'reactstrap';
 import Select from 'react-select';
 
-export class SportSelect extends Component {
+class SportSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +22,7 @@ export class SportSelect extends Component {
   loadSports = () => {
     Axios({
       method: 'post',
-      url: '/api/graphiql',
+      url: '/graphiql',
       data: { query: `
         query { listSports { name } }
       `}
@@ -59,3 +59,5 @@ export class SportSelect extends Component {
     );
   }
 };
+
+export default SportSelect;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Input } from 'reactstrap';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
-export class GoogleAutocomplete extends Component {
+class GoogleAutocomplete extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,3 +59,5 @@ export class GoogleAutocomplete extends Component {
     );
   }
 };
+
+export default GoogleAutocomplete;

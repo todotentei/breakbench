@@ -1,0 +1,39 @@
+.login-form {
+  width: 100%;
+
+  .login-form__form-group {
+    margin: 0;
+    margin-bottom: 20px;
+
+    .login-form__form-group--label {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 11px;
+    }
+
+    .login-form__form-group--input {
+      margin-bottom: 5px;
+    }
+  }
+
+  .login-form__forgot-password {
+    margin-bottom: 20px;
+
+    button {
+      color: $bb-dusty-400;
+      font-size: 12px;
+      font-weight: lighter;
+      border: none;
+      background: none;
+      padding: 0;
+
+      &:hover { cursor: pointer; }
+    }
+  }
+
+  .login-form__submit {
+    width: 100%;
+    color: white;
+    background-color: $bb-primary-900;
+  }
+}

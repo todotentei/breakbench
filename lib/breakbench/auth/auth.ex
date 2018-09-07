@@ -9,7 +9,7 @@ defmodule Breakbench.Auth do
 
   def get(id), do: Repo.get(User, id)
 
-  def get_by(%{"login" => username_or_email}) do
+  def get_by(%{"username_or_email" => username_or_email}) do
     from(User)
     |> where([u], u.username == ^username_or_email)
     |> or_where([u], u.email == ^username_or_email)

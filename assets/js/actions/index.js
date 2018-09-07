@@ -1,4 +1,4 @@
-export * from './alert.actions';
-export * from './flash.actions';
-export * from './logged.actions';
-export * from './user.actions';
+export { default as authenticatedActions } from './authenticated-actions';
+export { default as flashAlertActions } from './flash-alert-actions';
+export { default as sessionActions } from './session-actions';
+export { default as userActions } from './user-actions';

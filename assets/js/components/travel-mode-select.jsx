@@ -4,7 +4,7 @@ import {
   Button, ButtonGroup
 } from 'reactstrap';
 
-export class TravelModeSelect extends Component {
+class TravelModeSelect extends Component {
   constructor(props) {
     super(props);
 
@@ -27,7 +27,7 @@ export class TravelModeSelect extends Component {
   componentDidMount = () => {
     Axios({
       method: 'post',
-      url: '/api/graphiql',
+      url: '/graphiql',
       data: { query: `query { listMatchmakingTravelModes { type } }`}
     })
     .then(response => {
@@ -61,3 +61,5 @@ export class TravelModeSelect extends Component {
     );
   }
 };
+
+export default TravelModeSelect;
