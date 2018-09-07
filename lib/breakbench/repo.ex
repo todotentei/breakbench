@@ -31,7 +31,7 @@ defmodule Breakbench.Repo do
     end
   end
 
-  def has?(schema, clauses) do
+  def has(schema, clauses) do
     case all(from(schema, where: ^Enum.to_list(clauses))) do
       [_head | _] -> true
       [] -> false

@@ -41,6 +41,6 @@ for currency <- read!.("seeds/currencies.json") do
 end
 
 for travel_mode <- ~w(Driving Transit Walking Cycling) do
-  Repo.has?(Matchmaking.MatchmakingTravelMode, %{type: travel_mode})
+  Repo.has(Matchmaking.MatchmakingTravelMode, %{type: travel_mode})
     || Matchmaking.create_travel_mode(%{type: travel_mode})
 end
