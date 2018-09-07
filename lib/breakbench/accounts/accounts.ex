@@ -123,6 +123,10 @@ defmodule Breakbench.Accounts do
   end
   def get_user!(id), do: Repo.get!(User, id)
 
+  def has_user(attrs) do
+    Repo.has(User, attrs)
+  end
+
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.registration_changeset(attrs)
