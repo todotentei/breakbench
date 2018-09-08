@@ -1,5 +1,5 @@
-import Axios from 'axios';
 import React, { Component } from 'react';
+import { gql } from '../utils';
 import {
   FormGroup,
   Label
@@ -20,22 +20,19 @@ class SportSelect extends Component {
   }
 
   loadSports = () => {
-    Axios({
-      method: 'post',
-      url: '/graphiql',
-      data: { query: `
-        query { listSports { name } }
-      `}
-    })
-    .then(response => response.data.data.listSports)
-    .then(data => {
-      this.setState({
-        sports: data.map(({name}) => ({ value: name, label: name }))
+    gql.query(`{
+      listSports { name }
+    }`)()
+      .then(data => {
+        const { listSports } = data;
+        const sports = listSports.map(
+          ({name}) => ({ value: name, label: name })
+        );
+
+        this.setState({ sports });
+      }, err => {
+        console.error(err);
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
   }
 
   componentDidMount = () => {

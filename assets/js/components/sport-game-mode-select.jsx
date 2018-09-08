@@ -1,5 +1,5 @@
-import Axios from 'axios';
 import React, { Component } from 'react';
+import { gql } from '../utils';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
@@ -12,8 +12,9 @@ class SportGameModeSelect extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {...defaultState}
-    this.signal = Axios.CancelToken.source();
+    this.state = {
+      ...defaultState
+    };
   }
 
   resetState = () => {
@@ -28,27 +29,23 @@ class SportGameModeSelect extends Component {
   }
 
   loadGameModes = (sport) => {
-    try {
-      Axios({
-        method: 'post',
-        url: '/graphiql',
-        data: { query: `
-          query { listSportGameModes(sport: "${sport}") { id, name } }
-        `},
-        cancelToken: this.signal.token
-      })
-      .then(response => response.data.data.listSportGameModes)
-      .then(data => {
-        this.setState({
-          game_modes: data.map(({id, name}) => ({value: id, label: name}))
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    } catch (err) {
-      if (axios.isCancel(err)) console.log(err.message);
-    }
+    gql.query(`($sport: String!) {
+      listGameModes( sport: $sport ) {
+        id,
+        name
+      }
+    }`, {
+      sport: sport
+    }).then(data => {
+      const { listGameModes } = data;
+      const game_modes = listGameModes.map(
+        ({id, name}) => ({ value: id, label: name })
+      );
+
+      this.setState({ game_modes });
+    }, err => {
+      console.error(err);
+    });
   }
 
   componentWillMount = () => {
@@ -63,10 +60,6 @@ class SportGameModeSelect extends Component {
       this.resetState();
       if (sport) this.loadGameModes(sport);
     }
-  }
-
-  componentWillUnmount = () => {
-    this.signal.cancel('Sport\'s game mode (select) loading is being canceled');
   }
 
   render() {

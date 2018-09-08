@@ -1,5 +1,5 @@
-import Axios from 'axios';
 import React, { Component } from 'react';
+import { gql } from '../utils';
 import {
   Button, ButtonGroup
 } from 'reactstrap';
@@ -25,19 +25,15 @@ class TravelModeSelect extends Component {
   }
 
   componentDidMount = () => {
-    Axios({
-      method: 'post',
-      url: '/graphiql',
-      data: { query: `query { listMatchmakingTravelModes { type } }`}
-    })
-    .then(response => {
-      this.setState({
-        travel_modes: response.data.data.listMatchmakingTravelModes
+    gql.query(`{
+      listMatchmakingTravelModes { type }
+    }`)()
+      .then(data => {
+        const travel_modes = data.listMatchmakingTravelModes;
+        this.setState({ travel_modes });
+      }, err => {
+        console.error(err);
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
   }
 
   render() {
