@@ -1,6 +1,5 @@
 defmodule BreakbenchWeb.AccountResolver do
   @moduledoc false
-  alias Breakbench.Repo
   alias Breakbench.Accounts
 
   def list_users(_, _, _) do
