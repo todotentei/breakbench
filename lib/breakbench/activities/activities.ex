@@ -7,22 +7,56 @@ defmodule Breakbench.Activities do
   alias Breakbench.Repo
 
   alias Breakbench.Activities.{
-    GameMode, Sport
+    GameMode,
+    Sport
   }
   alias Breakbench.Accounts.Match
 
+  @doc """
+  Generates a changeset for the activity schemas.
+  """
+  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  def changeset(:game_mode) do
+    GameMode.changeset(%GameMode{}, %{})
+  end
+  def changeset(:sport) do
+    Sport.changeset(%Sport{}, %{})
+  end
 
-  # Game modes
-
+  @doc """
+  Returns a sport's game modes.
+  """
+  @spec list_game_modes(term :: Sport.t) :: [GameMode.t]
   def list_game_modes(%Sport{} = sport) do
     sport
     |> Ecto.assoc(:game_modes)
     |> Repo.all()
   end
+
+  @doc """
+  Returns all the activity game modes.
+  """
+  @spec list_game_modes() :: [GameMode.t]
   def list_game_modes do
     Repo.all(GameMode)
   end
 
+  @doc """
+  Returns all the sports.
+  """
+  @spec list_sports() :: [Sport.t]
+  def list_sports do
+    Repo.all(Sport)
+  end
+
+  @doc """
+  Get a game mode.
+  """
+  @spec get_game_mode!(
+    term :: binary
+          | Match.t
+  ) :: nil
+     | GameMode.t
   def get_game_mode!(%Match{} = match) do
     match
     |> Ecto.assoc(:game_mode)
@@ -32,52 +66,12 @@ defmodule Breakbench.Activities do
     Repo.get!(GameMode, id)
   end
 
-  def create_game_mode(attrs \\ %{}) do
-    %GameMode{}
-      |> GameMode.changeset(attrs)
-      |> Repo.insert()
-  end
-
-  def update_game_mode(%GameMode{} = game_mode, attrs) do
-    game_mode
-      |> GameMode.changeset(attrs)
-      |> Repo.update()
-  end
-
-  def delete_game_mode(%GameMode{} = game_mode) do
-    Repo.delete(game_mode)
-  end
-
-  def change_game_mode(%GameMode{} = game_mode) do
-    GameMode.changeset(game_mode, %{})
-  end
-
-
-  # Sports
-
-  def list_sports do
-    Repo.all(Sport)
-  end
-
+  @doc """
+  Get a sport.
+  """
+  @spec get_sport!(
+    term :: binary
+  ) :: nil
+     | Sport.t
   def get_sport!(name), do: Repo.get!(Sport, name)
-
-  def create_sport(attrs \\ %{}) do
-    %Sport{}
-      |> Sport.changeset(attrs)
-      |> Repo.insert()
-  end
-
-  def update_sport(%Sport{} = sport, attrs) do
-    sport
-      |> Sport.changeset(attrs)
-      |> Repo.update()
-  end
-
-  def delete_sport(%Sport{} = sport) do
-    Repo.delete(sport)
-  end
-
-  def change_sport(%Sport{} = sport) do
-    Sport.changeset(sport, %{})
-  end
 end

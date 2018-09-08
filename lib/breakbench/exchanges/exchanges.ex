@@ -9,11 +9,22 @@ defmodule Breakbench.Exchanges do
   alias Breakbench.Exchanges.Currency
   alias Breakbench.Accounts.Booking
 
-
-  def list_currencies do
-    Repo.all(Currency)
+  @doc """
+  Generates a changeset for the exchange schemas.
+  """
+  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  def changeset(:currency) do
+    Currency.changeset(%Currency{}, %{})
   end
 
+  @doc """
+  Get a currency.
+  """
+  @spec get_currency!(
+    term :: binary
+          | Booking.t
+  ) :: nil
+     | Currency.t
   def get_currency!(%Booking{} = booking) do
     booking
     |> Ecto.assoc(:currency)
@@ -21,25 +32,5 @@ defmodule Breakbench.Exchanges do
   end
   def get_currency!(code) do
     Repo.get!(Currency, code)
-  end
-
-  def create_currency(attrs \\ %{}) do
-    %Currency{}
-    |> Currency.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  def update_currency(%Currency{} = currency, attrs) do
-    currency
-    |> Currency.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def delete_currency(%Currency{} = currency) do
-    Repo.delete(currency)
-  end
-
-  def change_currency(%Currency{} = currency) do
-    Currency.changeset(currency, %{})
   end
 end

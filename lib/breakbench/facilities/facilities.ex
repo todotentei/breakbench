@@ -6,88 +6,103 @@ defmodule Breakbench.Facilities do
   alias Breakbench.Repo
 
   alias Breakbench.Facilities.{
-    Area, GameArea, GameAreaClosingHour, GameAreaDynamicPricing, Space,
-    SpaceOpeningHour
+    AffectedGameArea,
+    AreaClosingHour,
+    Area,
+    GameAreaClosingHour,
+    GameAreaDynamicPricing,
+    GameAreaMode,
+    GameArea,
+    SpaceOpeningHour,
+    Space,
   }
   alias Breakbench.Accounts.Booking
 
-
-  ## Area
-
-  def list_areas do
-    Repo.all Area
+  @doc """
+  Generates a changeset for the facility schemas.
+  """
+  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  def changeset(:affected_game_area) do
+    AffectedGameArea.changeset(%AffectedGameArea{}, %{})
+  end
+  def changeset(:area_closing_hour) do
+    AreaClosingHour.changeset(%AreaClosingHour{}, %{})
+  end
+  def changeset(:area) do
+    Area.changeset(%Area{}, %{})
+  end
+  def changeset(:game_area_closing_hour) do
+    GameAreaClosingHour.changeset(%GameAreaClosingHour{}, %{})
+  end
+  def changeset(:game_area_dynamic_pricing) do
+    GameAreaDynamicPricing.changeset(%GameAreaDynamicPricing{}, %{})
+  end
+  def changeset(:game_area_mode) do
+    GameAreaMode.changeset(%GameAreaMode{}, %{})
+  end
+  def changeset(:game_area) do
+    GameArea.changeset(%GameArea{}, %{})
+  end
+  def changeset(:space_opening_hour) do
+    SpaceOpeningHour.changeset(%SpaceOpeningHour{}, %{})
+  end
+  def changeset(:space) do
+    Space.changeset(%Space{}, %{})
   end
 
-  def get_area!(id) do
-    Repo.get! Area, id
-  end
-
-  def create_area(attrs \\ %{}) do
-    %Area{}
-    |> Area.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  def delete_area(%Area{} = area) do
-    Repo.delete area
-  end
-
-
-  ## Game Area
-
-  def list_game_areas do
-    Repo.all GameArea
-  end
-
+  @doc """
+  Returns all the game area closing hours.
+  """
+  @spec list_game_area_closing_hours() :: [GameAreaClosingHour.t]
   def list_game_area_closing_hours do
     Repo.all GameAreaClosingHour
   end
 
+  @doc """
+  Returns all the game area dynamic pricings.
+  """
+  @spec list_game_area_dynamic_pricings() :: [GameAreaDynamicPricing.t]
   def list_game_area_dynamic_pricings do
     Repo.all GameAreaDynamicPricing
   end
 
-  def get_game_area!(id) do
-    Repo.get! GameArea, id
-  end
-
-  def get_game_area_closing_hour!(id) do
-    Repo.get! GameAreaClosingHour, id
-  end
-
-  def get_game_area_dynamic_pricing!(id) do
-    Repo.get! GameAreaDynamicPricing, id
-  end
-
-  def create_game_area(attrs \\ %{}) do
-    %GameArea{}
-    |> GameArea.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  def create_game_area_closing_hour(attrs \\ %{}) do
-    %GameAreaClosingHour{}
-    |> GameAreaClosingHour.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  def create_game_area_dynamic_pricing(attrs \\ %{}) do
-    %GameAreaDynamicPricing{}
-    |> GameAreaDynamicPricing.changeset(attrs)
-    |> Repo.insert()
-  end
-
-
-  ## Space
-
-  def list_spaces do
-    Repo.all Space
-  end
-
+  @doc """
+  Returns all the space opening hours.
+  """
+  @spec list_space_opening_hours() :: [SpaceOpeningHour.t]
   def list_space_opening_hours do
     Repo.all SpaceOpeningHour
   end
 
+  @doc """
+  Get a game area closing hour.
+  """
+  @spec get_game_area_closing_hour!(
+    term :: binary
+  ) :: nil
+     | GameAreaClosingHour.t
+  def get_game_area_closing_hour!(id) do
+    Repo.get! GameAreaClosingHour, id
+  end
+
+  @doc """
+  Get a game area dynamic pricing.
+  """
+  @spec get_game_area_dynamic_pricing!(
+    term :: binary
+  ) :: nil
+     | GameAreaDynamicPricing.t
+  def get_game_area_dynamic_pricing!(id) do
+    Repo.get! GameAreaDynamicPricing, id
+  end
+
+  @doc """
+  Get a space.
+  """
+  @spec get_space!(
+    term :: binary
+  ) :: nil
+     | Space.t
   def get_space!(%Booking{} = booking) do
     booking
     |> Ecto.assoc([:game_area, :area, :space])
@@ -97,37 +112,53 @@ defmodule Breakbench.Facilities do
     Repo.get! Space, id
   end
 
+  @doc """
+  Get a space opening hour.
+  """
+  @spec get_space_opening_hour!(
+    term :: binary
+  ) :: nil
+     | SpaceOpeningHour.t
   def get_space_opening_hour!(id) do
     Repo.get! SpaceOpeningHour, id
   end
 
-  def create_space(attrs \\ %{}) do
-    %Space{}
-    |> Space.changeset(attrs)
+  @doc """
+  Creates a game area closing hour.
+  """
+  @spec create_game_area_closing_hour(
+    attrs :: map
+  ) :: {:ok, GameAreaClosingHour.t}
+     | {:error, Ecto.Changeset.t}
+  def create_game_area_closing_hour(attrs \\ %{}) do
+    %GameAreaClosingHour{}
+    |> GameAreaClosingHour.changeset(attrs)
     |> Repo.insert()
   end
 
+  @doc """
+  Creates a game area dynamic pricing.
+  """
+  @spec create_game_area_dynamic_pricing(
+    attrs :: map
+  ) :: {:ok, GameAreaDynamicPricing.t}
+     | {:error, Ecto.Changeset.t}
+  def create_game_area_dynamic_pricing(attrs \\ %{}) do
+    %GameAreaDynamicPricing{}
+    |> GameAreaDynamicPricing.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates a space opening hour.
+  """
+  @spec create_space_opening_hour(
+    attrs :: map
+  ) :: {:ok, SpaceOpeningHour.t}
+     | {:error, Ecto.Changeset.t}
   def create_space_opening_hour(attrs \\ %{}) do
     %SpaceOpeningHour{}
     |> SpaceOpeningHour.changeset(attrs)
     |> Repo.insert()
-  end
-
-  def update_space(%Space{} = space, attrs) do
-    space
-    |> Space.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def delete_space(%Space{} = space) do
-    Repo.delete space
-  end
-
-  def change_space(%Space{} = space) do
-    Space.changeset space, %{}
-  end
-
-  def change_space_opening_hour(%SpaceOpeningHour{} = space_opening_hour) do
-    SpaceOpeningHour.changeset space_opening_hour, %{}
   end
 end

@@ -6,24 +6,24 @@ defmodule Breakbench.Regions do
 
   alias Breakbench.Regions.Country
 
-
-  # Country
-
-  def list_countries do
-    Repo.all Country
+  @doc """
+  Generates a changeset for the region schemas.
+  """
+  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  def changeset(:country) do
+    Country.changeset(%Country{}, %{})
   end
 
-  def get_country!(short_name) do
-    Repo.get! Country, short_name
-  end
-
+  @doc """
+  Creates a country.
+  """
+  @spec create_country(
+    attrs :: map
+  ) :: {:ok, Country.t}
+     | {:error, Ecto.Changeset.t}
   def create_country(attrs \\ %{}) do
     %Country{}
-      |> Country.changeset(attrs)
-      |> Repo.insert()
-  end
-
-  def delete_country(%Country{} = country) do
-    Repo.delete country
+    |> Country.changeset(attrs)
+    |> Repo.insert()
   end
 end

@@ -8,30 +8,27 @@ defmodule Breakbench.Timesheets do
 
   alias Breakbench.Timesheets.TimeBlock
 
-
-  def list_time_blocks do
-    Repo.all(TimeBlock)
+  @doc """
+  Get a time block.
+  """
+  @spec get_time_block!(
+    term :: binary
+  ) :: nil
+     | TimeBlock.t
+  def get_time_block!(id) do
+    Repo.get!(TimeBlock, id)
   end
 
-  def get_time_block!(id), do: Repo.get!(TimeBlock, id)
-
+  @doc """
+  Creates a time block.
+  """
+  @spec create_time_block(
+    attrs :: map
+  ) :: {:ok, TimeBlock.t}
+     | {:error, Ecto.Changeset.t}
   def create_time_block(attrs \\ %{}) do
     %TimeBlock{}
-      |> TimeBlock.changeset(attrs)
-      |> Repo.insert()
-  end
-
-  def update_time_block(%TimeBlock{} = time_block, attrs) do
-    time_block
-      |> TimeBlock.changeset(attrs)
-      |> Repo.update()
-  end
-
-  def delete_time_block(%TimeBlock{} = time_block) do
-    Repo.delete(time_block)
-  end
-
-  def change_time_block(%TimeBlock{} = time_block) do
-    TimeBlock.changeset(time_block, %{})
+    |> TimeBlock.changeset(attrs)
+    |> Repo.insert()
   end
 end
