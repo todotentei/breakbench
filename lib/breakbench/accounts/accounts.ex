@@ -106,6 +106,20 @@ defmodule Breakbench.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Get a user by username or email address.
+  """
+  @spec get_user_by_username_or_email!(
+    data :: binary
+  ) :: nil
+     | User.t
+  def get_user_by_username_or_email!(data) do
+    from(User)
+    |> where(username: ^data)
+    |> or_where(email: ^data)
+    |> Repo.one!()
+  end
+
+  @doc """
   Checks if a user exists.
   """
   @spec has_user(attrs :: map) :: boolean

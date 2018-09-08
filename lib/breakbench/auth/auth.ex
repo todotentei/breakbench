@@ -1,34 +1,68 @@
 defmodule Breakbench.Auth do
   @moduledoc false
+  import Plug.Conn
 
-  import Ecto.Query
-  alias Breakbench.Repo
-
+  alias Comeonin.Bcrypt
   alias Breakbench.Accounts
-  alias Breakbench.Accounts.User
+  alias Breakbench.Auth.{Config, Token}
 
-  def get(id), do: Repo.get(User, id)
-
-  def get_by(%{"username_or_email" => username_or_email}) do
-    from(User)
-    |> where([u], u.username == ^username_or_email)
-    |> or_where([u], u.email == ^username_or_email)
-    |> Repo.one()
+  def authenticate(username_or_email, password) do
+    try do
+      username_or_email
+      |> Accounts.get_user_by_username_or_email!()
+      |> check_password(password)
+    rescue
+      _ -> {:error, "Incorrest username or password"}
+    end
   end
 
-  def list_sessions(%User{} = user) do
-    user.sessions
+  def put_session(conn, user) do
+    conn
+    |> put_current_user(user)
+    |> put_session(:user_id, user.id)
+    |> configure_session(renew: true)
   end
 
-  def add_session(%User{} = user, session_id, timestamp) do
-    sessions = put_in(user.sessions, [session_id], timestamp)
-
-    Accounts.update_user(user, %{sessions: sessions})
+  def put_current_user(conn, user) do
+    assign(conn, :current_user, user)
   end
 
-  def delete_session(%User{} = user, session_id) do
-    sessions = Map.delete(user.sessions, session_id)
+  def put_rem_cookie(conn, id, max_age \\ Config.max_age()) do
+    key = Config.remember_key()
+    cookie = Token.sign(conn, id, [
+      max_age: max_age
+    ])
+    opts = [
+      http_only: true,
+      max_age: max_age
+    ]
 
-    Accounts.update_user(user, %{sessions: sessions})
+    put_resp_cookie(conn, key, cookie, opts)
+  end
+
+  def delete_session(conn) do
+    conn
+    |> put_current_user(nil)
+    |> delete_session(:user_id)
+    |> configure_session(drop: true)
+  end
+
+  def delete_rem_cookie(conn) do
+    register_before_send conn,
+      fn conn ->
+        key = Config.remember_key()
+        delete_resp_cookie(conn, key)
+      end
+  end
+
+
+  ## Private
+
+  defp check_password(user, password) do
+    if Bcrypt.checkpw(password, user.password_hash) do
+      {:ok, user}
+    else
+      {:error, "Incorrest username or password"}
+    end
   end
 end

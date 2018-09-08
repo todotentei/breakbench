@@ -16,6 +16,7 @@ defmodule BreakbenchWeb.UserController do
         conn
         |> put_status(:created)
         |> json(%{message: "Register successfully"})
+        
       {:error, _} ->
         conn
         |> put_status(:bad_request)

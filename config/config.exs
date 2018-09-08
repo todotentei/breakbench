@@ -34,10 +34,8 @@ config :breakbench, Stripe,
   httpoison: [recv_timeout: 5000, timeout: 8000],
   webhook: [tolerance: 300000]
 
-config :phauxth,
-  token_salt: "7MgjnmF3",
-  endpoint: BreakbenchWeb.Endpoint,
-  user_context: Breakbench.Auth
+config :breakbench, Breakbench.Auth,
+  token_salt: "7MgjnmF3"
 
 config :verk,
   queues: [default: 25, priority: 10],

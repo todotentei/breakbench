@@ -1,6 +1,7 @@
 defmodule BreakbenchWeb.Router do
   use BreakbenchWeb, :router
 
+  alias Breakbench.Auth.Plug
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -8,18 +9,20 @@ defmodule BreakbenchWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Phauxth.Authenticate
-    plug Phauxth.Remember
+    plug Plug.Remember
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug Plug.EnsureAuthenticated
+  end
+
   scope "/", BreakbenchWeb do
     pipe_through [:browser]
 
-    get "/", PageController, :index
     get "/login", SessionController, :new
     get "/register", UserController, :new
 
@@ -27,6 +30,12 @@ defmodule BreakbenchWeb.Router do
     post "/register", UserController, :create
 
     delete "/logout", SessionController, :delete
+  end
+
+  scope "/", BreakbenchWeb do
+    pipe_through [:browser, :auth]
+
+    get "/", PageController, :index
   end
 
   scope "/api", BreakbenchWeb do
