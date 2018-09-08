@@ -1,10 +1,9 @@
 defmodule Breakbench.PostgrexHelper do
   @moduledoc "Postgrex Helper"
 
-
-  def result_to_map(%Postgrex.Result{columns: columns, rows: rows, num_rows: num_rows}) do
-    Enum.map rows, fn row ->
-      columns
+  def result_to_map(%Postgrex.Result{} = result) do
+    Enum.map result.rows, fn row ->
+      result.columns
       |> Enum.zip(row)
       |> Map.new
       |> AtomicMap.convert(safe: false)
