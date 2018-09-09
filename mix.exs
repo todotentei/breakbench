@@ -63,8 +63,7 @@ defmodule Breakbench.Mixfile do
       {:flow, "~> 0.12"},
       {:benchee, "~> 0.11", only: :dev},
       {:timex_ecto, "~> 3.0"},
-      {:entropy_string, "~> 1.3"},
-      {:browser, "~> 0.1.0"}
+      {:entropy_string, "~> 1.3"}
     ]
   end
 
