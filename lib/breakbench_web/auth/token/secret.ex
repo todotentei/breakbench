@@ -1,6 +1,6 @@
-defmodule Breakbench.Auth.Secret do
+defmodule BreakbenchWeb.Auth.Secret do
   @moduledoc false
-  alias Breakbench.Auth.KDF
+  alias BreakbenchWeb.Auth.KDF
 
   def generate(source, opts) do
     source

@@ -1,7 +1,7 @@
-defmodule Breakbench.Auth.KDF do
+defmodule BreakbenchWeb.Auth.KDF do
   @moduledoc false
   alias Plug.Crypto.KeyGenerator
-  alias Breakbench.Auth.Config
+  alias BreakbenchWeb.Auth.Config
 
   import Keyword, only: [get: 2, get: 3]
 

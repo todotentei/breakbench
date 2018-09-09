@@ -1,15 +1,13 @@
 defmodule BreakbenchWeb.Router do
   use BreakbenchWeb, :router
 
-  alias Breakbench.Auth.Plug
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Plug.Remember
+    plug :remember_me
   end
 
   pipeline :api do
@@ -17,7 +15,7 @@ defmodule BreakbenchWeb.Router do
   end
 
   pipeline :auth do
-    plug Plug.EnsureAuthenticated
+    plug :ensure_authenticated
   end
 
   scope "/", BreakbenchWeb do

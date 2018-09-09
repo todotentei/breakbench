@@ -23,6 +23,7 @@ defmodule BreakbenchWeb do
       import Plug.Conn
       import BreakbenchWeb.Router.Helpers
       import BreakbenchWeb.Gettext
+      import BreakbenchWeb.Auth.Plugs
     end
   end
 
@@ -48,6 +49,7 @@ defmodule BreakbenchWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import BreakbenchWeb.Auth.Plugs
     end
   end
 

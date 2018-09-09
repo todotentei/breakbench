@@ -1,8 +1,8 @@
-defmodule Breakbench.Auth.Config do
+defmodule BreakbenchWeb.Auth.Config do
   @moduledoc false
 
   def auth_config do
-    Application.get_env(:breakbench, Breakbench.Auth)
+    Application.get_env(:breakbench, BreakbenchWeb.Auth)
   end
 
   def remember_key do

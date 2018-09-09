@@ -1,4 +1,4 @@
-defmodule Breakbench.Auth.Message do
+defmodule BreakbenchWeb.Auth.Message do
   @derive Jason.Encoder
 
   @enforce_keys [:data, :exp]

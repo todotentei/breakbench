@@ -1,8 +1,8 @@
-defmodule Breakbench.Auth.Token do
+defmodule BreakbenchWeb.Auth.Token do
   @moduledoc false
 
-  alias Breakbench.Auth.Message
-  alias Breakbench.Auth.Secret
+  alias BreakbenchWeb.Auth.Message
+  alias BreakbenchWeb.Auth.Secret
   alias Plug.Crypto.MessageVerifier
 
   def sign(source, data, opts \\ []) do

@@ -34,7 +34,7 @@ config :breakbench, Stripe,
   httpoison: [recv_timeout: 5000, timeout: 8000],
   webhook: [tolerance: 300000]
 
-config :breakbench, Breakbench.Auth,
+config :breakbench, BreakbenchWeb.Auth,
   token_salt: "7MgjnmF3"
 
 config :verk,

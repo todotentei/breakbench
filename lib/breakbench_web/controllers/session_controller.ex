@@ -1,11 +1,10 @@
 defmodule BreakbenchWeb.SessionController do
   use BreakbenchWeb, :controller
 
-  alias Breakbench.Auth
-  alias Breakbench.Auth.Plug
+  plug :ensure_not_authenticated when action in [:new, :create]
+  plug :ensure_ownership when action in [:delete]
 
-  plug Plug.EnsureNotAuthenticated when action in [:new, :create]
-  plug Plug.EnsureOwnership when action in [:delete]
+  alias BreakbenchWeb.Auth
 
   def new(conn, _params) do
     render(conn, "new.html")

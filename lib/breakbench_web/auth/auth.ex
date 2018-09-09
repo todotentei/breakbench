@@ -1,10 +1,10 @@
-defmodule Breakbench.Auth do
+defmodule BreakbenchWeb.Auth do
   @moduledoc false
   import Plug.Conn
 
   alias Comeonin.Bcrypt
   alias Breakbench.Accounts
-  alias Breakbench.Auth.{Config, Token}
+  alias BreakbenchWeb.Auth.{Config, Token}
 
   def authenticate(username_or_email, password) do
     try do
