@@ -15,7 +15,9 @@ defmodule Breakbench.Auth.Plug.EnsureOwnership do
     _opts
   ) do
     unless id == to_string(current_user.id) do
-      redirect(conn, to: "/")
+      conn
+      |> redirect(to: "/")
+      |> Plug.Conn.halt()
     else
       conn
     end

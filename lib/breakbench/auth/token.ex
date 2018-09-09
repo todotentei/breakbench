@@ -1,8 +1,3 @@
-defmodule Breakbench.Auth.Message do
-  @enforce_keys [:data, :exp]
-  defstruct [:data, :exp]
-end
-
 defmodule Breakbench.Auth.Token do
   @moduledoc false
 
@@ -31,6 +26,7 @@ defmodule Breakbench.Auth.Token do
       {:ok, message} ->
         message
         |> Jason.decode!()
+        |> Message.to_struct()
         |> handle_verify()
       _ ->
         {:error, "invalid token"}

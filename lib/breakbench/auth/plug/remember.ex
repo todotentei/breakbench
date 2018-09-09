@@ -6,9 +6,9 @@ defmodule Breakbench.Auth.Plug.Remember do
   alias Breakbench.Accounts
 
   def init(opts) do
-    {
-      Keyword.get(opts, :max_age, Config.max_age())
-    }
+    [
+      max_age: Keyword.get(opts, :max_age, Config.max_age())
+    ]
   end
 
   def call(%Plug.Conn{assigns: %{current_user: current_user}} = conn, _opts)

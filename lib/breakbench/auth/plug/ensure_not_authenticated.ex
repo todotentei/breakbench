@@ -6,7 +6,9 @@ defmodule Breakbench.Auth.Plug.EnsureNotAuthenticated do
 
   def call(%Plug.Conn{} = conn, _opts) do
     if Map.get(conn.assigns, :current_user) do
-      redirect(conn, to: "/")
+      conn
+      |> redirect(to: "/")
+      |> Plug.Conn.halt()
     else
       conn
     end
