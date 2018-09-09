@@ -16,10 +16,10 @@ defmodule Breakbench.Timesheets.TimeBlock do
   @doc false
   def changeset(time_block, attrs) do
     time_block
-      |> cast(attrs, [:day_of_week, :start_time, :end_time, :from_date, :through_date])
-      |> validate_required([:day_of_week, :start_time, :end_time])
-      |> check_constraint(:start_time, name: :valid_start_time)
-      |> check_constraint(:end_time, name: :valid_end_time)
-      |> check_constraint(:end_time, name: :positive_duration)
+    |> cast(attrs, [:day_of_week, :start_time, :end_time, :from_date, :through_date])
+    |> validate_required([:day_of_week, :start_time, :end_time])
+    |> check_constraint(:start_time, name: :valid_start_time)
+    |> check_constraint(:end_time, name: :valid_end_time)
+    |> check_constraint(:end_time, name: :positive_duration)
   end
 end

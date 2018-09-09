@@ -29,7 +29,7 @@ defmodule Breakbench.Facilities.Space do
   def changeset(space, attrs) do
     space
     |> cast(attrs, [:id, :owner_id, :currency_code, :phone, :email, :website,
-       :about, :address, :geom, :timezone, :stripe_account, :service_fee])
+     :about, :address, :geom, :timezone, :stripe_account, :service_fee])
     |> validate_required([:id, :service_fee])
     |> check_constraint(:service_fee, name: :valid_service_fee)
   end

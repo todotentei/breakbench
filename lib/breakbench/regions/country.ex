@@ -12,7 +12,7 @@ defmodule Breakbench.Regions.Country do
   @doc false
   def changeset(country, attrs) do
     country
-      |> cast(attrs, [:short_name, :long_name])
-      |> validate_required([:short_name, :long_name])
+    |> cast(attrs, [:short_name, :long_name])
+    |> validate_required([:short_name, :long_name])
   end
 end

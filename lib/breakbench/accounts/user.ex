@@ -24,21 +24,21 @@ defmodule Breakbench.Accounts.User do
   @doc false
   def registration_changeset(struct, attrs) do
     struct
-      |> changeset(attrs)
-      |> cast(attrs, [:password])
-      |> validate_length(:password, min: 6, max: 100)
-      |> put_pass_hash()
+    |> changeset(attrs)
+    |> cast(attrs, [:password])
+    |> validate_length(:password, min: 6, max: 100)
+    |> put_pass_hash()
   end
 
   @doc false
   def changeset(struct, attrs) do
     struct
-      |> cast(attrs, [:full_name, :given_name, :email, :date_of_birth, :gender,
-         :username, :profile, :stripe_customer, :sessions])
-      |> validate_required([:email, :username])
-      |> validate_length(:username, min: 1, max: 20)
-      |> unique_constraint(:username)
-      |> unique_constraint(:email)
+    |> cast(attrs, [:full_name, :given_name, :email, :date_of_birth, :gender,
+      :username, :profile, :stripe_customer, :sessions])
+    |> validate_required([:email, :username])
+    |> validate_length(:username, min: 1, max: 20)
+    |> unique_constraint(:username)
+    |> unique_constraint(:email)
   end
 
 

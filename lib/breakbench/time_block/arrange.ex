@@ -16,8 +16,8 @@ defmodule Breakbench.TimeBlock.Arrange do
     uid = ArrangeState.new_state(time_blocks)
 
     time_blocks
-      |> Enum.reduce([], & &2 ++ Merge.merge(&1, new_time_block))
-      |> Glue.paste(state: uid)
+    |> Enum.reduce([], & &2 ++ Merge.merge(&1, new_time_block))
+    |> Glue.paste(state: uid)
 
     # Returns state id
     uid
@@ -33,8 +33,8 @@ defmodule Breakbench.TimeBlock.Arrange do
     uid = ArrangeState.new_state(time_blocks)
 
     time_blocks
-      |> Enum.reduce([], & &2 ++ Split.split(&1, target_time_block))
-      |> Glue.paste(uid)
+    |> Enum.reduce([], & &2 ++ Split.split(&1, target_time_block))
+    |> Glue.paste(uid)
 
     # Returns state id
     uid

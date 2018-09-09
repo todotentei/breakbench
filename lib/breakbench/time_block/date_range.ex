@@ -21,11 +21,13 @@ defmodule Breakbench.TimeBlock.DateRange do
 
     cond do
       touch1? and touch2? ->
-        from_date = time_blocks
+        from_date =
+          time_blocks
           |> Enum.min_by(&valid_from(&1.from_date))
           |> Map.get(:from_date)
 
-        through_date = time_blocks
+        through_date =
+          time_blocks
           |> Enum.max_by(&valid_through(&1.through_date))
           |> Map.get(:through_date)
 
@@ -41,11 +43,13 @@ defmodule Breakbench.TimeBlock.DateRange do
         end
 
       not(touch1? || touch2?) ->
-        from_date = time_blocks
+        from_date =
+          time_blocks
           |> Enum.max_by(&valid_from(&1.from_date))
           |> Map.get(:from_date)
 
-        through_date = time_blocks
+        through_date =
+          time_blocks
           |> Enum.min_by(&valid_through(&1.through_date))
           |> Map.get(:through_date)
 
@@ -58,11 +62,13 @@ defmodule Breakbench.TimeBlock.DateRange do
   def split(tb0, tb1) do
     time_blocks = [tb0, tb1]
 
-    from_date = time_blocks
+    from_date =
+      time_blocks
       |> Enum.max_by(&valid_from(&1.from_date))
       |> Map.get(:from_date)
 
-    through_date = time_blocks
+    through_date =
+      time_blocks
       |> Enum.min_by(&valid_through(&1.through_date))
       |> Map.get(:through_date)
 

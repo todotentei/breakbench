@@ -16,7 +16,7 @@ defmodule Breakbench.Exchanges.Currency do
   @doc false
   def changeset(currency, attrs) do
     currency
-      |> cast(attrs, [:code, :decimal_digits, :name, :name_plural, :symbol, :symbol_native])
-      |> validate_required([:name])
+    |> cast(attrs, [:code, :decimal_digits, :name, :name_plural, :symbol, :symbol_native])
+    |> validate_required([:name])
   end
 end

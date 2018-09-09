@@ -14,7 +14,7 @@ defmodule Breakbench.Facilities.GameAreaClosingHour do
   @doc false
   def changeset(game_area_closing_hour, attrs) do
     game_area_closing_hour
-      |> cast(attrs, [:time_block_id, :game_area_id])
-      |> validate_required([:time_block_id, :game_area_id])
+    |> cast(attrs, [:time_block_id, :game_area_id])
+    |> validate_required([:time_block_id, :game_area_id])
   end
 end

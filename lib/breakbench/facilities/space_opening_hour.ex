@@ -15,7 +15,7 @@ defmodule Breakbench.Facilities.SpaceOpeningHour do
   @doc false
   def changeset(space_opening_hour, attrs) do
     space_opening_hour
-      |> cast(attrs, [:time_block_id, :space_id])
-      |> validate_required([:time_block_id, :space_id])
+    |> cast(attrs, [:time_block_id, :space_id])
+    |> validate_required([:time_block_id, :space_id])
   end
 end

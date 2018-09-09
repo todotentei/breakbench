@@ -20,44 +20,44 @@ defmodule Breakbench.TimeBlock.Split do
       {from_date, through_date} = DateRange.split(new_time_block, old_time_block)
 
       []
-        |> append_on(new_time_block.start_time > old_time_block.start_time,
-            TimeBlock.build(%{
-              day_of_week: day_of_week,
-              start_time: old_time_block.start_time,
-              end_time: new_time_block.start_time,
-              from_date: from_date,
-              through_date: through_date
-            }))
-        |> append_on(new_time_block.end_time < old_time_block.end_time,
-            TimeBlock.build(%{
-              day_of_week: day_of_week,
-              start_time: new_time_block.end_time,
-              end_time: old_time_block.end_time,
-              from_date: from_date,
-              through_date: through_date
-            }))
-        |> append_on(Date.compare(
-              valid_from(new_time_block.from_date),
-              valid_from(old_time_block.from_date)
-            ) == :gt,
-            TimeBlock.build(%{
-              day_of_week: day_of_week,
-              start_time: old_time_block.start_time,
-              end_time: old_time_block.end_time,
-              from_date: old_time_block.from_date,
-              through_date: new_time_block.from_date
-            }))
-        |> append_on(Date.compare(
-              valid_through(new_time_block.through_date),
-              valid_through(old_time_block.through_date)
-            ) == :lt,
-            TimeBlock.build(%{
-              day_of_week: day_of_week,
-              start_time: old_time_block.start_time,
-              end_time: old_time_block.end_time,
-              from_date: new_time_block.through_date,
-              through_date: old_time_block.through_date
-            }))
+      |> append_on(new_time_block.start_time > old_time_block.start_time,
+          TimeBlock.build(%{
+            day_of_week: day_of_week,
+            start_time: old_time_block.start_time,
+            end_time: new_time_block.start_time,
+            from_date: from_date,
+            through_date: through_date
+          }))
+      |> append_on(new_time_block.end_time < old_time_block.end_time,
+          TimeBlock.build(%{
+            day_of_week: day_of_week,
+            start_time: new_time_block.end_time,
+            end_time: old_time_block.end_time,
+            from_date: from_date,
+            through_date: through_date
+          }))
+      |> append_on(Date.compare(
+            valid_from(new_time_block.from_date),
+            valid_from(old_time_block.from_date)
+          ) == :gt,
+          TimeBlock.build(%{
+            day_of_week: day_of_week,
+            start_time: old_time_block.start_time,
+            end_time: old_time_block.end_time,
+            from_date: old_time_block.from_date,
+            through_date: new_time_block.from_date
+          }))
+      |> append_on(Date.compare(
+            valid_through(new_time_block.through_date),
+            valid_through(old_time_block.through_date)
+          ) == :lt,
+          TimeBlock.build(%{
+            day_of_week: day_of_week,
+            start_time: old_time_block.start_time,
+            end_time: old_time_block.end_time,
+            from_date: new_time_block.through_date,
+            through_date: old_time_block.through_date
+          }))
     catch
       hours -> hours
     end

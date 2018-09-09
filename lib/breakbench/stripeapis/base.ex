@@ -26,9 +26,10 @@ defmodule Breakbench.StripeAPIs.Base do
   Constructs url with query
   """
   def url(endpoint, schema, path, data) do
-    Path.join([endpoint, schema, path])
-      <> "?"
-      <> Query.encode(data)
+    main_path = Path.join([endpoint, schema, path])
+    encoded_data = Query.encode(data)
+
+    "#{main_path}?#{encoded_data}"
   end
 
   def request(method, path, account \\ nil, data)
@@ -81,7 +82,7 @@ defmodule Breakbench.StripeAPIs.Base do
 
   defp decodep(body) do
     body
-      |> Poison.decode!()
-      |> AtomicMap.convert(safe: false)
+    |> Poison.decode!()
+    |> AtomicMap.convert(safe: false)
   end
 end

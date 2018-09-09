@@ -16,7 +16,7 @@ defmodule Breakbench.Matchmaking.MatchmakingGameMode do
   @doc false
   def changeset(game_mode, attrs) do
     game_mode
-      |> cast(attrs, [:matchmaking_queue_id, :game_mode_id])
-      |> validate_required([:matchmaking_queue_id, :game_mode_id])
+    |> cast(attrs, [:matchmaking_queue_id, :game_mode_id])
+    |> validate_required([:matchmaking_queue_id, :game_mode_id])
   end
 end

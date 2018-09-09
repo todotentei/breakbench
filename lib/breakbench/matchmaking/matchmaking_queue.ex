@@ -23,8 +23,8 @@ defmodule Breakbench.Matchmaking.MatchmakingQueue do
   @doc false
   def changeset(queue, attrs) do
     queue
-      |> cast(attrs, [:geom, :rule_id, :status, :user_id])
-      |> optimistic_lock(:lock_version)
-      |> validate_required([:geom, :rule_id, :user_id])
+    |> cast(attrs, [:geom, :rule_id, :status, :user_id])
+    |> optimistic_lock(:lock_version)
+    |> validate_required([:geom, :rule_id, :user_id])
   end
 end

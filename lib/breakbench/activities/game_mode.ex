@@ -21,7 +21,7 @@ defmodule Breakbench.Activities.GameMode do
   @doc false
   def changeset(game_mode, attrs) do
     game_mode
-      |> cast(attrs, [:name, :number_of_players, :duration, :sport_name])
-      |> validate_required([:name, :number_of_players, :duration, :sport_name])
+    |> cast(attrs, [:name, :number_of_players, :duration, :sport_name])
+    |> validate_required([:name, :number_of_players, :duration, :sport_name])
   end
 end

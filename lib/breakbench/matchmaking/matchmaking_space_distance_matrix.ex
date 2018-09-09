@@ -18,7 +18,7 @@ defmodule Breakbench.Matchmaking.MatchmakingSpaceDistanceMatrix do
   @doc false
   def changeset(distance_matrix, attrs) do
     distance_matrix
-      |> cast(attrs, [:distance, :duration, :space_id, :matchmaking_queue_id])
-      |> validate_required([:distance, :duration, :space_id, :matchmaking_queue_id])
+    |> cast(attrs, [:distance, :duration, :space_id, :matchmaking_queue_id])
+    |> validate_required([:distance, :duration, :space_id, :matchmaking_queue_id])
   end
 end

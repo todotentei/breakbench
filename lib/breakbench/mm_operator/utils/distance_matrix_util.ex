@@ -13,7 +13,7 @@ defmodule Breakbench.MMOperator.Utils.DistanceMatrixUtil do
   def get_duration(%MatchmakingQueue{} = queue, %Space{} = space) do
     from(MatchmakingQueue)
     |> join(:inner, [mmq], msd in MatchmakingSpaceDistanceMatrix,
-        mmq.id == msd.matchmaking_queue_id)
+      mmq.id == msd.matchmaking_queue_id)
     |> where([mmq], mmq.id == type(^queue.id, :binary_id))
     |> where([_, msd], msd.space_id == ^space.id)
     |> select([_, msd], msd.duration)

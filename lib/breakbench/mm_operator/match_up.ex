@@ -31,15 +31,20 @@ defmodule Breakbench.MMOperator.MatchUp do
     try do
       geometry
       |> MatchUpUtil.populated_spaces(radius)
-      |> Enum.each(fn %{space: space, game_mode: game_mode} ->
-        with {:ok, match} <- MatchCore.run(space, game_mode) do
-          throw match
-        end
-      end)
+      |> Enum.each(& try_matching/1)
     catch
       %Match{} = match -> Payment.charge(match)
     end
 
     {:noreply, state}
+  end
+
+
+  ## Private
+
+  defp try_matching(%{space: space, game_mode: game_mode}) do
+    with {:ok, match} <- MatchCore.run(space, game_mode) do
+      throw match
+    end
   end
 end

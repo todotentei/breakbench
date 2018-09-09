@@ -29,8 +29,8 @@ defmodule Breakbench.StripeAPIs.Query do
   # Keyword
   defp resolve(key, data) when is_list(data) and is_tuple(hd data) do
     data
-      |> Enum.uniq_by(&elem(&1, 0))
-      |> flatten(key)
+    |> Enum.uniq_by(&elem(&1, 0))
+    |> flatten(key)
   end
 
   # Non-keyword

@@ -72,7 +72,8 @@ defmodule Breakbench.Facilities.GameAreaClosingHourTest do
       assert_raise Ecto.NoResultsError, fn -> Timesheets.get_time_block!(context[:time_block2].id) end
 
       game_area_closing_hours = Facilities.list_game_area_closing_hours()
-        |> Repo.preload(:time_block)
+      |> Repo.preload(:time_block)
+
       assert Enum.all? game_area_closing_hours, fn %{time_block: time_block} ->
         time_block.day_of_week == 1 and
         time_eq(time_block.start_time, 3600) and

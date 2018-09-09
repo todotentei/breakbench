@@ -18,7 +18,7 @@ defmodule Breakbench.Matchmaking.MatchmakingRule do
   @doc false
   def changeset(rule, attrs) do
     rule
-      |> cast(attrs, [:radius, :travel_mode_type, :availability_mode_type])
-      |> validate_required([:radius, :travel_mode_type, :availability_mode_type])
+    |> cast(attrs, [:radius, :travel_mode_type, :availability_mode_type])
+    |> validate_required([:radius, :travel_mode_type, :availability_mode_type])
   end
 end

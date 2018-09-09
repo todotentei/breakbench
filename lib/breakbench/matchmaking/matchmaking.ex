@@ -78,4 +78,24 @@ defmodule Breakbench.Matchmaking do
     |> MatchmakingTravelMode.changeset(attrs)
     |> Repo.insert()
   end
+
+  @doc """
+  Inserts all matchmaking game mode entries.
+  """
+  @spec insert_all_game_modes(
+    entries :: [map() | Keyword.t()]
+  ) :: {integer(), nil | [term()]}
+  def insert_all_game_modes(entries) do
+    Repo.insert_all(MatchmakingGameMode, entries)
+  end
+
+  @doc """
+  Inserts all matchmaking space distance matrix entries.
+  """
+  @spec insert_all_space_distance_matrix(
+    entries :: [map() | Keyword.t()]
+  ) :: {integer(), nil | [term()]}
+  def insert_all_space_distance_matrix(entries) do
+    Repo.insert_all(MatchmakingSpaceDistanceMatrix, entries)
+  end
 end

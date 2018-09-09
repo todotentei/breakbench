@@ -38,28 +38,28 @@ defmodule Breakbench.TimeBlock.Merge do
       # Break exceed into small pieces
       Enum.reduce(time_blocks, default, fn time_block, accumulator ->
         accumulator
-          |> append_on(Date.compare(
-                valid_from(from_date),
-                valid_from(time_block.from_date)
-              ) == :gt,
-              TimeBlock.build(%{
-                day_of_week: day_of_week,
-                start_time: time_block.start_time,
-                end_time: time_block.end_time,
-                from_date: time_block.from_date,
-                through_date: from_date
-              }))
-          |> append_on(Date.compare(
-                valid_through(through_date),
-                valid_through(time_block.through_date)
-              ) == :lt,
-              TimeBlock.build(%{
-                day_of_week: day_of_week,
-                start_time: time_block.start_time,
-                end_time: time_block.end_time,
-                from_date: through_date,
-                through_date: time_block.through_date
-              }))
+        |> append_on(Date.compare(
+              valid_from(from_date),
+              valid_from(time_block.from_date)
+            ) == :gt,
+            TimeBlock.build(%{
+              day_of_week: day_of_week,
+              start_time: time_block.start_time,
+              end_time: time_block.end_time,
+              from_date: time_block.from_date,
+              through_date: from_date
+            }))
+        |> append_on(Date.compare(
+              valid_through(through_date),
+              valid_through(time_block.through_date)
+            ) == :lt,
+            TimeBlock.build(%{
+              day_of_week: day_of_week,
+              start_time: time_block.start_time,
+              end_time: time_block.end_time,
+              from_date: through_date,
+              through_date: time_block.through_date
+            }))
       end)
     catch
       hours -> hours

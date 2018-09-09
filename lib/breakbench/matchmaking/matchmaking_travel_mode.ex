@@ -12,7 +12,7 @@ defmodule Breakbench.Matchmaking.MatchmakingTravelMode do
   @doc false
   def changeset(travel_mode, attrs) do
     travel_mode
-      |> cast(attrs, [:type])
-      |> validate_required([:type])
+    |> cast(attrs, [:type])
+    |> validate_required([:type])
   end
 end

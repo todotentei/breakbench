@@ -3,8 +3,8 @@ defmodule Breakbench.GoogleAPIs.Query do
 
   def encode(data) do
     data
-      |> resolve()
-      |> URI.encode_query()
+    |> resolve()
+    |> URI.encode_query()
   end
 
 

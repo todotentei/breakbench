@@ -40,8 +40,8 @@ defmodule Breakbench.GoogleAPIs.Base do
       # Issues a GET request to the given url
       query = Map.merge(data, %{key: api_key})
       url(endpoint, service, format, query)
-        |> HTTPoison.get(headers, options)
-        |> parse_http_response
+      |> HTTPoison.get(headers, options)
+      |> parse_http_response
     else
       {:error, "no google configuration"}
     end
@@ -64,7 +64,7 @@ defmodule Breakbench.GoogleAPIs.Base do
 
   defp atomic_decode(data) do
     data
-      |> Poison.decode!()
-      |> AtomicMap.convert(safe: false)
+    |> Poison.decode!()
+    |> AtomicMap.convert(safe: false)
   end
 end
