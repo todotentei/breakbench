@@ -18,24 +18,25 @@ defmodule Breakbench.Matchmaking do
   @doc """
   Generates a changeset for the matchmaking schemas.
   """
-  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
-  def changeset(:availability_mode) do
-    MatchmakingAvailabilityMode.changeset(%MatchmakingAvailabilityMode{}, %{})
+  @spec changeset(term :: atom(), attrs :: map()) :: Ecto.Changeset.t()
+  def changeset(atom, attrs \\ %{})
+  def changeset(:availability_mode, attrs) do
+    MatchmakingAvailabilityMode.changeset(%MatchmakingAvailabilityMode{}, attrs)
   end
-  def changeset(:game_mode) do
-    MatchmakingGameMode.changeset(%MatchmakingGameMode{}, %{})
+  def changeset(:game_mode, attrs) do
+    MatchmakingGameMode.changeset(%MatchmakingGameMode{}, attrs)
   end
-  def changeset(:queue) do
-    MatchmakingQueue.changeset(%MatchmakingQueue{}, %{})
+  def changeset(:queue, attrs) do
+    MatchmakingQueue.changeset(%MatchmakingQueue{}, attrs)
   end
-  def changeset(:rule) do
-    MatchmakingRule.changeset(%MatchmakingRule{}, %{})
+  def changeset(:rule, attrs) do
+    MatchmakingRule.changeset(%MatchmakingRule{}, attrs)
   end
-  def changeset(:space_distance_matrix) do
-    MatchmakingSpaceDistanceMatrix.changeset(%MatchmakingSpaceDistanceMatrix{}, %{})
+  def changeset(:space_distance_matrix, attrs) do
+    MatchmakingSpaceDistanceMatrix.changeset(%MatchmakingSpaceDistanceMatrix{}, attrs)
   end
-  def changeset(:travel_mode) do
-    MatchmakingTravelMode.changeset(%MatchmakingTravelMode{}, %{})
+  def changeset(:travel_mode, attrs) do
+    MatchmakingTravelMode.changeset(%MatchmakingTravelMode{}, attrs)
   end
 
   @doc """

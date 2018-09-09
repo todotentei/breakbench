@@ -21,33 +21,34 @@ defmodule Breakbench.Facilities do
   @doc """
   Generates a changeset for the facility schemas.
   """
-  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
-  def changeset(:affected_game_area) do
-    AffectedGameArea.changeset(%AffectedGameArea{}, %{})
+  @spec changeset(term :: atom(), attrs :: map()) :: Ecto.Changeset.t()
+  def changeset(atom, attrs \\ %{})
+  def changeset(:affected_game_area, attrs) do
+    AffectedGameArea.changeset(%AffectedGameArea{}, attrs)
   end
-  def changeset(:area_closing_hour) do
-    AreaClosingHour.changeset(%AreaClosingHour{}, %{})
+  def changeset(:area_closing_hour, attrs) do
+    AreaClosingHour.changeset(%AreaClosingHour{}, attrs)
   end
-  def changeset(:area) do
-    Area.changeset(%Area{}, %{})
+  def changeset(:area, attrs) do
+    Area.changeset(%Area{}, attrs)
   end
-  def changeset(:game_area_closing_hour) do
-    GameAreaClosingHour.changeset(%GameAreaClosingHour{}, %{})
+  def changeset(:game_area_closing_hour, attrs) do
+    GameAreaClosingHour.changeset(%GameAreaClosingHour{}, attrs)
   end
-  def changeset(:game_area_dynamic_pricing) do
-    GameAreaDynamicPricing.changeset(%GameAreaDynamicPricing{}, %{})
+  def changeset(:game_area_dynamic_pricing, attrs) do
+    GameAreaDynamicPricing.changeset(%GameAreaDynamicPricing{}, attrs)
   end
-  def changeset(:game_area_mode) do
-    GameAreaMode.changeset(%GameAreaMode{}, %{})
+  def changeset(:game_area_mode, attrs) do
+    GameAreaMode.changeset(%GameAreaMode{}, attrs)
   end
-  def changeset(:game_area) do
-    GameArea.changeset(%GameArea{}, %{})
+  def changeset(:game_area, attrs) do
+    GameArea.changeset(%GameArea{}, attrs)
   end
-  def changeset(:space_opening_hour) do
-    SpaceOpeningHour.changeset(%SpaceOpeningHour{}, %{})
+  def changeset(:space_opening_hour, attrs) do
+    SpaceOpeningHour.changeset(%SpaceOpeningHour{}, attrs)
   end
-  def changeset(:space) do
-    Space.changeset(%Space{}, %{})
+  def changeset(:space, attrs) do
+    Space.changeset(%Space{}, attrs)
   end
 
   @doc """

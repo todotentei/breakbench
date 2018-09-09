@@ -15,12 +15,13 @@ defmodule Breakbench.Activities do
   @doc """
   Generates a changeset for the activity schemas.
   """
-  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
-  def changeset(:game_mode) do
-    GameMode.changeset(%GameMode{}, %{})
+  @spec changeset(term :: atom(), attrs :: map()) :: Ecto.Changeset.t()
+  def changeset(atom, attrs \\ %{})
+  def changeset(:game_mode, attrs) do
+    GameMode.changeset(%GameMode{}, attrs)
   end
-  def changeset(:sport) do
-    Sport.changeset(%Sport{}, %{})
+  def changeset(:sport, attrs) do
+    Sport.changeset(%Sport{}, attrs)
   end
 
   @doc """

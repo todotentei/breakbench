@@ -9,6 +9,15 @@ defmodule Breakbench.Timesheets do
   alias Breakbench.Timesheets.TimeBlock
 
   @doc """
+  Generates a changeset for the timesheet schemas.
+  """
+  @spec changeset(term :: atom(), attrs :: map()) :: Ecto.Changeset.t()
+  def changeset(atom, attrs \\ %{})
+  def changeset(:time_block, attrs) do
+    TimeBlock.changeset(%TimeBlock{}, attrs)
+  end
+
+  @doc """
   Get a time block.
   """
   @spec get_time_block!(term :: binary()) :: TimeBlock.t()

@@ -12,9 +12,10 @@ defmodule Breakbench.Exchanges do
   @doc """
   Generates a changeset for the exchange schemas.
   """
-  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
-  def changeset(:currency) do
-    Currency.changeset(%Currency{}, %{})
+  @spec changeset(term :: atom(), attrs :: map()) :: Ecto.Changeset.t()
+  def changeset(atom, attrs \\ %{})
+  def changeset(:currency, attrs) do
+    Currency.changeset(%Currency{}, attrs)
   end
 
   @doc """

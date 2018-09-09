@@ -11,9 +11,10 @@ defmodule Breakbench.Balances do
   @doc """
   Generates a changeset for the balance schemas.
   """
-  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
-  def changeset(:outstanding_balance) do
-    OutstandingBalance.changeset(%OutstandingBalance{}, %{})
+  @spec changeset(term :: atom(), attrs :: map()) :: Ecto.Changeset.t()
+  def changeset(atom, attrs \\ %{})
+  def changeset(:outstanding_balance, attrs) do
+    OutstandingBalance.changeset(%OutstandingBalance{}, attrs)
   end
 
   @doc """

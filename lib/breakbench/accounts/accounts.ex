@@ -17,21 +17,22 @@ defmodule Breakbench.Accounts do
   @doc """
   Generates a changeset for the account schemas.
   """
-  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
-  def changeset(:booking) do
-    Booking.changeset(%Booking{}, %{})
+  @spec changeset(term :: atom(), attrs :: map()) :: Ecto.Changeset.t()
+  def changeset(atom, attrs \\ %{})
+  def changeset(:booking, attrs) do
+    Booking.changeset(%Booking{}, attrs)
   end
-  def changeset(:match_member) do
-    MatchMember.changeset(%MatchMember{}, %{})
+  def changeset(:match_member, attrs) do
+    MatchMember.changeset(%MatchMember{}, attrs)
   end
-  def changeset(:match) do
-    Match.changeset(%Match{}, %{})
+  def changeset(:match, attrs) do
+    Match.changeset(%Match{}, attrs)
   end
-  def changeset(:user_cookie) do
-    UserCookie.changeset(%UserCookie{}, %{})
+  def changeset(:user_cookie, attrs) do
+    UserCookie.changeset(%UserCookie{}, attrs)
   end
-  def changeset(:user) do
-    User.changeset(%User{}, %{})
+  def changeset(:user, attrs) do
+    User.changeset(%User{}, attrs)
   end
 
   @doc """
