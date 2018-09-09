@@ -18,7 +18,7 @@ defmodule Breakbench.Matchmaking do
   @doc """
   Generates a changeset for the matchmaking schemas.
   """
-  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
   def changeset(:availability_mode) do
     MatchmakingAvailabilityMode.changeset(%MatchmakingAvailabilityMode{}, %{})
   end
@@ -41,7 +41,7 @@ defmodule Breakbench.Matchmaking do
   @doc """
   Returns all the matchmaking travel modes.
   """
-  @spec list_travel_modes() :: [MatchmakingTravelMode.t]
+  @spec list_travel_modes() :: [MatchmakingTravelMode.t()]
   def list_travel_modes do
     Repo.all(MatchmakingTravelMode)
   end
@@ -49,10 +49,7 @@ defmodule Breakbench.Matchmaking do
   @doc """
   Get a rule by a given clauses.
   """
-  @spec get_rule_by!(
-    attrs :: map
-  ) :: nil
-     | MatchmakingRule.t
+  @spec get_rule_by!(attrs :: map()) :: MatchmakingRule.t()
   def get_rule_by!(attrs) do
     Repo.get_by!(MatchmakingRule, attrs)
   end
@@ -61,9 +58,8 @@ defmodule Breakbench.Matchmaking do
   Creates a matchmaking queue.
   """
   @spec create_queue(
-    attrs :: map
-  ) :: {:ok, MatchmakingQueue.t}
-     | {:error, Ecto.Changeset.t}
+    attrs :: map()
+  ) :: {:ok, MatchmakingQueue.t()} | {:error, Ecto.Changeset.t()}
   def create_queue(attrs \\ %{}) do
     %MatchmakingQueue{}
     |> MatchmakingQueue.changeset(attrs)
@@ -74,9 +70,8 @@ defmodule Breakbench.Matchmaking do
   Creates a matchmaking travel mode.
   """
   @spec create_travel_mode(
-    attrs :: map
-  ) :: {:ok, MatchmakingTravelMode.t}
-     | {:error, Ecto.Changeset.t}
+    attrs :: map()
+  ) :: {:ok, MatchmakingTravelMode.t()} | {:error, Ecto.Changeset.t()}
   def create_travel_mode(attrs \\ %{}) do
     %MatchmakingTravelMode{}
     |> MatchmakingTravelMode.changeset(attrs)

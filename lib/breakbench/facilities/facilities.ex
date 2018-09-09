@@ -21,7 +21,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Generates a changeset for the facility schemas.
   """
-  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
   def changeset(:affected_game_area) do
     AffectedGameArea.changeset(%AffectedGameArea{}, %{})
   end
@@ -53,7 +53,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Returns all the game area closing hours.
   """
-  @spec list_game_area_closing_hours() :: [GameAreaClosingHour.t]
+  @spec list_game_area_closing_hours() :: [GameAreaClosingHour.t()]
   def list_game_area_closing_hours do
     Repo.all GameAreaClosingHour
   end
@@ -61,7 +61,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Returns all the game area dynamic pricings.
   """
-  @spec list_game_area_dynamic_pricings() :: [GameAreaDynamicPricing.t]
+  @spec list_game_area_dynamic_pricings() :: [GameAreaDynamicPricing.t()]
   def list_game_area_dynamic_pricings do
     Repo.all GameAreaDynamicPricing
   end
@@ -69,7 +69,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Returns all the space opening hours.
   """
-  @spec list_space_opening_hours() :: [SpaceOpeningHour.t]
+  @spec list_space_opening_hours() :: [SpaceOpeningHour.t()]
   def list_space_opening_hours do
     Repo.all SpaceOpeningHour
   end
@@ -77,10 +77,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Get a game area closing hour.
   """
-  @spec get_game_area_closing_hour!(
-    term :: binary
-  ) :: nil
-     | GameAreaClosingHour.t
+  @spec get_game_area_closing_hour!(term :: binary()) :: GameAreaClosingHour.t()
   def get_game_area_closing_hour!(id) do
     Repo.get! GameAreaClosingHour, id
   end
@@ -88,10 +85,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Get a game area dynamic pricing.
   """
-  @spec get_game_area_dynamic_pricing!(
-    term :: binary
-  ) :: nil
-     | GameAreaDynamicPricing.t
+  @spec get_game_area_dynamic_pricing!(term :: binary()) :: GameAreaDynamicPricing.t()
   def get_game_area_dynamic_pricing!(id) do
     Repo.get! GameAreaDynamicPricing, id
   end
@@ -99,10 +93,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Get a space.
   """
-  @spec get_space!(
-    term :: binary
-  ) :: nil
-     | Space.t
+  @spec get_space!(term :: binary()) :: Space.t()
   def get_space!(%Booking{} = booking) do
     booking
     |> Ecto.assoc([:game_area, :area, :space])
@@ -115,10 +106,7 @@ defmodule Breakbench.Facilities do
   @doc """
   Get a space opening hour.
   """
-  @spec get_space_opening_hour!(
-    term :: binary
-  ) :: nil
-     | SpaceOpeningHour.t
+  @spec get_space_opening_hour!(term :: binary()) :: SpaceOpeningHour.t()
   def get_space_opening_hour!(id) do
     Repo.get! SpaceOpeningHour, id
   end
@@ -127,9 +115,8 @@ defmodule Breakbench.Facilities do
   Creates a game area closing hour.
   """
   @spec create_game_area_closing_hour(
-    attrs :: map
-  ) :: {:ok, GameAreaClosingHour.t}
-     | {:error, Ecto.Changeset.t}
+    attrs :: map()
+  ) :: {:ok, GameAreaClosingHour.t()} | {:error, Ecto.Changeset.t()}
   def create_game_area_closing_hour(attrs \\ %{}) do
     %GameAreaClosingHour{}
     |> GameAreaClosingHour.changeset(attrs)
@@ -140,9 +127,8 @@ defmodule Breakbench.Facilities do
   Creates a game area dynamic pricing.
   """
   @spec create_game_area_dynamic_pricing(
-    attrs :: map
-  ) :: {:ok, GameAreaDynamicPricing.t}
-     | {:error, Ecto.Changeset.t}
+    attrs :: map()
+  ) :: {:ok, GameAreaDynamicPricing.t()} | {:error, Ecto.Changeset.t()}
   def create_game_area_dynamic_pricing(attrs \\ %{}) do
     %GameAreaDynamicPricing{}
     |> GameAreaDynamicPricing.changeset(attrs)
@@ -153,9 +139,8 @@ defmodule Breakbench.Facilities do
   Creates a space opening hour.
   """
   @spec create_space_opening_hour(
-    attrs :: map
-  ) :: {:ok, SpaceOpeningHour.t}
-     | {:error, Ecto.Changeset.t}
+    attrs :: map()
+  ) :: {:ok, SpaceOpeningHour.t()} | {:error, Ecto.Changeset.t()}
   def create_space_opening_hour(attrs \\ %{}) do
     %SpaceOpeningHour{}
     |> SpaceOpeningHour.changeset(attrs)

@@ -21,8 +21,10 @@ defmodule Breakbench.MMOperator.Cores.MatchCore do
   import Breakbench.PostgrexHelper, only: [to_secs_interval: 1]
 
 
-  @spec run(space :: Space.t, game_mode :: GameMode.t) :: {:ok, Match.t}
-                                                        | {:error, atom()}
+  @spec run(
+    space :: Space.t(),
+    game_mode :: GameMode.t()
+  ) :: {:ok, Match.t()} | {:error, atom()}
   def run(%Space{} = space, %GameMode{} = game_mode) do
     Repo.transaction fn ->
       # Use space currency as the default currency

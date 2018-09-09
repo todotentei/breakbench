@@ -12,7 +12,7 @@ defmodule Breakbench.Exchanges do
   @doc """
   Generates a changeset for the exchange schemas.
   """
-  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
   def changeset(:currency) do
     Currency.changeset(%Currency{}, %{})
   end
@@ -21,10 +21,8 @@ defmodule Breakbench.Exchanges do
   Get a currency.
   """
   @spec get_currency!(
-    term :: binary
-          | Booking.t
-  ) :: nil
-     | Currency.t
+    term :: binary() | Booking.t()
+  ) :: Currency.t()
   def get_currency!(%Booking{} = booking) do
     booking
     |> Ecto.assoc(:currency)

@@ -9,7 +9,7 @@ defmodule Breakbench.Regions do
   @doc """
   Generates a changeset for the region schemas.
   """
-  @spec changeset(term :: atom) :: Ecto.Changeset.t
+  @spec changeset(term :: atom()) :: Ecto.Changeset.t()
   def changeset(:country) do
     Country.changeset(%Country{}, %{})
   end
@@ -18,9 +18,8 @@ defmodule Breakbench.Regions do
   Creates a country.
   """
   @spec create_country(
-    attrs :: map
-  ) :: {:ok, Country.t}
-     | {:error, Ecto.Changeset.t}
+    attrs :: map()
+  ) :: {:ok, Country.t()} | {:error, Ecto.Changeset.t()}
   def create_country(attrs \\ %{}) do
     %Country{}
     |> Country.changeset(attrs)

@@ -4,10 +4,10 @@ defmodule BreakbenchWeb.Auth.ErrorHandler do
   import Phoenix.Controller
 
   @spec handle(
-    conn   :: Plug.Conn.t,
-    type   :: atom,
-    reason :: binary
-  ) :: Plug.Conn.t
+    conn :: Plug.Conn.t(),
+    type :: atom(),
+    reason :: binary()
+  ) :: Plug.Conn.t()
   def handle(conn, type, reason \\ "")
 
   def handle(conn, :unauthorized, _) do
