@@ -4,7 +4,14 @@ defmodule BreakbenchWeb.Auth do
 
   alias Comeonin.Bcrypt
   alias Breakbench.Accounts
-  alias BreakbenchWeb.Auth.{Config, Token}
+
+  alias BreakbenchWeb.Auth.Config
+  alias BreakbenchWeb.Auth.Token
+
+  import BreakbenchWeb.ConnInfo, only: [
+    remote_ip: 1,
+    user_agent: 1
+  ]
 
   def authenticate(username_or_email, password) do
     try do
@@ -27,17 +34,29 @@ defmodule BreakbenchWeb.Auth do
     assign(conn, :current_user, user)
   end
 
-  def put_rem_cookie(conn, id, max_age \\ Config.max_age()) do
-    key = Config.remember_key()
-    cookie = Token.sign(conn, id, [
-      max_age: max_age
-    ])
-    opts = [
-      http_only: true,
-      max_age: max_age
-    ]
+  def put_rem_cookie(conn, user_id, opts \\ []) do
+    key = Keyword.get(opts, :key, Config.remember_key())
+    max_age = Keyword.get(opts, :max_age, Config.max_age())
 
-    put_resp_cookie(conn, key, cookie, opts)
+    token = Token.sign(conn, user_id, [max_age: max_age])
+
+    rem_attrs = %{
+      user_id: user_id,
+      token: token,
+      user_agent: user_agent(conn),
+      remote_ip: remote_ip(conn)
+    }
+
+    with {:ok, _} <- Accounts.create_user_cookie(rem_attrs) do
+      resp_opts = [
+        http_only: true,
+        max_age: max_age
+      ]
+
+      put_resp_cookie(conn, key, token, resp_opts)
+    else _ ->
+      conn
+    end
   end
 
   def delete_session(conn) do

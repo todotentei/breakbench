@@ -16,6 +16,8 @@ defmodule Breakbench.Accounts.User do
     field :stripe_customer, :string
     field :sessions, {:map, :integer}, default: %{}
 
+    has_many :cookies, Breakbench.Accounts.UserCookie
+
     timestamps()
   end
 

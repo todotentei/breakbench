@@ -13,6 +13,19 @@ defmodule BreakbenchWeb.Auth.Plugs do
   alias BreakbenchWeb.Auth.Config
   alias BreakbenchWeb.Auth.Token
 
+  def load_resource(conn, _opts) do
+    try do
+      if user_id = get_session(conn, :user_id) do
+        user = Accounts.get_user!(user_id)
+        Auth.put_current_user(conn, user)
+      else
+        conn
+      end
+    rescue
+      _ -> Auth.delete_session(conn)
+    end
+  end
+
   def remember_me(conn, opts) do
     token_opts = [
       max_age: Keyword.get(opts, :max_age, Config.max_age())
@@ -24,12 +37,22 @@ defmodule BreakbenchWeb.Auth.Plugs do
 
       token = get_req_cookie(conn, Config.remember_key()) ->
         try do
-          {:ok, user_id} = Token.verify(conn, token, token_opts)
-          user = Accounts.get_user!(user_id)
+          user_cookie = Accounts.get_user_cookie!(token)
 
-          Auth.put_session(conn, user)
-        rescue
-          _ -> Auth.put_current_user(conn, nil)
+          with {:ok, user_id} <- Token.verify(conn, token, token_opts) do
+            if user_cookie.user_id == user_id do
+              user = Accounts.get_user!(user_id)
+              Auth.put_session(conn, user)
+            else
+              raise ArgumentError, "unauthorized"
+            end
+          else
+            {:error, message} -> raise ArgumentError, message
+          end
+        rescue _ ->
+          conn
+          |> Auth.delete_session()
+          |> Auth.delete_rem_cookie()
         end
 
       true ->

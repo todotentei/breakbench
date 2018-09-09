@@ -10,6 +10,7 @@ defmodule Breakbench.Accounts do
     Booking,
     Match,
     MatchMember,
+    UserCookie,
     User
   }
 
@@ -25,6 +26,9 @@ defmodule Breakbench.Accounts do
   end
   def changeset(:match) do
     Match.changeset(%Match{}, %{})
+  end
+  def changeset(:user_cookie) do
+    UserCookie.changeset(%UserCookie{}, %{})
   end
   def changeset(:user) do
     User.changeset(%User{}, %{})
@@ -91,6 +95,16 @@ defmodule Breakbench.Accounts do
   end
 
   @doc """
+  Get a user cookie
+  """
+  @spec get_user_cookie!(
+    term :: binary
+  ) :: UserCookie.t
+  def get_user_cookie!(token) do
+    Repo.get!(UserCookie, token)
+  end
+
+  @doc """
   Get a user.
   """
   @spec get_user!(
@@ -150,6 +164,19 @@ defmodule Breakbench.Accounts do
   def create_match(attrs \\ %{}) do
     %Match{}
     |> Match.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Inserts a user cookie.
+  """
+  @spec create_user_cookie(
+    attrs :: map
+  ) :: {:ok, UserCookie.t}
+     | {:error, Ecto.Changeset.t}
+  def create_user_cookie(attrs \\ %{}) do
+    %UserCookie{}
+    |> UserCookie.changeset(attrs)
     |> Repo.insert()
   end
 
