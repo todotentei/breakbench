@@ -2,6 +2,8 @@ defmodule Breakbench.MMOperator.Utils.MatchUpUtil do
   @moduledoc false
 
   import Ecto.Query
+  import Breakbench.PostgrexFuncs
+
   alias Breakbench.Repo
 
   alias Breakbench.Facilities.Space
@@ -9,11 +11,24 @@ defmodule Breakbench.MMOperator.Utils.MatchUpUtil do
 
 
   def populated_spaces(%Geo.Point{} = geom, radius) do
-    from(Space)
-    |> join(:right, [spc], psc in fragment("SELECT space_id, game_mode_id FROM populated_spaces(?,?)",
-      ^geom, ^radius), spc.id == psc.space_id)
-    |> join(:left, [_, psc], gmd in GameMode, gmd.id == psc.game_mode_id)
-    |> select([spc, _, gmd], %{space: spc, game_mode: gmd})
-    |> Repo.all
+    query = ps_query(geom, radius)
+    Repo.all(query)
+  end
+
+
+  ## Private
+
+  defp ps_query(geom, radius) do
+    from spc in Space,
+      right_join: psc in fragment("
+        SELECT space_id, game_mode_id FROM ?
+      ", fn_populated_spaces(^geom, ^radius)),
+        on: spc.id == psc.space_id,
+      left_join: gmd in GameMode,
+        on: gmd.id == psc.game_mode_id,
+      select: %{
+        space: spc,
+        game_mode: gmd
+      }
   end
 end

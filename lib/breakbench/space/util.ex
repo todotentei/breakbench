@@ -2,6 +2,8 @@ defmodule Breakbench.SpaceUtil do
   @moduledoc false
 
   import Ecto.Query
+  import Breakbench.PostgrexFuncs
+
   alias Breakbench.Repo
 
   alias Breakbench.Facilities.Space
@@ -14,14 +16,19 @@ defmodule Breakbench.SpaceUtil do
   def list(%Geo.Point{} = geom, radius, game_modes) do
     gm_ids = Enum.map(game_modes, & gm_id/1)
 
-    from(Space)
-    |> join(:inner, [spc], swi in fragment("SELECT space_id FROM space_within(?,?,?)",
-      ^geom, ^radius, type(^gm_ids, {:array, :binary_id})), spc.id == swi.space_id)
-    |> Repo.all
+    query = spaces_within_query(geom, radius, gm_ids)
+    Repo.all(query)
   end
 
 
   ## Private
 
   defp gm_id(%GameMode{id: id}), do: id
+
+  defp spaces_within_query(geom, radius, game_mode_ids) do
+    from spc in Space,
+      inner_join: swi in fragment("
+        SELECT space_id FROM ?
+      ", fn_space_within(^geom, ^radius, ^game_mode_ids))
+  end
 end

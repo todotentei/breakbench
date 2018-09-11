@@ -2,6 +2,8 @@ defmodule Breakbench.MMOperator.Utils.GamePriceUtil do
   @moduledoc false
 
   import Ecto.Query
+  import Breakbench.PostgrexFuncs
+
   alias Breakbench.Repo
 
   alias Breakbench.{
@@ -16,10 +18,8 @@ defmodule Breakbench.MMOperator.Utils.GamePriceUtil do
   Calc total game price
   """
   def total(%GameArea{} = game_area, kickoff, duration) do
-    from(GameArea)
-    |> where([gaa], gaa.id == ^game_area.id)
-    |> select([gaa], fragment("total_game_price(?,?,?)", gaa.id, ^kickoff, ^duration))
-    |> Repo.one()
+    query = tp_query(game_area.id, kickoff, duration)
+    Repo.one(query)
   end
 
   @doc """
@@ -32,5 +32,14 @@ defmodule Breakbench.MMOperator.Utils.GamePriceUtil do
     booking.price / game_mode.number_of_players
     |> :math.ceil()
     |> round()
+  end
+
+
+  ## Private
+
+  defp tp_query(game_area_id, kickoff, duration) do
+    from gaa in GameArea,
+      where: gaa.id == ^game_area_id,
+      select: fn_total_game_price(gaa.id, ^kickoff, ^duration)
   end
 end

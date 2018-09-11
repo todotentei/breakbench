@@ -2,6 +2,8 @@ defmodule Breakbench.GameArea.ClosingHour do
   @moduledoc false
 
   import Ecto.Query
+  import Breakbench.PostgrexFuncs
+
   alias Breakbench.Repo
 
   alias Breakbench.{
@@ -56,11 +58,18 @@ defmodule Breakbench.GameArea.ClosingHour do
   end
 
   def overlap(%GameArea{} = game_area, time_block) do
-    game_area
-    |> Ecto.assoc(:closing_hours)
-    |> join(:inner, [fch], tbk in fragment("SELECT id FROM overlap_time_blocks(?,?,?,?,?)",
-      ^time_block.day_of_week, ^time_block.start_time, ^time_block.end_time,
-      ^time_block.from_date, ^time_block.through_date), tbk.id == fch.time_block_id)
-    |> Repo.all()
+    query = overlap_query(game_area, time_block)
+    Repo.all(query)
+  end
+
+
+  ## Private
+
+  defp overlap_query(game_area, tb) do
+    from gch in Ecto.assoc(game_area, :closing_hours),
+      inner_join: tbk in fragment("
+        SELECT id FROM ?
+      ", fn_overlap_time_blocks(^tb.day_of_week, ^tb.start_time, ^tb.end_time, ^tb.from_date, ^tb.through_date)),
+        on: tbk.id == gch.time_block_id
   end
 end

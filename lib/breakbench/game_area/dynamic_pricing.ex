@@ -2,6 +2,8 @@ defmodule Breakbench.GameArea.DynamicPricing do
   @moduledoc false
 
   import Ecto.Query
+  import Breakbench.PostgrexFuncs
+
   alias Breakbench.Repo
 
   alias Breakbench.{
@@ -57,12 +59,19 @@ defmodule Breakbench.GameArea.DynamicPricing do
   end
 
   def overlap(%GameArea{} = game_area, price, time_block) do
-    game_area
-    |> Ecto.assoc(:dynamic_pricings)
-    |> where(price: ^price)
-    |> join(:inner, [fdp], tbk in fragment("SELECT id FROM overlap_time_blocks(?,?,?,?,?)",
-      ^time_block.day_of_week, ^time_block.start_time, ^time_block.end_time,
-      ^time_block.from_date, ^time_block.through_date), tbk.id == fdp.time_block_id)
-    |> Repo.all()
+    query = overlap_query(game_area, price, time_block)
+    Repo.all(query)
+  end
+
+
+  ## Private
+
+  defp overlap_query(game_area, price, tb) do
+    from gdp in Ecto.assoc(game_area, :dynamic_pricings),
+      inner_join: tbk in fragment("
+        SELECT id FROM ?
+      ", fn_overlap_time_blocks(^tb.day_of_week, ^tb.start_time, ^tb.end_time, ^tb.from_date, ^tb.through_date)),
+        on: tbk.id == gdp.time_block_id,
+      where: gdp.price == ^price
   end
 end
