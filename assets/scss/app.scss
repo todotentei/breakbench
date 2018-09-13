@@ -1,45 +1,31 @@
-@import 'fontawesome';
-@import 'fa-solid';
-@import 'fa-regular';
+@charset 'UTF-8';
 
-@import 'colors';
-@import 'components/index';
-@import 'containers/index';
-@import 'forms';
-@import 'google';
-@import 'icons';
-@import 'pages/index';
-@import 'react-modal';
-@import 'react-select';
+@import 'abstracts/colors',
+        'abstracts/variables',
+        'abstracts/functions',
+        'abstracts/mixins';
 
-/* This file is for your main application css. */
+@import 'abstracts/placeholders';
 
-html,
-body,
-.breakbench-app,
-.app-content {
-  height: 100%;
-  width: 100%;
-}
+@import 'base/reset',
+        'base/typography';
+
+@import 'components/flash-alert',
+        'components/forms';
+
+@import 'layout/header',
+        'layout/footer';
+
+@import 'pages/home',
+        'pages/login',
+        'pages/register';
+
+@import 'themes/default';
+
+@import '../vendor/fontawesome/scss/fontawesome',
+        '../vendor/fontawesome/scss/solid',
+        '../vendor/fontawesome/scss/brands';
 
 body {
-  font-size: 14px;
-  font-style: normal;
-  font-weight: normal;
-}
-
-.logged-welcoming {
-  width: 380px;
-  padding: 30px;
-  border: 1px solid $bb-primary-900;
-  background-color: white;
-  text-align: center;
-}
-
-.fixed-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1111;
+  font-family: $font-family-open-sans;
 }

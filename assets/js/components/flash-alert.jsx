@@ -22,14 +22,16 @@ class FlashAlert extends Component {
         <div className='flash-alert__body'>
           {children}
         </div>
-        <div className='flash-alert__close'>
-          <button
-            type='button'
-            onClick={this.onClose}
-          >
-            <FontAwesomeIcon icon='times' />
-          </button>
-        </div>
+        <button
+          className='flash-alert__close'
+          type='button'
+          onClick={this.onClose}
+        >
+          <FontAwesomeIcon
+            className='flash-alert__close__icon'
+            icon='times'
+          />
+        </button>
       </div>
     );
   }

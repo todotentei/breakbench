@@ -1,0 +1,42 @@
+// Buttons
+// ----------
+
+
+%blank-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+
+  @include focus {
+    outline: none;
+  };
+}
+
+%default-button {
+  @extend %blank-button;
+
+  display: inline-block;
+  height: $button-height;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-regular;
+  color: $button-text-color;
+  background-color: $button-background-color;
+  border-width: $button-border-width;
+  border-radius: $button-border-radius;
+  border-color: $button-border-color;
+
+  @include hover {
+    color: $button-text-color-hover;
+    background-color: $button-background-color-hover;
+    border-color: $button-border-color-hover;
+  };
+}
+
+%button-as-link {
+  @extend %blank-button;
+  color: $primary-color;
+
+  @include hover { text-decoration: underline; }
+}

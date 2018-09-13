@@ -13,10 +13,10 @@ import {
 
 const fieldClasses = {
   groupAttrs: {
-    className: 'register-form__form-group'
+    className: 'bb-form__form-group'
   },
-  labelClass: 'register-form__form-group--label',
-  inputClass: 'register-form__form-group--input'
+  labelClass: 'bb-form__form-group--label',
+  inputClass: 'bb-form__form-group--input'
 };
 
 const activateValidation = (value, input) => {
@@ -160,7 +160,7 @@ class RegisterForm extends Component {
   render() {
     return (
       <AvForm
-        className='register-form'
+        className='bb-form'
         onSubmit={this.handleSubmit}
         onValidSubmit={this.handleValidSubmit}
         onInvalidSubmit={this.handleInvalidSubmit}
@@ -199,7 +199,7 @@ class RegisterForm extends Component {
           validate={validatePassword(this.asyncPassword)}
         />
         <Button
-          className='register-form__submit'
+          className='bb-form__submit'
           type='submit'
           size='lg'
           block

@@ -4,12 +4,12 @@ const flashAlert = (state = {}, action) => {
   switch (action.type) {
     case flashAlertC.SUCCESS:
       return {
-        type: 'success',
+        type: 'flash-alert--success',
         message: action.message
       };
     case flashAlertC.ERROR:
       return {
-        type: 'danger',
+        type: 'flash-alert--danger',
         message: action.message
       };
     case flashAlertC.CLEAR:

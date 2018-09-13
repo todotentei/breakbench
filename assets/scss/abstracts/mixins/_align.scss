@@ -1,0 +1,19 @@
+// Align
+// ----------
+
+
+@mixin center-absolute($position: 'both') {
+  position: absolute;
+
+  @if $position == 'vertical' {
+    top: 50%;
+    @include prefix(transform, translateY(-50%), ('webkit', 'ms'));
+  } @else if $position == 'horizontal' {
+    left: 50%;
+    @include prefix(transform, translateX(-50%), ('webkit', 'ms'));
+  } @else if $position == 'both' {
+    top: 50%;
+    left: 50%;
+    @include prefix(transform, translate(-50%, -50%), ('webkit', 'ms'));
+  }
+}

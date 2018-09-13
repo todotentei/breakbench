@@ -1,0 +1,64 @@
+// This file contains all Sass variables.
+// ----------
+
+
+// Z-index
+//
+// BEGIN
+
+$z-indexes: (
+  'below'    : -1,
+  'default'  : 1,
+  'dropdown' : 4000,
+  'modal'    : 5000
+);
+
+// END
+
+
+// Components
+//
+// BEGIN
+
+$component-height               : 50px !default;
+$component-border-width         : 1px !default;
+$component-border-radius        : 0 !default;
+
+// END
+
+
+// Buttons
+//
+// BEGIN
+
+$button-height                  : $component-height !default;
+$button-border-width            : 0 !default;
+$button-border-radius           : $component-border-radius !default;
+
+// END
+
+
+// Forms
+
+$input-height                   : $component-height !default;
+$input-border-width             : $component-border-width !default;
+$input-border-radius            : $component-border-radius !default;
+
+// END
+
+
+// Typography
+//
+// BEGIN
+
+$font-family-open-sans          : 'OpenSans', sans-serif !default;
+
+$font-size-small                : 12px !default;
+$font-size-regular              : 14px !default;
+$font-size-large                : 18px !default;
+
+$font-weight-light              : 300 !default;
+$font-weight-regular            : 400 !default;
+$font-weight-bold               : 600 !default;
+
+// END

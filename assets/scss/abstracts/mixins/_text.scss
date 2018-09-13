@@ -1,0 +1,13 @@
+// Text
+// ----------
+
+
+@mixin text(
+  $size   : $font-size-regular,
+  $weight : $font-weight-regular,
+  $color  : $primary-color
+) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+}

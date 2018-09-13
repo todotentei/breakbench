@@ -1,0 +1,37 @@
+.flash-alert {
+  $self: &;
+
+  /// @access private
+  @mixin _set-fa-style($color) {
+    background-color: $color;
+
+    #{ $self }__body,
+    #{ $self }__close__icon {
+      color: darken($color, 28.5%);
+    }
+  }
+
+  @include as-row;
+  min-height: $component-height;
+  background-color: $city-lights;
+
+  &__body {
+    @include text($font-size-small);
+    width: 100%;
+    padding: 15px;
+  }
+
+  &__close {
+    @extend %blank-button;
+    width: 50px;
+    float: right;
+  }
+
+  &--success {
+    @include _set-fa-style($success-color);
+  }
+
+  &--danger {
+    @include _set-fa-style($danger-color);
+  }
+}

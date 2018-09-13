@@ -1,0 +1,35 @@
+// Forms
+// ----------
+
+
+.bb-form {
+  $self: &;
+
+  width: 100%;
+
+  &__form-group {
+    margin: 0;
+    margin-bottom: 5px;
+
+    &--label {
+      @include text($font-size-small, $font-weight-bold);
+    }
+
+    &--input {
+      @extend %default-input;
+      margin-bottom: 5px;
+    }
+  }
+
+  &__submit {
+    @extend %default-button;
+  }
+
+  &--login {
+    #{ $self }__forgot-password {
+      @extend %button-as-link;
+      @include text($font-size-small, $color: $secondary-color);
+      margin-bottom: 20px;
+    }
+  }
+}

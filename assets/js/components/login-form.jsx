@@ -39,14 +39,15 @@ class LoginForm extends Component {
 
     return (
       <Form
-        className='login-form'
+        className='bb-form bb-form--login'
         onSubmit={this.handleSubmit}
       >
-        <FormGroup className='login-form__form-group'>
-          <Label className='login-form__form-group--label'>
+        <FormGroup className='bb-form__form-group'>
+          <Label className='bb-form__form-group--label'>
             Username or email address
           </Label>
           <Input
+            className='bb-form__form-group--input'
             name='username_or_email'
             type='text'
             value={username_or_email}
@@ -54,11 +55,12 @@ class LoginForm extends Component {
           />
         </FormGroup>
 
-        <FormGroup className='login-form__form-group'>
-          <Label className='login-form__form-group--label'>
+        <FormGroup className='bb-form__form-group'>
+          <Label className='bb-form__form-group--label'>
             Password
           </Label>
           <Input
+            className='bb-form__form-group--input'
             name='password'
             type='password'
             value={password}
@@ -66,14 +68,14 @@ class LoginForm extends Component {
           />
         </FormGroup>
 
-        <div className='login-form__forgot-password'>
-          <button type='button'>
-            Forgot your password?
-          </button>
-        </div>
+        <button
+          className='bb-form__forgot-password'
+          type='button'>
+          Forgot your password?
+        </button>
 
         <Button
-          className='login-form__submit'
+          className='bb-form__submit'
           type='submit'
           size='lg'
           block
