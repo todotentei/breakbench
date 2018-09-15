@@ -5,10 +5,8 @@ import {
   flashAlertActions,
   sessionActions
 } from '../actions';
-import {
-  LoginForm,
-  FlashAlert
-} from '../components';
+import { FlashAlert } from '../components';
+import { LoginForm } from '../forms';
 import history from '../utils/history';
 
 class LoginPage extends Component {
@@ -32,11 +30,10 @@ class LoginPage extends Component {
     this.setState({ user });
   }
 
-  handleSubmit = () => {
-    const { login } = this.props;
-    const { user } = this.state;
+  handleSubmit = (e) => {
+    console.log(e);
 
-    login(user);
+    // login(user);
   }
 
   componentDidUpdate = () => {

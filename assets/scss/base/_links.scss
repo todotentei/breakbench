@@ -1,0 +1,16 @@
+// Links
+// ----------
+
+
+// Contextual links
+//
+// BEGIN
+
+@each $color, $value in $theme-colors {
+  .link-#{ $color },
+  a.text-#{ $color } {
+    @include link-variant($value)
+  }
+}
+
+// END

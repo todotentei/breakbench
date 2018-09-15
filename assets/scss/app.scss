@@ -1,31 +1,11 @@
 @charset 'UTF-8';
 
-@import 'abstracts/colors',
-        'abstracts/variables',
-        'abstracts/functions',
-        'abstracts/mixins';
+@import 'vendor';
 
-@import 'abstracts/placeholders';
+@import 'abstracts';
+@import 'base';
+@import 'components';
+@import 'layout';
+@import 'pages';
 
-@import 'base/reset',
-        'base/typography';
-
-@import 'components/flash-alert',
-        'components/forms';
-
-@import 'layout/header',
-        'layout/footer';
-
-@import 'pages/home',
-        'pages/login',
-        'pages/register';
-
-@import 'themes/default';
-
-@import '../vendor/fontawesome/scss/fontawesome',
-        '../vendor/fontawesome/scss/solid',
-        '../vendor/fontawesome/scss/brands';
-
-body {
-  font-family: $font-family-open-sans;
-}
+@import 'normalize';

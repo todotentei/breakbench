@@ -6,131 +6,98 @@
 //
 // BEGIN
 
-$anti-flash-white           : #f1f2f6;
-$american-river             : #636e72;
-$aurora-green               : #78e08f;
-$azraq-blue                 : #4a69bd;
-$bay-wharf                  : #747d8c;
-$black                      : #000000;
-$black-pearl                : #1e272e;
-$bright-greek               : #3742fa;
-$bright-yarrow              : #fdcb6e;
-$bruschetta-tomato          : #ff6348;
-$carrot-orange              : #e58e26;
-$chi-gong                   : #d63031;
-$chrome-yellow              : #ffa801;
-$city-lights                : #dfe4ea;
-$clear-chill                : #1e90ff;
-$coral                      : #ff7f50;
-$dark-periwinkle            : #575fcf;
-$dark-sapphire              : #0c2461;
-$dracula-orchid             : #2d3436;
-$dupain                     : #60a3bc;
-$electron-blue              : #0984e3;
-$exodus-fruit               : #6c5ce7;
-$fade-poster                : #81ecec;
-$first-date                 : #fab1a0;
-$flat-flesh                 : #fad390;
-$forest-blues               : #0a3d62;
-$free-speech-blue           : #3c40c6;
-$french-sky-blue            : #70a1ff;
-$fresh-turquoise            : #34e7e4;
-$golden-sand                : #eccc68;
-$good-night                 : #485460;
-$good-samaritan             : #3c6382;
-$green-darner-tail          : #74b9ff;
-$green-teal                 : #05c46b;
-$grisaille                  : #57606f;
-$highlighter-pink           : #ef5777;
-$hint-of-elusive-blue       : #d2dae2;
-$iceland-poppy              : #fa983a;
-$jade-dust                  : #00d8d6;
-$jalapeno-red               : #b71540;
-$light-greenish-blue        : #55efc4;
-$lime-soap                  : #7bed9f;
-$livid                      : #6a89cc;
-$london-square              : #808e9b;
-$mandarin-red               : #e55039;
-$megaman                    : #4bcffa;
-$melon-melody               : #f8c291;
-$mint-leaf                  : #00b894;
-$minty-green                : #0be881;
-$narenji-orange             : #ffc048;
-$orange                     : #ffa502;
-$orangeville                : #e17055;
-$paradise-green             : #b8e994;
-$peace                      : #a4b0be;
-$pico-8-pink                : #fd79a8;
-$pink-glamour               : #ff7675;
-$prestige-blue              : #2f3542;
-$prunus-avium               : #e84393;
-$red-orange                 : #ff3f34;
-$reef-encounter             : #079992;
-$robin-egg-blue             : #00cec9;
-$saturated-sky              : #5352ed;
-$shark                      : #292d30;
-$soothing-breeze            : #b2bec3;
-$sour-lemon                 : #ffeaa7;
-$shy-moment                 : #a29bfe;
-$sizzling-red               : #f53b57;
-$spiro-disco-ball           : #0fbcf9;
-$spray                      : #82ccdd;
-$squash-blossom             : #f6b93b;
-$sunset-orange              : #ff5e57;
-$tomato-red                 : #eb2f06;
-$twinkle-blue               : #ced6e0;
-$ufo-green                  : #2ed573;
-$vibrant-yellow             : #ffd32a;
-$yriel-yellow               : #ffdd59;
-$yue-guang-lan-blue         : #1e3799;
-$waterfall                  : #38ada9;
-$watermelon                 : #ff4757;
-$white                      : #ffffff;
-$wild-watermelon            : #ff6b81;
+// Default
+$black                      : #000000 !default;
+$white                      : #ffffff !default;
+$gray-100                   : #f8f9fa !default;
+$gray-200                   : #e9ecef !default;
+$gray-300                   : #dee2e6 !default;
+$gray-400                   : #ced4da !default;
+$gray-500                   : #adb5bd !default;
+$gray-600                   : #6c757d !default;
+$gray-700                   : #495057 !default;
+$gray-800                   : #343a40 !default;
+$gray-900                   : #212529 !default;
 
-// END
-
-
-// Functional color variables
-//
-// BEGIN
-
-$primary-color                          : $shark !default;
-$secondary-color                        : $hint-of-elusive-blue !default;
-$accent-color                           : $exodus-fruit !default;
-$success-color                          : $light-greenish-blue !default;
-$danger-color                           : $sizzling-red !default;
-$warning-color                          : $chrome-yellow !default;
-$info-color                             : $jade-dust !default;
-
-$background-color                       : $white !default;
-$text-color                             : $black;
-$shadow-color                           : rgba($black, .125) !default;
-
-$link-color                             : $text-color !default;
-$link-color-hover                       : $link-color !default;
-
-$component-background-color             : $background-color !default;
-$component-text-color                   : $text-color !default;
-$component-border-color                 : $secondary-color !default;
-$component-border-color-hover           : darken($component-border-color, 7.5%) !default;
-$component-border-color-focus           : $component-border-color-hover !default;
-
-$input-background-color                 : $component-background-color !default;
-$input-background-color-hover           : $input-background-color !default;
-$input-text-color                       : $component-text-color !default;
-$input-text-color-hover                 : $input-text-color !default;
-$input-border-color                     : $component-border-color !default;
-$input-border-color-hover               : $component-border-color-hover !default;
-$input-border-color-focus               : $component-border-color-focus !default;
-
-
-$button-background-color                : $primary-color !default;
-$button-background-color-hover          : darken($button-background-color, 5%) !default;
-$button-text-color                      : $white !default;
-$button-text-color-hover                : $button-text-color !default;
-$button-border-color                    : $component-border-color !default;
-$button-border-color-hover              : $component-border-color-hover !default;
-$button-border-color-focus              : $component-border-color-focus !default;
+// Others
+$anti-flash-white           : #f1f2f6 !default;
+$american-river             : #636e72 !default;
+$aurora-green               : #78e08f !default;
+$azraq-blue                 : #4a69bd !default;
+$bay-wharf                  : #747d8c !default;
+$black-pearl                : #1e272e !default;
+$bright-greek               : #3742fa !default;
+$bright-yarrow              : #fdcb6e !default;
+$bruschetta-tomato          : #ff6348 !default;
+$carrot-orange              : #e58e26 !default;
+$chi-gong                   : #d63031 !default;
+$chrome-yellow              : #ffa801 !default;
+$city-lights                : #dfe4ea !default;
+$clear-chill                : #1e90ff !default;
+$coral                      : #ff7f50 !default;
+$dark-periwinkle            : #575fcf !default;
+$dark-sapphire              : #0c2461 !default;
+$dracula-orchid             : #2d3436 !default;
+$dupain                     : #60a3bc !default;
+$electron-blue              : #0984e3 !default;
+$exodus-fruit               : #6c5ce7 !default;
+$fade-poster                : #81ecec !default;
+$first-date                 : #fab1a0 !default;
+$flat-flesh                 : #fad390 !default;
+$forest-blues               : #0a3d62 !default;
+$free-speech-blue           : #3c40c6 !default;
+$french-sky-blue            : #70a1ff !default;
+$fresh-turquoise            : #34e7e4 !default;
+$golden-sand                : #eccc68 !default;
+$good-night                 : #485460 !default;
+$good-samaritan             : #3c6382 !default;
+$green-darner-tail          : #74b9ff !default;
+$green-teal                 : #05c46b !default;
+$grisaille                  : #57606f !default;
+$highlighter-pink           : #ef5777 !default;
+$hint-of-elusive-blue       : #d2dae2 !default;
+$iceland-poppy              : #fa983a !default;
+$jade-dust                  : #00d8d6 !default;
+$jalapeno-red               : #b71540 !default;
+$light-greenish-blue        : #55efc4 !default;
+$lime-soap                  : #7bed9f !default;
+$livid                      : #6a89cc !default;
+$london-square              : #808e9b !default;
+$mandarin-red               : #e55039 !default;
+$megaman                    : #4bcffa !default;
+$melon-melody               : #f8c291 !default;
+$mint-leaf                  : #00b894 !default;
+$minty-green                : #0be881 !default;
+$narenji-orange             : #ffc048 !default;
+$orange                     : #ffa502 !default;
+$orangeville                : #e17055 !default;
+$paradise-green             : #b8e994 !default;
+$peace                      : #a4b0be !default;
+$pico-8-pink                : #fd79a8 !default;
+$pink-glamour               : #ff7675 !default;
+$prestige-blue              : #2f3542 !default;
+$prunus-avium               : #e84393 !default;
+$red-orange                 : #ff3f34 !default;
+$reef-encounter             : #079992 !default;
+$robin-egg-blue             : #00cec9 !default;
+$saturated-sky              : #5352ed !default;
+$shark                      : #292d30 !default;
+$soothing-breeze            : #b2bec3 !default;
+$sour-lemon                 : #ffeaa7 !default;
+$shy-moment                 : #a29bfe !default;
+$sizzling-red               : #f53b57 !default;
+$spiro-disco-ball           : #0fbcf9 !default;
+$spray                      : #82ccdd !default;
+$squash-blossom             : #f6b93b !default;
+$sunset-orange              : #ff5e57 !default;
+$tomato-red                 : #eb2f06 !default;
+$twinkle-blue               : #ced6e0 !default;
+$ufo-green                  : #2ed573 !default;
+$vibrant-yellow             : #ffd32a !default;
+$yriel-yellow               : #ffdd59 !default;
+$yue-guang-lan-blue         : #1e3799 !default;
+$waterfall                  : #38ada9 !default;
+$watermelon                 : #ff4757 !default;
+$wild-watermelon            : #ff6b81 !default;
 
 // END

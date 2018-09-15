@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
-import { Button } from 'reactstrap';
 import socket from '../socket'
 import FindMatch from './find-match';
 
@@ -53,13 +52,13 @@ export default class PlayAction extends Component {
 
     return (
       <div>
-        <Button
-          className='actions-column__play-button'
-          size='lg'
+        <button
+          type='button'
+          className='app-button app-button-primary'
           onClick={this.handleOpenPlayForm}
         >
           play
-        </Button>
+        </button>
         <ReactModal
           portalClassName='bb-react-modal__find-match'
           className='bb-react-modal__find-match--content'

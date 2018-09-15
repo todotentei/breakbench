@@ -1,0 +1,67 @@
+// Buttons
+// ----------
+
+
+// Base buttons
+//
+// BEGIN
+
+.app-button {
+  display: inline-block;
+  height: $button-height;
+  width: $button-width;
+  font-size: $button-font-size;
+  font-weight: $button-font-weight;
+  color: $body-color;
+  background-color: transparent;
+  border-width: $button-border-width;
+  border-style: $button-border-style;
+  border-color: transparent;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  cursor: pointer;
+
+  @include button-events;
+}
+
+// Contextual buttons
+@each $color, $value in $button-colors {
+  .app-button-#{$color} {
+    @include button-variant($value, $value);
+  }
+}
+
+// END
+
+
+// Link buttons
+//
+// BEGIN
+
+.app-button-link {
+  color: $link-color;
+  font-weight: $font-weight-base;
+  text-decoration: $link-text-decoration;
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+  cursor: pointer;
+
+  @include hover {
+    color: $link-hover-color;
+    text-decoration: $link-hover-text-decoration;
+  };
+
+  @include focus {
+    box-shadow: none;
+  };
+
+  @include disabled {
+    color: $link-disabled-color;
+    pointer-events: none;
+    cursor: default;
+  };
+}
+
+// END

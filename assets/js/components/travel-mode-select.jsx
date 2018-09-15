@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import { gql } from '../utils';
-import {
-  Button, ButtonGroup
-} from 'reactstrap';
+import classNames from 'classnames';
 
 class TravelModeSelect extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      travel_mode: null,
+      travel_mode: '',
       travel_modes: []
     };
+  }
+
+  static defaultProps = {
+    onClick: () => {}
   }
 
   handleClick = (e) => {
     e.preventDefault();
 
     const { value } = e.target
-    this.setState({ travel_mode: value })
-
     const { onClick } = this.props;
-    if (onClick) onClick(value);
+
+    this.setState({ travel_mode: value })
+    onClick(value);
   }
 
   componentDidMount = () => {
@@ -36,23 +38,27 @@ class TravelModeSelect extends Component {
       });
   }
 
+  renderButton = (type, key) => {
+    const { travel_mode } = this.props;
+
+    const isActive = travel_mode == type
+      ? 'app-button-active'
+      : 'app-button-primary'
+    const _class = classNames('app-button', isActive)
+
+    return (
+      <button key={key} value={type} className={_class} onClick={this.handleClick}>
+        {type}
+      </button>
+    );
+  }
+
   render() {
     const { travel_mode, travel_modes } = this.state;
 
     return (
       <div>
-        <ButtonGroup>
-          {travel_modes.map(({type}, index) =>
-            <Button
-              key={ index }
-              value={type}
-              onClick={this.handleClick}
-              active={travel_mode === type}
-            >
-              {type}
-            </Button>
-          )}
-        </ButtonGroup>
+        {travel_modes.map(({type}, index) => this.renderButton(type, index))}
       </div>
     );
   }

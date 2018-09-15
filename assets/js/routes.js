@@ -4,7 +4,7 @@ import {
   HomePage,
   LoginPage,
   RegisterPage
-} from './containers';
+} from './pages';
 
 const routes = (
   <main id='main' role='main' className='app-content'>

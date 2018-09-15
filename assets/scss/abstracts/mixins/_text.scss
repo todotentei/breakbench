@@ -2,12 +2,29 @@
 // ----------
 
 
+// Text styling
+//
+// BEGIN
+
 @mixin text(
-  $size   : $font-size-regular,
-  $weight : $font-weight-regular,
+  $size   : $font-size-base,
+  $weight : $font-weight-base,
   $color  : $primary-color
 ) {
   font-size: $size;
   font-weight: $weight;
   color: $color;
 }
+
+// END
+
+
+// Contextual text
+//
+// BEGIN
+
+@mixin text-variant($color) {
+  color: $color;
+}
+
+// END

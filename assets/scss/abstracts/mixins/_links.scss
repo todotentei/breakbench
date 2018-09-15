@@ -1,0 +1,17 @@
+// Links
+// ----------
+
+
+// Contextual links
+//
+// BEGIN
+
+@mixin link-variant($color) {
+  color: $color;
+
+  @include hover-focus {
+    color: darken($color, 12.5%);
+  }
+}
+
+// END

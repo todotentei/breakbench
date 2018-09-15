@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { gql } from '../utils';
-import {
-  FormGroup,
-  Label
-} from 'reactstrap';
 import Select from 'react-select';
 
 class SportSelect extends Component {

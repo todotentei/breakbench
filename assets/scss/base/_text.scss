@@ -1,0 +1,45 @@
+// Text
+// ----------
+
+
+// Contextual text
+//
+// BEGIN
+
+@each $color, $value in $theme-colors {
+  .text-#{ $color } {
+    @include text-variant($value);
+  }
+}
+
+// END
+
+
+// Font sizes
+//
+// BEGIN
+
+.text-small {
+  font-size: $font-size-small;
+}
+
+.text-large {
+  font-size: $font-size-large;
+}
+
+// END
+
+
+// Font weight
+//
+// BEGIN
+
+.text-light {
+  font-weight: $font-weight-light;
+}
+
+.text-bold {
+  font-weight: $font-weight-bold;
+}
+
+// END

@@ -13,7 +13,7 @@
 
   @include as-row;
   min-height: $component-height;
-  background-color: $city-lights;
+  background-color: $secondary-color;
 
   &__body {
     @include text($font-size-small);
@@ -22,7 +22,7 @@
   }
 
   &__close {
-    @extend %blank-button;
+    @extend .app-button;
     width: 50px;
     float: right;
   }

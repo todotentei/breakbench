@@ -1,0 +1,66 @@
+// Buttons
+// ----------
+
+
+// App buttons
+//
+// BEGIN
+
+@mixin button-events {
+  @include hover-focus {
+    color: $body-color;
+    text-decoration: none;
+  };
+
+  @include focus {
+    outline: 0;
+    box-shadow: $button-focus-box-shadow;
+  };
+
+  @include disabled {
+    opacity: $button-disabled-opacity;
+    cursor: default;
+  };
+}
+
+// END
+
+
+// Alternate buttons
+//
+// BEGIN
+
+@mixin button-variant(
+  $background,
+  $border,
+  $hover-background: darken($background, 7.5%),
+  $hover-border: darken($border, 10%),
+  $active-background: darken($background, 10%),
+  $active-border: darken($border, 12.5%)
+) {
+  @include gradient-bg($background);
+  color: color-yiq($background);
+  border-color: $border;
+
+  @include hover {
+    @include gradient-bg($hover-background);
+    color: color-yiq($hover-background);
+    border-color: $hover-border;
+  };
+
+  @include focus {
+    color: color-yiq($background);
+  };
+
+  @include disabled {
+    color: color-yiq($background);
+    background-color: $background;
+    border-color: $border;
+  };
+
+  @include active {
+    box-shadow: $button-active-box-shadow;
+  }
+}
+
+// END

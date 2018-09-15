@@ -2,34 +2,28 @@
 // ----------
 
 
-.bb-form {
-  $self: &;
+// Login
+//
+// BEGIN
 
-  width: 100%;
-
-  &__form-group {
-    margin: 0;
-    margin-bottom: 5px;
-
-    &--label {
-      @include text($font-size-small, $font-weight-bold);
-    }
-
-    &--input {
-      @extend %default-input;
-      margin-bottom: 5px;
-    }
-  }
+.app-form {
+  $app-form: &;
 
   &__submit {
-    @extend %default-button;
+    @extend .app-button;
   }
 
   &--login {
-    #{ $self }__forgot-password {
-      @extend %button-as-link;
+    #{ $app-form }__forgot-password {
+      @extend .app-button-link;
       @include text($font-size-small, $color: $secondary-color);
-      margin-bottom: 20px;
     }
   }
+
+  &__forgot-password {
+    @extend .app-button-link;
+    @include text($font-size-small, $color: $secondary-color);
+  }
 }
+
+// END

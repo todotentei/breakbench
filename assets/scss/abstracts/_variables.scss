@@ -16,49 +16,167 @@ $z-indexes: (
 // END
 
 
-// Components
+// Typography
 //
 // BEGIN
 
-$component-height               : 50px !default;
-$component-border-width         : 1px !default;
-$component-border-radius        : 0 !default;
+$font-family-open-sans                  : 'OpenSans', sans-serif !default;
+$font-family-base                       : $font-family-open-sans;
+
+$font-size-small                        : 12px !default;
+$font-size-base                         : 14px !default;
+$font-size-large                        : 18px !default;
+
+$font-weight-light                      : 300 !default;
+$font-weight-base                       : 400 !default;
+$font-weight-bold                       : 600 !default;
+
+$headings-margin-bottom                 : .5rem !default;
+
+$paragraph-margin-bottom                : 1rem !default;
 
 // END
 
 
-// Buttons
+// Color system
 //
 // BEGIN
 
-$button-height                  : $component-height !default;
-$button-border-width            : 0 !default;
-$button-border-radius           : $component-border-radius !default;
+$primary-color                          : $shark !default;
+$accent-color                           : $white !default;
+$secondary-color                        : $gray-400 !default;
+$success-color                          : $light-greenish-blue !default;
+$info-color                             : $jade-dust !default;
+$warning-color                          : $chrome-yellow !default;
+$danger-color                           : $sizzling-red !default;
+$light-color                            : $gray-100 !default;
+$muted-color                            : $gray-500 !default;
+$dark-color                             : $gray-800 !default;
+
+$theme-colors: (
+  'primary'   : $primary-color,
+  'secondary' : $secondary-color,
+  'success'   : $success-color,
+  'info'      : $info-color,
+  'warning'   : $warning-color,
+  'danger'    : $danger-color,
+  'light'     : $light-color,
+  'muted'     : $muted-color,
+  'dark'      : $dark-color
+);
+
+// The yiq lightness value that determines when the lightness of color changes
+// from 'dark' to 'light'. Acceptable values are between 0 and 255.
+$yiq-contrasted-threshold               : 150 !default;
+
+// Customize the light and dark text colors for use in our YIQ color contrast function.
+$yiq-text-dark                          : $black !default;
+$yiq-text-light                         : $white !default;
+
+// END
+
+
+// Components (common)
+//
+// BEGIN
+
+$body-font-size                         : $font-size-base !default;
+$body-font-weight                       : $font-weight-base !default;
+$body-color                             : $black !default;
+$body-background-color                  : $white !default;
+
+$component-height                       : 40px !default;
+$component-width                        : 100% !default;
+$component-focus-box-shadow             : 0 !default;
+
+$border-width                           : 1px !default;
+$border-style                           : solid !default;
+$border-color                           : $gray-300 !default;
+$border-radius                          : 0 !default;
+
+$line-height-base                       : 1.5 !default;
+$box-shadow                             : 0 .5px 1px rgba($black, .15) !default;
+
+// END
+
+
+// Button
+//
+// BEGIN
+
+$button-height                          : $component-height !default;
+$button-width                           : $component-width !default;
+$button-line-height                     : $line-height-base !default;
+$button-font-size                       : $font-size-base !default;
+$button-font-weight                     : $font-weight-base !default;
+$button-color                           : $accent-color !default;
+$button-border-width                    : 0 !default;
+$button-border-style                    : $border-style !default;
+$button-border-radius                   : $border-radius !default;
+$button-disabled-opacity                : .65 !default;
+$button-focus-box-shadow                : $component-focus-box-shadow !default;
+$button-active-box-shadow               : inset 0 3px 5px rgba($black, .125) !default;
+
+$button-colors: map-merge(
+  $theme-colors,
+  (
+    'active': darken($primary-color, 12.5%)
+  ),
+);
 
 // END
 
 
 // Forms
+//
+// BEGIN
 
-$input-height                   : $component-height !default;
-$input-border-width             : $component-border-width !default;
-$input-border-radius            : $component-border-radius !default;
+$form-group-margin-bottom               : 20px !default;
+$form-text-margin-top                   : 5px !default;
+
+$label-margin-bottom                    : 5px !default;
+
+$input-height                           : $component-height !default;
+$input-width                            : $component-width !default;
+$input-line-height                      : $line-height-base !default;
+$input-font-size                        : $font-size-base !default;
+$input-font-weight                      : $font-weight-base !default;
+$input-color                            : $body-color !default;
+$input-background-color                 : $body-background-color !default;
+$input-padding                          : 0 .75rem !default;
+$input-border-width                     : $border-width !default;
+$input-border-color                     : $border-color !default;
+$input-border-style                     : $border-style !default;
+$input-border-radius                    : $border-radius !default;
+$input-hover-color                      : $input-color !default;
+$input-hover-background-color           : $input-background-color !default;
+$input-hover-border-color               : darken($input-border-color, 7.5%) !default;
+$input-focus-color                      : $input-color !default;
+$input-focus-background-color           : $input-background-color !default;
+$input-focus-border-color               : darken($input-border-color, 7.5%) !default;
+$input-focus-box-shadow                 : $component-focus-box-shadow !default;
 
 // END
 
 
-// Typography
+// Links
 //
 // BEGIN
 
-$font-family-open-sans          : 'OpenSans', sans-serif !default;
+$link-color                             : $body-color !default;
+$link-text-decoration                   : underline;
+$link-hover-color                       : darken($link-color, 15%) !default;
+$link-hover-text-decoration             : $link-text-decoration !default;
+$link-disabled-color                    : $muted-color !default;
 
-$font-size-small                : 12px !default;
-$font-size-regular              : 14px !default;
-$font-size-large                : 18px !default;
+// END
 
-$font-weight-light              : 300 !default;
-$font-weight-regular            : 400 !default;
-$font-weight-bold               : 600 !default;
+
+// Tables
+//
+// BEGIN
+
+$table-cell-padding                     : .75rem !default;
+$table-caption-color                    : $muted-color !default;
 
 // END

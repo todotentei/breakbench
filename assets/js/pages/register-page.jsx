@@ -5,19 +5,17 @@ import {
   flashAlertActions,
   userActions
 } from '../actions';
-import {
-  FlashAlert,
-  RegisterForm
-} from '../components';
+import { FlashAlert } from '../components';
+import { RegisterForm } from '../forms';
 
 class RegisterPage extends Component {
   constructor(props) {
     super(props);
   }
 
-  handleValidSubmit = (e, user) => {
-    const { register } = this.props;
-    register(user);
+  handleSubmit = (e) => {
+    console.log(e);
+    // register(user);
   }
 
   componentWillMount = () => {
@@ -44,7 +42,7 @@ class RegisterPage extends Component {
           </FlashAlert>
         }
         <RegisterForm
-          onValidSubmit={this.handleValidSubmit}
+          onSubmit={this.handleSubmit}
         />
       </div>
     );

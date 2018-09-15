@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Input } from 'reactstrap';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
 class GoogleAutocomplete extends Component {
@@ -34,11 +33,11 @@ class GoogleAutocomplete extends Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <div>
-            <Input
+            <input
               {...getInputProps({
                 name: 'location',
                 placeholder: 'Your current location',
-                className: 'play-info-location'
+                className: 'app-form-control'
               })}
             />
             <div className="autocomplete-dropdown-container">

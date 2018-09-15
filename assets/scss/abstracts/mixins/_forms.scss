@@ -1,0 +1,47 @@
+// Forms
+// ----------
+
+
+// Contextual form controls
+//
+// BEGIN
+
+@mixin form-control-variant($color) {
+  border-color: $color;
+
+  @include hover-focus {
+    border-color: $color;
+  };
+}
+
+// END
+
+
+// Form control events
+//
+// ----------
+
+@mixin form-control-hover {
+  @include hover {
+    color: $input-hover-color;
+    background-color: $input-hover-background-color;
+    border-color: $input-hover-border-color;
+  }
+}
+
+@mixin form-control-focus {
+  @include focus {
+    color: $input-focus-color;
+    background-color: $input-focus-background-color;
+    border-color: $input-focus-border-color;
+    box-shadow: $input-focus-box-shadow;
+    outline: 0;
+  }
+}
+
+@mixin form-control-hover-focus {
+  @include form-control-hover;
+  @include form-control-focus;
+}
+
+// END

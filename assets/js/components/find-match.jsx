@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Button,
-  Form,
-  FormGroup,
-  Label
-} from 'reactstrap';
-import {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
@@ -68,48 +62,42 @@ export default class FindMatch extends Component {
 
     if (sport)
       return (
-        <FormGroup className='bb-find-match__game-mode'>
+        <div className='app-form-group'>
           <Label>Game modes</Label>
           <SportGameModeSelect
             sport={sport}
             onChange={this.handleSGMChange}
           />
-        </FormGroup>
+        </div>
       );
   }
 
   render() {
     return (
-      <Form className='bb-find-match'>
-        <FormGroup className='bb-find-match__location'>
-          <Label>Location</Label>
+      <form className='bb-find-match'>
+        <div className='app-form-group'>
+          <label>Location</label>
           <GoogleAutocomplete
             onChange={this.handleGACClick}
             onSelect={this.handleGAGSelect}
           />
-        </FormGroup>
-        <FormGroup className='bb-find-match__travel-mode'>
-          <Label>Travel mode</Label>
-          <TravelModeSelect
-            onClick={this.handleTVMClick}
-          />
-        </FormGroup>
-        <FormGroup className='bb-find-match__sport'>
-          <Label>Sport</Label>
-          <SportSelect
-            onChange={this.handleSPSChange}
-          />
-        </FormGroup>
+        </div>
+        <div className='app-form-group'>
+          <label>Travel mode</label>
+          <TravelModeSelect onClick={this.handleTVMClick} />
+        </div>
+        <div className='app-form-group'>
+          <label>Sport</label>
+          <SportSelect onChange={this.handleSPSChange} />
+        </div>
         {this.renderSGMSelect()}
-        <Button
-          size='lg'
+        <button
           onClick={this.handleFindMatch}
-          className='bb-find-match__submit'
-          outline
+          className='app-button app-button-primary'
         >
           Find Match
-        </Button>
-      </Form>
+        </button>
+      </form>
     );
   }
 };
