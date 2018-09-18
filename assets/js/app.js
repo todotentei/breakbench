@@ -17,15 +17,3 @@ import 'phoenix_html'
 // paths './socket' or full ones 'web/static/js/socket'.
 
 // import socket from './socket'
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { store } from './utils';
-import Breakbench from './breakbench'
-
-ReactDOM.render((
-  <Provider store={store}>
-    <Breakbench />
-  </Provider>
-), document.getElementById('breakbench-app'))

@@ -25,14 +25,10 @@ module.exports = (env, options) => ({
     path: path.resolve(__dirname, '../priv/static/js')
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js']
   },
   module: {
     rules: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      use: 'babel-loader'
-    }, {
       test: /\.js$/,
       exclude: /node_modules/,
       use: 'babel-loader'
@@ -68,8 +64,7 @@ module.exports = (env, options) => ({
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       Tether: 'tether',
-      'window.Tether': 'tether',
-      Popper: ['popper.js', 'default']
+      'window.Tether': 'tether'
     }),
   ]
 });
