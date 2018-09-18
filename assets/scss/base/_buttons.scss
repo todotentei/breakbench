@@ -6,7 +6,7 @@
 //
 // BEGIN
 
-.app-button {
+.web-button {
   display: inline-block;
   height: $button-height;
   width: $button-width;
@@ -17,6 +17,7 @@
   border-width: $button-border-width;
   border-style: $button-border-style;
   border-color: transparent;
+  box-shadow: $button-box-shadow;
   text-align: center;
   vertical-align: middle;
   user-select: none;
@@ -26,10 +27,8 @@
 }
 
 // Contextual buttons
-@each $color, $value in $button-colors {
-  .app-button-#{$color} {
-    @include button-variant($value, $value);
-  }
+@each $name, $value in $button-colors {
+  @include button-variant('.web-button-#{ $name }', $value, $value);
 }
 
 // END
@@ -39,7 +38,7 @@
 //
 // BEGIN
 
-.app-button-link {
+.web-button-link {
   color: $link-color;
   font-weight: $font-weight-base;
   text-decoration: $link-text-decoration;

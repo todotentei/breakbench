@@ -5,35 +5,20 @@ import {
   flashAlertActions,
   sessionActions
 } from '../actions';
-import { FlashAlert } from '../components';
+import { Container, FlashAlert, Logo } from '../components';
 import { LoginForm } from '../forms';
 import history from '../utils/history';
+
+const logoColor = { top: '#fff', bottom: '#fff' };
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      user: {
-        username_or_email: '',
-        password: '',
-        remember_me: true
-      }
-    };
   }
 
-  handleChange = (obj) => {
-    const { name, value } = obj;
-    const { user } = this.state;
-
-    user[name] = value;
-    this.setState({ user });
-  }
-
-  handleSubmit = (e) => {
-    console.log(e);
-
-    // login(user);
+  handleSubmit = (user) => {
+    const { login } = this.props;
+    login(user);
   }
 
   componentDidUpdate = () => {
@@ -41,24 +26,37 @@ class LoginPage extends Component {
     if (authenticated) history.push('/');
   }
 
-  render() {
-    const { clearAlert, flashAlert } = this.props;
+  renderFlashAlert = () => {
+    const { clearAlert } = this.props;
+    const { type, message } = this.props.flashAlert;
 
     return (
-      <div className='login-page'>
-        {flashAlert.message &&
-          <FlashAlert
-            className={flashAlert.type}
-            onClose={clearAlert}
-          >
-            <div>{flashAlert.message}</div>
-          </FlashAlert>
-        }
-        <LoginForm
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        />
-      </div>
+      message &&
+        <FlashAlert className={type} onClose={clearAlert}>
+          <div>{message}</div>
+        </FlashAlert>
+    );
+  }
+
+  render() {
+    return (
+      <Container className='login-page'>
+        <div className='login-page__header'>
+          <div className='login-page__header__logo'>
+            <Logo width='20px' height='20px' fill={logoColor} />
+          </div>
+          <span className='login-page__header__text'>
+            Log into Breakbench
+          </span>
+        </div>
+        {this.renderFlashAlert()}
+        <div className='login-page__login-form'>
+          <LoginForm
+            onChange={this.handleChange}
+            onSubmit={this.handleSubmit}
+          />
+        </div>
+      </Container>
     );
   }
 };

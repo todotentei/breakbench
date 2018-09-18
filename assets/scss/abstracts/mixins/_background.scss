@@ -1,0 +1,22 @@
+// Background
+// ----------
+
+
+// Alternate background colors
+//
+// BEGIN
+
+@mixin background-color-variant($class, $color) {
+  #{ $class } {
+    background-color: $color;
+  }
+
+  a#{ $class },
+  button#{ $class } {
+    @include hover-focus {
+      background-color: darken($color, 12.5%);
+    };
+  }
+}
+
+// END

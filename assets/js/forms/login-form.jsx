@@ -1,10 +1,14 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-const renderField = ({ input, id, label, type }) => (
-  <div className='app-form-group'>
-    <label className='text-small text-bold'>{label}</label>
-    <input {...input} type={type} className='app-form-control' />
+const renderField = ({ input, id, placeholder, type }) => (
+  <div className='web-form-group'>
+    <input
+      {...input}
+      type={type}
+      placeholder={placeholder}
+      className='web-form-control'
+    />
   </div>
 );
 
@@ -16,26 +20,26 @@ const LoginForm = (props) => {
         name='username_or_email'
         type='text'
         component={renderField}
-        label='Username or email address'
+        placeholder='Username or email address'
       />
       <Field
         id='password'
         name='password'
         type='password'
         component={renderField}
-        label='Password'
+        placeholder='Password'
       />
-      <div className='app-form-group'>
+      <div className='web-form-group'>
         <button
           type='button'
-          className='app-button-link text-small'
+          className='web-button-link web-text-small'
         >
           Forgot your password?
         </button>
       </div>
       <button
         type='submit'
-        className='app-button app-button-primary'
+        className='web-button web-button-primary'
       >
         Sign in to your account
       </button>

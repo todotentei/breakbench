@@ -23,8 +23,35 @@
 //
 // BEGIN
 
-@mixin text-variant($color) {
-  color: $color;
+@mixin text-color-variant($class, $color) {
+  #{ $class } {
+    color: $color;
+  }
+
+  a#{ $class } {
+    @include hover-focus {
+      color: darken($color, 12.5%);
+    }
+  }
+}
+
+@mixin text-size-variant($class, $size) {
+  #{ $class } {
+    font-size: $size;
+  }
+}
+
+@mixin text-weight-variant($class, $weight) {
+  #{ $class } {
+    font-weight: $weight;
+  }
+}
+
+@mixin text-size-weight-combo($class, $size, $weight) {
+  #{ $class } {
+    font-size: $size;
+    font-weight: $weight;
+  }
 }
 
 // END

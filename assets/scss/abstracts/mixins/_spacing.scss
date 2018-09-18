@@ -1,0 +1,36 @@
+// Spacing
+// ----------
+
+
+// Margin
+//
+// BEGIN
+
+@mixin margin-tb($size) {
+  margin-top: $size;
+  margin-bottom: $size;
+}
+
+@mixin margin-lr($size) {
+  margin-left: $size;
+  margin-right: $size;
+}
+
+// END
+
+
+// Padding
+//
+// BEGIN
+
+@mixin padding-tb($size) {
+  padding-top: $size;
+  padding-bottom: $size;
+}
+
+@mixin padding-lr($size) {
+  padding-left: $size;
+  padding-right: $size;
+}
+
+// END

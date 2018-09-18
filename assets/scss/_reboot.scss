@@ -330,7 +330,7 @@ label {
 //
 // Details at https://github.com/twbs/bootstrap/issues/24093
 button {
-  border-radius: 0;
+  border-radius: $button-border-radius;
 }
 
 // Work around a Firefox/IE bug where the transparent `button` background
@@ -493,4 +493,21 @@ template {
 // Needed for proper display in IE 10-.
 [hidden] {
   display: none !important;
+}
+
+//
+// Change the color of placeholder
+//
+
+::placeholder { // Chrome, Firefox, Opera, Safari 10.1+
+  color: $gray-400;
+  opacity: 1; // Firefox
+}
+
+:-ms-input-placeholder { // Internet Explorer 10-11
+  color: $gray-400;
+}
+
+::-ms-input-placeholder { // Microsoft Edge
+  color: $gray-400;
 }

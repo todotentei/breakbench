@@ -32,7 +32,7 @@ class RegisterPage extends Component {
     const { clearAlert, flashAlert } = this.props;
 
     return (
-      <div className='register-page'>
+      <div className='web-container'>
         {flashAlert.message &&
           <FlashAlert
             className={flashAlert.type}

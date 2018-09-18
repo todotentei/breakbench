@@ -37,7 +37,7 @@ class GoogleAutocomplete extends Component {
               {...getInputProps({
                 name: 'location',
                 placeholder: 'Your current location',
-                className: 'app-form-control'
+                className: 'web-form-control'
               })}
             />
             <div className="autocomplete-dropdown-container">

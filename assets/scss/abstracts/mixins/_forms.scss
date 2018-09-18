@@ -6,12 +6,14 @@
 //
 // BEGIN
 
-@mixin form-control-variant($color) {
-  border-color: $color;
-
-  @include hover-focus {
+@mixin form-control-variant($class, $color) {
+  #{ $class } {
     border-color: $color;
-  };
+
+    @include hover-focus {
+      border-color: $color;
+    };
+  }
 }
 
 // END

@@ -42,16 +42,29 @@ $paragraph-margin-bottom                : 1rem !default;
 //
 // BEGIN
 
-$primary-color                          : $shark !default;
-$accent-color                           : $white !default;
+$primary-color                          : $woodsmoke !default;
 $secondary-color                        : $gray-400 !default;
 $success-color                          : $light-greenish-blue !default;
 $info-color                             : $jade-dust !default;
 $warning-color                          : $chrome-yellow !default;
 $danger-color                           : $sizzling-red !default;
-$light-color                            : $gray-100 !default;
-$muted-color                            : $gray-500 !default;
 $dark-color                             : $gray-800 !default;
+$muted-color                            : $gray-500 !default;
+$light-color                            : $gray-100 !default;
+
+$default-colors: (
+  'white'       : $white,
+  'gray-100'    : $gray-100,
+  'gray-200'    : $gray-200,
+  'gray-300'    : $gray-300,
+  'gray-400'    : $gray-400,
+  'gray-500'    : $gray-500,
+  'gray-600'    : $gray-600,
+  'gray-700'    : $gray-700,
+  'gray-800'    : $gray-800,
+  'gray-900'    : $gray-900,
+  'transparent' : transparent
+);
 
 $theme-colors: (
   'primary'   : $primary-color,
@@ -60,10 +73,17 @@ $theme-colors: (
   'info'      : $info-color,
   'warning'   : $warning-color,
   'danger'    : $danger-color,
-  'light'     : $light-color,
+  'dark'      : $dark-color,
   'muted'     : $muted-color,
-  'dark'      : $dark-color
+  'light'     : $light-color
 );
+
+$background-colors: map-collect(
+  $default-colors,
+  $theme-colors,
+  (
+  )
+) !default;
 
 // The yiq lightness value that determines when the lightness of color changes
 // from 'dark' to 'light'. Acceptable values are between 0 and 255.
@@ -76,26 +96,61 @@ $yiq-text-light                         : $white !default;
 // END
 
 
+// Grid
+//
+// BEGIN
+
+$grid-gutter-width                      : 15px !default;
+
+// END
+
+
 // Components (common)
 //
 // BEGIN
 
 $body-font-size                         : $font-size-base !default;
 $body-font-weight                       : $font-weight-base !default;
-$body-color                             : $black !default;
-$body-background-color                  : $white !default;
+$body-color                             : $woodsmoke !default;
+$body-background-color                  : $gray-100 !default;
 
-$component-height                       : 40px !default;
+$component-height                       : 50px !default;
 $component-width                        : 100% !default;
-$component-focus-box-shadow             : 0 !default;
+$component-focus-box-shadow             : none !default;
 
 $border-width                           : 1px !default;
 $border-style                           : solid !default;
 $border-color                           : $gray-300 !default;
-$border-radius                          : 0 !default;
+$border-radius                          : 2.5px !default;
 
 $line-height-base                       : 1.5 !default;
-$box-shadow                             : 0 .5px 1px rgba($black, .15) !default;
+
+// END
+
+
+// Text
+//
+// BEGIN
+
+$text-colors: () !default;
+$text-colors: map-collect(
+  $default-colors,
+  $theme-colors,
+  (
+  )
+);
+
+$text-font-sizes: () !default;
+$text-font-sizes: (
+  'small' : $font-size-small,
+  'large' : $font-size-large
+);
+
+$text-font-weights: () !default;
+$text-font-weights: (
+  'light' : $font-weight-light,
+  'bold'  : $font-weight-bold
+);
 
 // END
 
@@ -109,20 +164,22 @@ $button-width                           : $component-width !default;
 $button-line-height                     : $line-height-base !default;
 $button-font-size                       : $font-size-base !default;
 $button-font-weight                     : $font-weight-base !default;
-$button-color                           : $accent-color !default;
+$button-color                           : $white !default;
 $button-border-width                    : 0 !default;
 $button-border-style                    : $border-style !default;
 $button-border-radius                   : $border-radius !default;
+$button-box-shadow                      : 0 2px 4px 0 rgba($black,.1) !default;
 $button-disabled-opacity                : .65 !default;
-$button-focus-box-shadow                : $component-focus-box-shadow !default;
-$button-active-box-shadow               : inset 0 3px 5px rgba($black, .125) !default;
+$button-focus-box-shadow                : $button-box-shadow !default;
+$button-active-box-shadow               : inset 0 2px 4px rgba($black, .1) !default;
 
-$button-colors: map-merge(
+$button-colors: map-collect(
+  $default-colors,
   $theme-colors,
   (
     'active': darken($primary-color, 12.5%)
-  ),
-);
+  )
+) !default;
 
 // END
 
@@ -131,7 +188,7 @@ $button-colors: map-merge(
 //
 // BEGIN
 
-$form-group-margin-bottom               : 20px !default;
+$form-group-margin-bottom               : $grid-gutter-width !default;
 $form-text-margin-top                   : 5px !default;
 
 $label-margin-bottom                    : 5px !default;
@@ -142,19 +199,20 @@ $input-line-height                      : $line-height-base !default;
 $input-font-size                        : $font-size-base !default;
 $input-font-weight                      : $font-weight-base !default;
 $input-color                            : $body-color !default;
-$input-background-color                 : $body-background-color !default;
+$input-background-color                 : $white !default;
 $input-padding                          : 0 .75rem !default;
 $input-border-width                     : $border-width !default;
 $input-border-color                     : $border-color !default;
 $input-border-style                     : $border-style !default;
 $input-border-radius                    : $border-radius !default;
+$input-box-shadow                       : inset 0 1px 2px rgba($black,.1) !default;
 $input-hover-color                      : $input-color !default;
 $input-hover-background-color           : $input-background-color !default;
 $input-hover-border-color               : darken($input-border-color, 7.5%) !default;
 $input-focus-color                      : $input-color !default;
 $input-focus-background-color           : $input-background-color !default;
 $input-focus-border-color               : darken($input-border-color, 7.5%) !default;
-$input-focus-box-shadow                 : $component-focus-box-shadow !default;
+$input-focus-box-shadow                 : $input-box-shadow !default;
 
 // END
 

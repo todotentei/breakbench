@@ -54,7 +54,7 @@ export default class PlayAction extends Component {
       <div>
         <button
           type='button'
-          className='app-button app-button-primary'
+          className='web-button web-button-primary'
           onClick={this.handleOpenPlayForm}
         >
           play

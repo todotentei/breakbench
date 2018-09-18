@@ -9,7 +9,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className='home-page'>
+      <div className='web-container'>
         <FindMatch />
       </div>
     );

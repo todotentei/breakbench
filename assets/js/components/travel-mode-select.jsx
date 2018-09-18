@@ -42,9 +42,9 @@ class TravelModeSelect extends Component {
     const { travel_mode } = this.props;
 
     const isActive = travel_mode == type
-      ? 'app-button-active'
-      : 'app-button-primary'
-    const _class = classNames('app-button', isActive)
+      ? 'web-button-active'
+      : 'web-button-primary'
+    const _class = classNames('web-button', isActive)
 
     return (
       <button key={key} value={type} className={_class} onClick={this.handleClick}>

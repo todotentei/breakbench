@@ -2,20 +2,67 @@
 // ----------
 
 
-// Helpers
-//
-// BEGIN
+/// Merge multiple maps
+/// @access public
+/// @return {Map}
+/// @param {List} $maps
+@function map-collect($maps...) {
+  $collection: ();
 
-@import 'functions/helpers';
+  @each $map in $maps {
+    $collection: map-merge($collection, $map);
+  }
+  @return $collection;
+}
 
-// END
+
+/// String replace
+/// @access public
+/// @return {String}
+/// @param {String} $string
+/// @param {String} $search
+/// @param {String} $replace
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
 
 
-// Utilities
-//
-// BEGIN
+/// Color contrast
+/// @access public
+/// @return {Color}
+/// @param {Color} $color
+/// @require $color
+@function color-yiq($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
 
-@import 'functions/colors';
-@import 'functions/z-index';
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
 
-// END
+  @if ($yiq >= $yiq-contrasted-threshold) {
+    @return $yiq-text-dark;
+  } @else {
+    @return $yiq-text-light;
+  }
+}
+
+
+/// Get a z-index value from a layer name
+/// @access public
+/// @require $z-indexes
+/// @return {Number}
+/// @param {String} $layer - Layer's name
+@function z($layer) {
+  @if not map-has-key($z-indexes, $layer) {
+    @error 'There is no layer named `#{$layer}` in $z-indexes. '
+         + 'Layer should be one of #{map-keys($z-indexes)}.';
+  }
+
+  @return map-get($z-indexes, $layer);
+}

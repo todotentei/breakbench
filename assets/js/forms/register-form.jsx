@@ -25,16 +25,16 @@ const renderField = ({ input, id, type, placeholder, label, meta }) => {
 
   const errors = {input_class: '', text_class: ''};
   if (touched && error) {
-    errors.input_class = 'app-form-control-danger';
-    errors.text_class = 'text-danger'
+    errors.input_class = 'web-form-control-danger';
+    errors.text_class = 'web-text-danger'
   }
 
-  const _iC = classNames('app-form-control', errors.input_class);
-  const _fC = classNames('text-small text-danger', errors.feedback_class);
+  const _iC = classNames('web-form-control', errors.input_class);
+  const _fC = classNames('web-text-small text-danger', errors.feedback_class);
 
   return (
-    <div className='app-form-group'>
-      <label className='text-small text-bold'>{label}</label>
+    <div className='web-form-group'>
+      <label className='web-text-small text-bold'>{label}</label>
       <input {...input} type={type} className={_iC} placeholder={placeholder} />
       {touched && error &&
         <span className={_fC}>{error}</span>
@@ -78,7 +78,7 @@ const RegisterForm = (props) => {
         placeholder='•••••••'
         component={renderField}
       />
-      <button type='submit' className='app-button app-button-primary'>
+      <button type='submit' className='web-button web-button-primary'>
         Sign in to your account
       </button>
     </form>

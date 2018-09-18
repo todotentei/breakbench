@@ -1,0 +1,29 @@
+// Register page
+// ----------
+
+
+.register-page {
+  @extend .web-container;
+
+  > div {
+    @extend .web-container;
+    @extend .web-hc;
+
+    max-width: 350px;
+  }
+
+  &__header {
+    &__logo {
+      @include box-it($woodsmoke, 10px);
+      margin-right: 10px;
+    }
+
+    &__text {
+      @extend .web-text-large-bold;
+    }
+  }
+
+  &__login-form {
+    @include padding-tb(50px);
+  }
+}

@@ -62,7 +62,7 @@ export default class FindMatch extends Component {
 
     if (sport)
       return (
-        <div className='app-form-group'>
+        <div className='web-form-group'>
           <Label>Game modes</Label>
           <SportGameModeSelect
             sport={sport}
@@ -75,25 +75,25 @@ export default class FindMatch extends Component {
   render() {
     return (
       <form className='bb-find-match'>
-        <div className='app-form-group'>
+        <div className='web-form-group'>
           <label>Location</label>
           <GoogleAutocomplete
             onChange={this.handleGACClick}
             onSelect={this.handleGAGSelect}
           />
         </div>
-        <div className='app-form-group'>
+        <div className='web-form-group'>
           <label>Travel mode</label>
           <TravelModeSelect onClick={this.handleTVMClick} />
         </div>
-        <div className='app-form-group'>
+        <div className='web-form-group'>
           <label>Sport</label>
           <SportSelect onChange={this.handleSPSChange} />
         </div>
         {this.renderSGMSelect()}
         <button
           onClick={this.handleFindMatch}
-          className='app-button app-button-primary'
+          className='web-button web-button-primary'
         >
           Find Match
         </button>

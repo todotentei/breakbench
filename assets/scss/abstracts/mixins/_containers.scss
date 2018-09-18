@@ -1,0 +1,9 @@
+// Containers
+// ----------
+
+
+@mixin box-it($background: transparent, $padding: $grid-gutter-width) {
+  display: inline-block;
+  background-color: $background;
+  padding: $padding;
+}

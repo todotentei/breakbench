@@ -1,0 +1,14 @@
+// Background
+// ----------
+
+
+// Base backgrounds
+//
+// END
+
+// Contextual background colors
+@each $name, $value in $background-colors {
+  @include background-color-variant('.bg-#{ $name }', $value);
+}
+
+// END

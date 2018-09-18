@@ -6,7 +6,7 @@
 //
 // BEGIN
 
-.app-form-control {
+.web-form-control {
   display: block;
   width: $input-width;
   height: $input-height;
@@ -20,15 +20,14 @@
   border-style: $input-border-style;
   border-color: $input-border-color;
   border-radius: $input-border-radius;
+  box-shadow: $input-box-shadow;
 
   @include form-control-hover-focus;
 }
 
 // Contextual form controls
-@each $color, $value in $theme-colors {
-  .app-form-control-#{ $color } {
-    @include form-control-variant($value);
-  }
+@each $name, $value in $theme-colors {
+  @include form-control-variant('.web-form-control-#{ $name }', $value);
 }
 
 // END
@@ -38,11 +37,11 @@
 //
 // BEGIN
 
-.app-form-group {
+.web-form-group {
   margin-bottom: $form-group-margin-bottom;
 }
 
-.app-form-text {
+.web-form-text {
   display: block;
   margin-top: $form-text-margin-top;
 }

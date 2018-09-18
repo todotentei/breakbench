@@ -6,10 +6,8 @@
 //
 // BEGIN
 
-@each $color, $value in $theme-colors {
-  .text-#{ $color } {
-    @include text-variant($value);
-  }
+@each $name, $value in $text-colors {
+  @include text-color-variant('.web-text-#{ $name }', $value);
 }
 
 // END
@@ -19,27 +17,33 @@
 //
 // BEGIN
 
-.text-small {
-  font-size: $font-size-small;
-}
-
-.text-large {
-  font-size: $font-size-large;
+@each $name, $value in $text-font-sizes {
+  @include text-size-variant('.web-text-#{ $name }', $value);
 }
 
 // END
 
 
-// Font weight
+// Font weights
 //
 // BEGIN
 
-.text-light {
-  font-weight: $font-weight-light;
+@each $name, $value in $text-font-weights {
+  @include text-weight-variant('.web-text-#{ $name }', $value);
 }
 
-.text-bold {
-  font-weight: $font-weight-bold;
+// END
+
+
+
+// Font combos
+//
+// BEGIN
+
+@each $sname, $svalue in $text-font-sizes {
+  @each $wname, $wvalue in $text-font-weights {
+    @include text-size-weight-combo('.web-text-#{ $sname }-#{ $wname }', $svalue, $wvalue);
+  }
 }
 
 // END

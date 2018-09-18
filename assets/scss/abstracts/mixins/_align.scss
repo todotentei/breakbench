@@ -2,18 +2,19 @@
 // ----------
 
 
-@mixin center-absolute($position: 'both') {
-  position: absolute;
+@mixin absolute-centerer($horizontal: true, $vertical: true) {
+  $prefixes: ('webkit', 'ms');
 
-  @if $position == 'vertical' {
-    top: 50%;
-    @include prefix(transform, translateY(-50%), ('webkit', 'ms'));
-  } @else if $position == 'horizontal' {
-    left: 50%;
-    @include prefix(transform, translateX(-50%), ('webkit', 'ms'));
-  } @else if $position == 'both' {
+  position: absolute;
+  @if ($horizontal and $vertical) {
     top: 50%;
     left: 50%;
-    @include prefix(transform, translate(-50%, -50%), ('webkit', 'ms'));
+    @include prefix(transform, translate(-50%, -50%), $prefixes);
+  } @else if ($horizontal) {
+    left: 50%;
+    @include prefix(transform, translate(-50%, 0), $prefixes);
+  } @else if ($vertical) {
+    top: 50%;
+    @include prefix(transform, translate(0, -50%), $prefixes);
   }
 }

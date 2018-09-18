@@ -31,6 +31,7 @@
 // BEGIN
 
 @mixin button-variant(
+  $class,
   $background,
   $border,
   $hover-background: darken($background, 7.5%),
@@ -38,28 +39,30 @@
   $active-background: darken($background, 10%),
   $active-border: darken($border, 12.5%)
 ) {
-  @include gradient-bg($background);
-  color: color-yiq($background);
-  border-color: $border;
-
-  @include hover {
-    @include gradient-bg($hover-background);
-    color: color-yiq($hover-background);
-    border-color: $hover-border;
-  };
-
-  @include focus {
+  #{ $class } {
+    @include gradient-bg($background);
     color: color-yiq($background);
-  };
-
-  @include disabled {
-    color: color-yiq($background);
-    background-color: $background;
     border-color: $border;
-  };
 
-  @include active {
-    box-shadow: $button-active-box-shadow;
+    @include hover {
+      @include gradient-bg($hover-background);
+      color: color-yiq($hover-background);
+      border-color: $hover-border;
+    };
+
+    @include focus {
+      color: color-yiq($background);
+    };
+
+    @include disabled {
+      color: color-yiq($background);
+      background-color: $background;
+      border-color: $border;
+    };
+
+    @include active {
+      box-shadow: $button-active-box-shadow;
+    }
   }
 }
 
