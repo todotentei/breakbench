@@ -14,7 +14,7 @@
   <body>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUg9WieYmhDWTuNFoORRoJ-gl1gw9X1RQ&libraries=places"></script>
 
-    <div id="breakbench-app" class="breakbench-app"></div>
+    <div id="app" class="app"></div>
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <script type="text/javascript">

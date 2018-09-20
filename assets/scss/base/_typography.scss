@@ -6,18 +6,18 @@
 //
 // BEGIN
 
-@include font-face('OpenSans', '../static/fonts/OpenSans-Light', 300, normal, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-LightItalic', 300, italic, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-Regular', 400, normal, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-Italic', 400, italic, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-SemiBold', 600, normal, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-SemiBoldItalic', 600, italic, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-Light', 300, normal, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-LightItalic', 300, italic, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-Regular', 400, normal, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-Italic', 400, italic, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-SemiBold', 600, normal, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-SemiBoldItalic', 600, italic, ttf);
 
 /* -- MORE BOLD FONTS --
-@include font-face('OpenSans', '../static/fonts/OpenSans-Bold', 700, normal, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-BoldItalic', 700, italic, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-ExtraBold', 800, normal, ttf);
-@include font-face('OpenSans', '../static/fonts/OpenSans-ExtraBoldItalic', 800, italic, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-Bold', 700, normal, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-BoldItalic', 700, italic, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-ExtraBold', 800, normal, ttf);
+@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-ExtraBoldItalic', 800, italic, ttf);
 */
 
 // END
