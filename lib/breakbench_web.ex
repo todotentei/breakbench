@@ -45,7 +45,7 @@ defmodule BreakbenchWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/breakbench_web/phoenix/templates",
+      use Phoenix.View, root: "lib/breakbench_web/phoenix",
                         namespace: BreakbenchWeb
 
       # Import convenience functions from controllers
