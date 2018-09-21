@@ -1,7 +1,7 @@
 defmodule BreakbenchWeb.PageController do
-  use BreakbenchWeb, :controller
+  use BreakbenchWeb, :vue
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    render(conn)
   end
 end

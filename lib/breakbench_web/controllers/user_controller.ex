@@ -1,11 +1,11 @@
 defmodule BreakbenchWeb.UserController do
-  use BreakbenchWeb, :controller
+  use BreakbenchWeb, :vue
 
   alias Breakbench.Accounts
   alias Breakbench.Accounts.User
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    render(conn)
   end
 
   def create(conn, %{"user" => attrs}) do
@@ -16,7 +16,7 @@ defmodule BreakbenchWeb.UserController do
         conn
         |> put_status(:created)
         |> json(%{message: "Register successfully"})
-        
+
       {:error, _} ->
         conn
         |> put_status(:bad_request)

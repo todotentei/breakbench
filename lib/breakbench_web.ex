@@ -17,6 +17,22 @@ defmodule BreakbenchWeb do
   and import those modules here.
   """
 
+  def vue do
+    quote do
+      import Phoenix.Controller
+      import Plug.Conn
+
+      use Phoenix.Controller.Pipeline
+
+      plug :put_new_layout, {BreakbenchWeb.VueView, :app}
+      plug :put_new_view, Phoenix.Controller.__view__(__MODULE__)
+
+      import BreakbenchWeb.Router.Helpers
+      import BreakbenchWeb.Gettext
+      import BreakbenchWeb.Auth.Plugs
+    end
+  end
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: BreakbenchWeb
@@ -29,7 +45,7 @@ defmodule BreakbenchWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/breakbench_web/templates",
+      use Phoenix.View, root: "lib/breakbench_web/phoenix/templates",
                         namespace: BreakbenchWeb
 
       # Import convenience functions from controllers

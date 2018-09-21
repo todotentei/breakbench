@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Breakbench</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUg9WieYmhDWTuNFoORRoJ-gl1gw9X1RQ&libraries=places"></script>
+
+    <%= render @view_module, @view_template, assigns %>
+
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script type="text/javascript">
+      window.csrf_token = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;
+    </script>
+  </body>
+</html>
