@@ -13,11 +13,14 @@
 @include font-face('OpenSans', '../static/fonts/opensans/OpenSans-SemiBold', 600, normal, ttf);
 @include font-face('OpenSans', '../static/fonts/opensans/OpenSans-SemiBoldItalic', 600, italic, ttf);
 
-/* -- MORE BOLD FONTS --
-@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-Bold', 700, normal, ttf);
-@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-BoldItalic', 700, italic, ttf);
-@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-ExtraBold', 800, normal, ttf);
-@include font-face('OpenSans', '../static/fonts/opensans/OpenSans-ExtraBoldItalic', 800, italic, ttf);
-*/
+// END
+
+
+// Ubuntu
+//
+// BEGIN
+
+@include font-face('Ubuntu', '../static/fonts/ubuntu/Ubuntu-Regular', 400, normal, ttf);
+@include font-face('Ubuntu', '../static/fonts/ubuntu/Ubuntu-Italic', 400, italic, ttf);
 
 // END

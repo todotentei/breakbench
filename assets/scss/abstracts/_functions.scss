@@ -2,6 +2,18 @@
 // ----------
 
 
+/// Set font
+/// @access public
+/// @return {List}
+/// @param {String} $font
+@function set-font($font) {
+  @if $font-family-fallback {
+    @return $font, $font-family-fallback;
+  } @else {
+    @return $font, sans-serif, serif;
+  }
+}
+
 /// Merge multiple maps
 /// @access public
 /// @return {Map}

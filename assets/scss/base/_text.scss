@@ -2,12 +2,42 @@
 // ----------
 
 
+// Alignment
+//
+// BEGIN
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.text-truncate {
+  @include text-truncate;
+}
+
+@each $value in $text-alignment {
+  @include text-align('.text-#{ $value }', $value);
+}
+
+// END
+
+
+// Transformation
+//
+// BEGIN
+
+@each $value in $text-transformation {
+  @include text-transform('.text-#{ $value }', $value);
+}
+
+// END
+
+
 // Contextual text
 //
 // BEGIN
 
 @each $name, $value in $text-colors {
-  @include text-color-variant('.web-text-#{ $name }', $value);
+  @include text-color-variant('.text-#{ $name }', $value);
 }
 
 // END
@@ -18,7 +48,7 @@
 // BEGIN
 
 @each $name, $value in $text-font-sizes {
-  @include text-size-variant('.web-text-#{ $name }', $value);
+  @include text-size-variant('.text-#{ $name }', $value);
 }
 
 // END
@@ -29,7 +59,7 @@
 // BEGIN
 
 @each $name, $value in $text-font-weights {
-  @include text-weight-variant('.web-text-#{ $name }', $value);
+  @include text-weight-variant('.text-#{ $name }', $value);
 }
 
 // END
@@ -42,7 +72,7 @@
 
 @each $sname, $svalue in $text-font-sizes {
   @each $wname, $wvalue in $text-font-weights {
-    @include text-size-weight-combo('.web-text-#{ $sname }-#{ $wname }', $svalue, $wvalue);
+    @include text-size-weight-combo('.text-#{ $sname }-#{ $wname }', $svalue, $wvalue);
   }
 }
 

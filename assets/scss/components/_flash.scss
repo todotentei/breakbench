@@ -1,0 +1,27 @@
+// Flash
+// ----------
+
+
+.flash {
+  position: relative;
+  @extend %flexbox;
+  @include align-items(center);
+
+  min-height: $flash-min-height;
+  background-color: $flash-background-color;
+  border-radius: $flash-border-radius;
+  padding: $flash-padding-y $flash-padding-x;
+  font-size: $flash-font-size;
+  box-shadow: $flash-shadow;
+
+  @include before {
+    @extend %fa-icon;
+    @extend .fas;
+    margin-right: $flash-padding-x;
+    font-size: $font-size-large;
+  };
+}
+
+@each $name, $value in $flash-types {
+  @include flash-variant('.flash-#{ $name }', $value)
+}

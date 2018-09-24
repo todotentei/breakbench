@@ -2,6 +2,33 @@
 // ----------
 
 
+// FontAwesome
+//
+// BEGIN
+
 @import '../vendor/fontawesome/scss/fontawesome';
 @import '../vendor/fontawesome/scss/solid';
+/*
 @import '../vendor/fontawesome/scss/brands';
+*/
+
+// END
+
+
+// NProgress
+//
+// BEGIN
+
+@import '~nprogress/nprogress.css';
+
+// END
+
+
+
+// Sass
+//
+// BEGIN
+
+@import '~sass-flex-mixin/flex';
+
+// END

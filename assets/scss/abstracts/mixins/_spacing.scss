@@ -34,3 +34,19 @@
 }
 
 // END
+
+@mixin make-paddings($size, $sides, $unit: 'px') {
+  @each $side in $sides {
+    .padding-#{ $side }-#{ $size } {
+      padding-#{ $side }: $size#{ $unit };
+    }
+  }
+}
+
+@mixin make-margins($size, $sides, $unit: 'px') {
+  @each $side in $sides {
+    .margin-#{ $side }-#{ $size } {
+      margin-#{ $side }: $size#{ $unit };
+    }
+  }
+}

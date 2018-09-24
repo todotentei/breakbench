@@ -3,11 +3,11 @@
 
 
 .register-page {
-  @extend .web-container;
+  @extend .container;
 
   > div {
-    @extend .web-container;
-    @extend .web-hc;
+    @extend .container;
+    @extend .hc;
 
     max-width: 350px;
   }
@@ -19,7 +19,7 @@
     }
 
     &__text {
-      @extend .web-text-large-bold;
+      @extend .text-large-bold;
     }
   }
 

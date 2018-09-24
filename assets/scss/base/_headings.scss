@@ -1,0 +1,15 @@
+// Headings
+// ----------
+
+
+// Heading sizes
+//
+// BEGIN
+
+@each $name, $value in $heading-sizes {
+  #{ unquote($name) } {
+    font-size: $value;
+  }
+}
+
+// END

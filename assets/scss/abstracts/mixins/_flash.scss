@@ -1,0 +1,17 @@
+// Flash
+// ----------
+
+
+@mixin flash-variant($class, $data) {
+  $color: map-get($data, 'color');
+
+  #{ $class } {
+    color: color-yiq($color);
+    background-color: $color;
+
+    @include before {
+      content: map-get($data, 'icon');
+      color: color-yiq($color);
+    };
+  }
+}

@@ -3,27 +3,13 @@
 
 
 .login-page {
-  @extend .web-container;
+  padding: 30px 0;
 
-  > div {
-    @extend .web-container;
-    @extend .web-hc;
-
-    max-width: 350px;
+  &__box {
+    max-width: 380px;
   }
 
-  &__header {
-    &__logo {
-      @include box-it($woodsmoke, 10px);
-      margin-right: 10px;
-    }
-
-    &__text {
-      @extend .web-text-large-bold;
-    }
-  }
-
-  &__login-form {
-    @include padding-tb(50px);
+  &__flash {
+    margin-bottom: 20px;
   }
 }

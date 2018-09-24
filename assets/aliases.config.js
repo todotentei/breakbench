@@ -3,11 +3,7 @@ const path = require('path');
 const aliases = {
   '@': '.',
   '@js': 'js',
-  '@router': 'js/router',
-  '@views': 'js/views',
-  '@layouts': 'js/layouts',
-  '@components': 'js/components',
-  '@state': 'js/state',
+  '@scss': 'scss',
 }
 
 module.exports = {};

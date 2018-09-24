@@ -6,22 +6,22 @@
 //
 // BEGIN
 
-.web-form {
-  $web-form: &;
+.form {
+  $form: &;
 
   &__submit {
-    @extend .web-button;
+    @extend .button;
   }
 
   &--login {
-    #{ $web-form }__forgot-password {
-      @extend .web-button-link;
+    #{ $form }__forgot-password {
+      @extend .button-link;
       @include text($font-size-small, $color: $secondary-color);
     }
   }
 
   &__forgot-password {
-    @extend .web-button-link;
+    @extend .button-link;
     @include text($font-size-small, $color: $secondary-color);
   }
 }

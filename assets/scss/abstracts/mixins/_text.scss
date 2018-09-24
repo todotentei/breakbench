@@ -7,9 +7,9 @@
 // BEGIN
 
 @mixin text(
-  $size   : $font-size-base,
-  $weight : $font-weight-base,
-  $color  : $primary-color
+  $size: $font-size-base,
+  $weight: $font-weight-base,
+  $color: $primary-color
 ) {
   font-size: $size;
   font-weight: $weight;
@@ -51,6 +51,40 @@
   #{ $class } {
     font-size: $size;
     font-weight: $weight;
+  }
+}
+
+// END
+
+
+// Alignment
+//
+// BEGIN
+
+@mixin text-align($class, $value) {
+  #{ $class } {
+    text-align: unquote($value);
+  }
+}
+
+// Text truncate
+// Requires inline-block or block for proper styling
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// END
+
+
+// Transformation
+//
+// BEGIN
+
+@mixin text-transform($class, $value) {
+  #{ $class } {
+    text-transform: unquote($value);
   }
 }
 

@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VueForm from 'vue-form';
 
 import modules from './modules';
 
 Vue.use(Vuex);
+Vue.use(VueForm);
 
 const store = new Vuex.Store({
   modules,

@@ -1,12 +1,9 @@
 <script>
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import { library } from '@fortawesome/fontawesome-svg-core';
-  import camelCase from 'lodash/camelCase';
 
   // https://fontawesome.com/icons
-  library.add(
-    require('@fortawesome/free-solid-svg-icons/faSync').definition,
-  );
+  library.add();
 
   export default {
     components: {
@@ -23,9 +20,8 @@
       },
     },
     computed: {
-      // Gets a CSS module class, e.g., iconCustomLogo
       customIconClass() {
-        return this.$style[camelCase('icon-custom-' + this.name)]
+        return 'icon-custom-' + this.name;
       },
     },
   }

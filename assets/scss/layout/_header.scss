@@ -1,0 +1,11 @@
+// Header
+// ----------
+
+
+.header {
+  @include flexbox;
+  @include align-items(center);
+  @include justify-content(center);
+  height: $header-height;
+  border-bottom: $header-border-bottom-width $header-border-bottom-style $header-border-bottom-color;
+}

@@ -6,7 +6,7 @@
 //
 // BEGIN
 
-.web-form-control {
+.form-control {
   display: block;
   width: $input-width;
   height: $input-height;
@@ -27,7 +27,7 @@
 
 // Contextual form controls
 @each $name, $value in $theme-colors {
-  @include form-control-variant('.web-form-control-#{ $name }', $value);
+  @include form-control-variant('.form-control-#{ $name }', $value);
 }
 
 // END
@@ -37,11 +37,11 @@
 //
 // BEGIN
 
-.web-form-group {
+.form-group {
   margin-bottom: $form-group-margin-bottom;
 }
 
-.web-form-text {
+.form-text {
   display: block;
   margin-top: $form-text-margin-top;
 }

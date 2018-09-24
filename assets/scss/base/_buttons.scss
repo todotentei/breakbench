@@ -6,7 +6,7 @@
 //
 // BEGIN
 
-.web-button {
+.button {
   display: inline-block;
   height: $button-height;
   width: $button-width;
@@ -28,7 +28,7 @@
 
 // Contextual buttons
 @each $name, $value in $button-colors {
-  @include button-variant('.web-button-#{ $name }', $value, $value);
+  @include button-variant('.button-#{ $name }', $value, $value);
 }
 
 // END
@@ -38,7 +38,7 @@
 //
 // BEGIN
 
-.web-button-link {
+.button-link {
   color: $link-color;
   font-weight: $font-weight-base;
   text-decoration: $link-text-decoration;

@@ -1,4 +1,4 @@
-// Hover
+// Selectors
 // ----------
 
 
@@ -29,6 +29,19 @@
 @mixin hover-focus {
   &:hover,
   &:focus {
+    @content;
+  }
+}
+
+
+@mixin before {
+  &:before {
+    @content;
+  }
+}
+
+@mixin after {
+  &:after {
     @content;
   }
 }

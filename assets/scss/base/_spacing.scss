@@ -1,0 +1,11 @@
+// Spacing
+// ----------
+
+
+@each $size, $sides in $paddings {
+  @include make-paddings($size, $sides);
+}
+
+@each $size, $sides in $margins {
+  @include make-margins($size, $sides);
+}

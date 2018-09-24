@@ -10,7 +10,7 @@
           : title;
 
         return title
-          ? `${title} | ${appConfig.title}`
+          ? `${title} - ${appConfig.title}`
           : appConfig.title;
       },
       htmlAttrs: {
@@ -20,11 +20,17 @@
         'script'
       ],
     }),
+    watch: {
+      $route(to, from) {
+        // Clear flash on location change
+        this.$store.dispatch('flash/clear');
+      },
+    },
   }
 </script>
 
 <template>
-  <div id="app">
+  <div id="vue-app">
     <!--
     Even when routes use the same component, treat them
     as distinct and create the component again.

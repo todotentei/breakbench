@@ -7,10 +7,10 @@
 // BEGIN
 
 $z-indexes: (
-  'below'    : -1,
-  'default'  : 1,
-  'dropdown' : 4000,
-  'modal'    : 5000
+  'below': -1,
+  'default': 1,
+  'dropdown': 4000,
+  'modal': 5000
 );
 
 // END
@@ -20,20 +20,35 @@ $z-indexes: (
 //
 // BEGIN
 
-$font-family-open-sans                  : 'OpenSans', sans-serif !default;
-$font-family-base                       : $font-family-open-sans;
+$font-family-fallback: sans-serif, serif !default;
+$font-family-open-sans: set-font('OpenSans') !default;
+$font-family-ubuntu: set-font('Ubuntu') !default;
 
-$font-size-small                        : 12px !default;
-$font-size-base                         : 14px !default;
-$font-size-large                        : 18px !default;
+$font-family-base: $font-family-open-sans !default;
+$font-family-heading: $font-family-ubuntu !default;
 
-$font-weight-light                      : 300 !default;
-$font-weight-base                       : 400 !default;
-$font-weight-bold                       : 600 !default;
+$font-size-small: 12px !default;
+$font-size-base: 14px !default;
+$font-size-large: 18px !default;
 
-$headings-margin-bottom                 : .5rem !default;
+$font-weight-light: 300 !default;
+$font-weight-base: 400 !default;
+$font-weight-bold: 600 !default;
 
-$paragraph-margin-bottom                : 1rem !default;
+$heading-sizes: () !default;
+$heading-sizes: (
+  'h1': 1.75rem,
+  'h2': 1.5rem,
+  'h3': 1.25rem,
+  'h4': 1.15rem,
+  'h5': 1rem,
+  'h6': .85rem,
+);
+$heading-font-weight: lighter !default;
+$heading-margin-top: 0 !default;
+$heading-margin-bottom: 1rem !default;
+
+$paragraph-margin-bottom: 1rem !default;
 
 // END
 
@@ -42,56 +57,57 @@ $paragraph-margin-bottom                : 1rem !default;
 //
 // BEGIN
 
-$primary-color                          : $woodsmoke !default;
-$secondary-color                        : $gray-400 !default;
-$success-color                          : $light-greenish-blue !default;
-$info-color                             : $jade-dust !default;
-$warning-color                          : $chrome-yellow !default;
-$danger-color                           : $sizzling-red !default;
-$dark-color                             : $gray-800 !default;
-$muted-color                            : $gray-500 !default;
-$light-color                            : $gray-100 !default;
+$primary-color: $woodsmoke !default;
+$secondary-color: $gray-100 !default;
+$success-color: $ufo-green !default;
+$info-color: $spiro-disco-ball !default;
+$warning-color: $chrome-yellow !default;
+$danger-color: $sizzling-red !default;
+$dark-color: $gray-800 !default;
+$muted-color: $gray-500 !default;
+$light-color: $gray-100 !default;
 
 $default-colors: (
-  'white'       : $white,
-  'gray-100'    : $gray-100,
-  'gray-200'    : $gray-200,
-  'gray-300'    : $gray-300,
-  'gray-400'    : $gray-400,
-  'gray-500'    : $gray-500,
-  'gray-600'    : $gray-600,
-  'gray-700'    : $gray-700,
-  'gray-800'    : $gray-800,
-  'gray-900'    : $gray-900,
-  'transparent' : transparent
+  'white': $white,
+  'gray-100': $gray-100,
+  'gray-200': $gray-200,
+  'gray-300': $gray-300,
+  'gray-400': $gray-400,
+  'gray-500': $gray-500,
+  'gray-600': $gray-600,
+  'gray-700': $gray-700,
+  'gray-800': $gray-800,
+  'gray-900': $gray-900,
+  'transparent': transparent
 );
 
 $theme-colors: (
-  'primary'   : $primary-color,
-  'secondary' : $secondary-color,
-  'success'   : $success-color,
-  'info'      : $info-color,
-  'warning'   : $warning-color,
-  'danger'    : $danger-color,
-  'dark'      : $dark-color,
-  'muted'     : $muted-color,
-  'light'     : $light-color
+  'primary': $primary-color,
+  'secondary': $secondary-color,
+  'success': $success-color,
+  'info': $info-color,
+  'warning': $warning-color,
+  'danger': $danger-color,
+  'dark': $dark-color,
+  'muted': $muted-color,
+  'light': $light-color
 );
 
+$background-colors: () !default;
 $background-colors: map-collect(
   $default-colors,
   $theme-colors,
   (
   )
-) !default;
+);
 
 // The yiq lightness value that determines when the lightness of color changes
 // from 'dark' to 'light'. Acceptable values are between 0 and 255.
-$yiq-contrasted-threshold               : 150 !default;
+$yiq-contrasted-threshold: 150 !default;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
-$yiq-text-dark                          : $black !default;
-$yiq-text-light                         : $white !default;
+$yiq-text-dark: $black !default;
+$yiq-text-light: $white !default;
 
 // END
 
@@ -100,7 +116,7 @@ $yiq-text-light                         : $white !default;
 //
 // BEGIN
 
-$grid-gutter-width                      : 15px !default;
+$grid-gutter-width: 15px !default;
 
 // END
 
@@ -109,21 +125,75 @@ $grid-gutter-width                      : 15px !default;
 //
 // BEGIN
 
-$body-font-size                         : $font-size-base !default;
-$body-font-weight                       : $font-weight-base !default;
-$body-color                             : $woodsmoke !default;
-$body-background-color                  : $gray-100 !default;
+$body-font-size: $font-size-base !default;
+$body-font-weight: $font-weight-base !default;
+$body-color: $woodsmoke !default;
+$body-background-color: $white !default;
 
-$component-height                       : 50px !default;
-$component-width                        : 100% !default;
-$component-focus-box-shadow             : none !default;
+$component-height: 40px !default;
+$component-width: 100% !default;
+$component-background-color: $gray-100 !default;
+$component-shadow: none !default;
+$component-focus-box-shadow: none !default;
 
-$border-width                           : 1px !default;
-$border-style                           : solid !default;
-$border-color                           : $gray-300 !default;
-$border-radius                          : 2.5px !default;
+$border-width: 1px !default;
+$border-style: solid !default;
+$border-color: $gray-300 !default;
+$border-radius: 2.5px !default;
 
-$line-height-base                       : 1.5 !default;
+$line-height-base: 1.5 !default;
+
+// END
+
+
+// Header
+//
+// BEGIN
+
+$header-height: 40px !default;
+$header-border-bottom-width: $border-width !default;
+$header-border-bottom-style: $border-style !default;
+$header-border-bottom-color: $border-color !default;
+
+
+// END
+
+
+// Flash
+//
+// BEGIN
+
+$flash-types: () !default;
+$flash-types: (
+  'primary': (
+    'icon': fa-content($fa-var-terminal),
+    'color': $primary-color,
+  ),
+  'danger': (
+    'icon': fa-content($fa-var-times-circle),
+    'color': $danger-color,
+  ),
+  'warning': (
+    'icon': fa-content($fa-var-exclamation-circle),
+    'color': $warning-color,
+  ),
+  'info': (
+    'icon': fa-content($fa-var-info-circle),
+    'color': $info-color,
+  ),
+  'success': (
+    'icon': fa-content($fa-var-check-circle),
+    'color': $success-color,
+  ),
+);
+
+$flash-min-height: $component-height !default;
+$flash-font-size: $font-size-small !default;
+$flash-background-color: $component-background-color !default;
+$flash-border-radius: $border-radius !default;
+$flash-padding-y: 10px !default;
+$flash-padding-x: 15px !default;
+$flash-shadow: $component-shadow !default;
 
 // END
 
@@ -140,16 +210,32 @@ $text-colors: map-collect(
   )
 );
 
+$text-transformation: () !default;
+$text-transformation: (
+  capitalize,
+  full-width,
+  lowercase,
+  uppercase
+);
+
+$text-alignment: () !default;
+$text-alignment: (
+  left,
+  right,
+  center,
+  justify
+);
+
 $text-font-sizes: () !default;
 $text-font-sizes: (
-  'small' : $font-size-small,
-  'large' : $font-size-large
+  'small': $font-size-small,
+  'large': $font-size-large
 );
 
 $text-font-weights: () !default;
 $text-font-weights: (
-  'light' : $font-weight-light,
-  'bold'  : $font-weight-bold
+  'light': $font-weight-light,
+  'bold': $font-weight-bold
 );
 
 // END
@@ -159,27 +245,27 @@ $text-font-weights: (
 //
 // BEGIN
 
-$button-height                          : $component-height !default;
-$button-width                           : $component-width !default;
-$button-line-height                     : $line-height-base !default;
-$button-font-size                       : $font-size-base !default;
-$button-font-weight                     : $font-weight-base !default;
-$button-color                           : $white !default;
-$button-border-width                    : 0 !default;
-$button-border-style                    : $border-style !default;
-$button-border-radius                   : $border-radius !default;
-$button-box-shadow                      : 0 2px 4px 0 rgba($black,.1) !default;
-$button-disabled-opacity                : .65 !default;
-$button-focus-box-shadow                : $button-box-shadow !default;
-$button-active-box-shadow               : inset 0 2px 4px rgba($black, .1) !default;
-
+$button-colors: () !default;
 $button-colors: map-collect(
   $default-colors,
   $theme-colors,
   (
-    'active': darken($primary-color, 12.5%)
   )
-) !default;
+);
+
+$button-height: $component-height !default;
+$button-width: $component-width !default;
+$button-line-height: $line-height-base !default;
+$button-font-size: $font-size-base !default;
+$button-font-weight: $font-weight-bold !default;
+$button-color: $white !default;
+$button-border-width: 0 !default;
+$button-border-style: $border-style !default;
+$button-border-radius: $border-radius !default;
+$button-box-shadow: $component-shadow !default;
+$button-disabled-opacity: .65 !default;
+$button-focus-box-shadow: $button-box-shadow !default;
+$button-active-box-shadow: inset 0 2px 4px rgba($black, .1) !default;
 
 // END
 
@@ -188,31 +274,33 @@ $button-colors: map-collect(
 //
 // BEGIN
 
-$form-group-margin-bottom               : $grid-gutter-width !default;
-$form-text-margin-top                   : 5px !default;
+$form-group-margin-bottom: $grid-gutter-width !default;
+$form-text-margin-top: 5px !default;
 
-$label-margin-bottom                    : 5px !default;
+$label-margin-bottom: 5px !default;
 
-$input-height                           : $component-height !default;
-$input-width                            : $component-width !default;
-$input-line-height                      : $line-height-base !default;
-$input-font-size                        : $font-size-base !default;
-$input-font-weight                      : $font-weight-base !default;
-$input-color                            : $body-color !default;
-$input-background-color                 : $white !default;
-$input-padding                          : 0 .75rem !default;
-$input-border-width                     : $border-width !default;
-$input-border-color                     : $border-color !default;
-$input-border-style                     : $border-style !default;
-$input-border-radius                    : $border-radius !default;
-$input-box-shadow                       : inset 0 1px 2px rgba($black,.1) !default;
-$input-hover-color                      : $input-color !default;
-$input-hover-background-color           : $input-background-color !default;
-$input-hover-border-color               : darken($input-border-color, 7.5%) !default;
-$input-focus-color                      : $input-color !default;
-$input-focus-background-color           : $input-background-color !default;
-$input-focus-border-color               : darken($input-border-color, 7.5%) !default;
-$input-focus-box-shadow                 : $input-box-shadow !default;
+$input-height: $component-height !default;
+$input-width: $component-width !default;
+$input-line-height: $line-height-base !default;
+$input-font-size: $font-size-base !default;
+$input-font-weight: $font-weight-base !default;
+$input-color: $body-color !default;
+$input-background-color: darken($body-background-color, 2.5%) !default;
+$input-padding: 0 .75rem !default;
+$input-border-width: $border-width !default;
+$input-border-color: $border-color !default;
+$input-border-style: $border-style !default;
+$input-border-radius: $border-radius !default;
+$input-box-shadow: inset $component-shadow !default;
+$input-hover-color: $input-color !default;
+$input-hover-background-color: $input-background-color !default;
+$input-hover-border-color: darken($input-border-color, 7.5%) !default;
+$input-focus-color: $input-color !default;
+$input-focus-background-color: $input-background-color !default;
+$input-focus-border-color: darken($input-border-color, 7.5%) !default;
+$input-focus-box-shadow: $input-box-shadow !default;
+
+$placeholder-color: $gray-500 !default;
 
 // END
 
@@ -221,11 +309,11 @@ $input-focus-box-shadow                 : $input-box-shadow !default;
 //
 // BEGIN
 
-$link-color                             : $body-color !default;
-$link-text-decoration                   : underline;
-$link-hover-color                       : darken($link-color, 15%) !default;
-$link-hover-text-decoration             : $link-text-decoration !default;
-$link-disabled-color                    : $muted-color !default;
+$link-color: $body-color !default;
+$link-text-decoration: underline;
+$link-hover-color: darken($link-color, 15%) !default;
+$link-hover-text-decoration: $link-text-decoration !default;
+$link-disabled-color: $muted-color !default;
 
 // END
 
@@ -234,7 +322,44 @@ $link-disabled-color                    : $muted-color !default;
 //
 // BEGIN
 
-$table-cell-padding                     : .75rem !default;
-$table-caption-color                    : $muted-color !default;
+$table-cell-padding: .75rem !default;
+$table-caption-color: $muted-color !default;
+
+// END
+
+
+// Icons
+//
+// BEGIN
+
+$icon-width: 48px !default;
+$icon-height: 48px !default;
+
+// END
+
+
+// Spacing
+//
+// BEGIN
+
+$spacings: () !default;
+$spacings: (
+  20: (top, bottom),
+  40: (top, bottom),
+);
+
+$paddings: () !default;
+$paddings: map-merge(
+  $spacings,
+  (
+  )
+);
+
+$margins: () !default;
+$margins: map-merge(
+  $spacings,
+  (
+  )
+);
 
 // END
