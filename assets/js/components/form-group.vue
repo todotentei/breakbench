@@ -6,6 +6,6 @@
 
 <template>
   <div class="form-group">
-    <slot />
+    <slot></slot>
   </div>
 </template>

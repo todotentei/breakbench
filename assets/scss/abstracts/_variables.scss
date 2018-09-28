@@ -143,6 +143,9 @@ $border-radius: 2.5px !default;
 
 $line-height-base: 1.5 !default;
 
+$label-margin-bottom: 5px !default;
+$placeholder-color: $gray-500 !default;
+
 // END
 
 
@@ -277,8 +280,6 @@ $button-active-box-shadow: inset 0 2px 4px rgba($black, .1) !default;
 $form-group-margin-bottom: $grid-gutter-width !default;
 $form-text-margin-top: 5px !default;
 
-$label-margin-bottom: 5px !default;
-
 $input-height: $component-height !default;
 $input-width: $component-width !default;
 $input-line-height: $line-height-base !default;
@@ -300,7 +301,20 @@ $input-focus-background-color: $input-background-color !default;
 $input-focus-border-color: darken($input-border-color, 7.5%) !default;
 $input-focus-box-shadow: $input-box-shadow !default;
 
-$placeholder-color: $gray-500 !default;
+$form-feedback-colors: () !default;
+$form-feedback-colors: (
+  'success': $success-color,
+  'info': $info-color,
+  'warning': $warning-color,
+  'danger': $danger-color
+);
+
+$form-feedback-font-size: $font-size-small !default;
+$form-feedback-font-weight: $font-weight-base !default;
+$form-feedback-margin-top: 5px !default;
+
+$form-check-input-gutter: 1.25rem !default;
+$form-check-input-margin-y: .3rem !default;
 
 // END
 

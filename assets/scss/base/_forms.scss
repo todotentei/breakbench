@@ -2,25 +2,32 @@
 // ----------
 
 
+// Form feedback
+//
+// BEGIN
+
+.form-feedback {
+  display: none;
+  width: 100%;
+  margin-top: $form-feedback-margin-top;
+  font-size: $form-feedback-font-size;
+  font-weight: $form-feedback-font-weight;
+}
+
+// Variant feedbacks
+@each $name, $value in $form-feedback-colors {
+  @include form-feedback-variant('.form-feedback-#{ $name }', $value);
+}
+
+// END
+
+
 // Form controls
 //
 // BEGIN
 
 .form-control {
-  display: block;
-  width: $input-width;
-  height: $input-height;
-  font-size: $font-size-base;
-  color: $input-color;
-  background-color: $input-background-color;
-  background-clip: padding-box;
-  padding: $input-padding;
-  line-height: $input-line-height;
-  border-width: $input-border-width;
-  border-style: $input-border-style;
-  border-color: $input-border-color;
-  border-radius: $input-border-radius;
-  box-shadow: $input-box-shadow;
+  @include as-form-control;
 
   @include form-control-hover-focus;
 }
@@ -44,6 +51,17 @@
 .form-text {
   display: block;
   margin-top: $form-text-margin-top;
+}
+
+// END
+
+
+// Form checks
+//
+// BEGIN
+
+.form-check {
+  @include as-form-check;
 }
 
 // END

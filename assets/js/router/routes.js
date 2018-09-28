@@ -1,4 +1,4 @@
-import store from '@js/state/store';
+import store from '@js/store';
 
 export default [
   {

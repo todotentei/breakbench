@@ -2,10 +2,28 @@
 // ----------
 
 
-// Contextual form controls
+// Form controls
 //
 // BEGIN
 
+@mixin as-form-control {
+  display: block;
+  width: $input-width;
+  height: $input-height;
+  font-size: $font-size-base;
+  color: $input-color;
+  background-color: $input-background-color;
+  background-clip: padding-box;
+  padding: $input-padding;
+  line-height: $input-line-height;
+  border-width: $input-border-width;
+  border-style: $input-border-style;
+  border-color: $input-border-color;
+  border-radius: $input-border-radius;
+  box-shadow: $input-box-shadow;
+}
+
+// Contextual form controls
 @mixin form-control-variant($class, $color) {
   #{ $class } {
     border-color: $color;
@@ -13,16 +31,12 @@
     @include hover-focus {
       border-color: $color;
     };
+
+    @include enable-feedback;
   }
 }
 
-// END
-
-
 // Form control events
-//
-// ----------
-
 @mixin form-control-hover {
   @include hover {
     color: $input-hover-color;
@@ -44,6 +58,49 @@
 @mixin form-control-hover-focus {
   @include form-control-hover;
   @include form-control-focus;
+}
+
+// END
+
+
+// Form feedback
+//
+// BEGIN
+
+@mixin enable-feedback {
+  ~ .form-feedback {
+    display: block;
+  }
+}
+
+@mixin form-feedback-variant($class, $color) {
+  #{ $class } {
+    color: $color;
+  }
+}
+
+// END
+
+
+// Form checks
+//
+// BEGIN
+
+@mixin as-form-check {
+  position: relative;
+  display: block;
+  padding-left: $form-check-input-gutter;
+
+  input[type=checkbox],
+  input[type=radio] {
+    position: absolute;
+    margin-top: $form-check-input-margin-y;
+    margin-left: -$form-check-input-gutter;
+
+    & + * {
+      margin-bottom: 0;
+    }
+  }
 }
 
 // END

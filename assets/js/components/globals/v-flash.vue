@@ -1,8 +1,5 @@
 <template>
-  <div
-    class='flash'
-    v-bind="$attrs"
-  >
+  <div class='flash'>
     <slot />
   </div>
 </template>

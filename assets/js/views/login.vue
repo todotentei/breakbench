@@ -53,17 +53,15 @@
   <layout>
     <v-container class="login-page">
       <v-container class="login-page__box">
-        <div class="margin-bottom-20">
-          <h2 class="text-center">Log into Breakbench</h2>
-        </div>
-        <v-flash
-          v-if="flash.message"
-          class="login-page__flash"
-          :class="flash.type"
-        >
-          {{ flash.message }}
-        </v-flash>
-        <div>
+        <h2 class="text-center">Log into Breakbench</h2>
+        <div class="margin-top-40">
+          <v-flash
+            v-if="flash.message"
+            class="login-page__flash"
+            :class="flash.type"
+          >
+            {{ flash.message }}
+          </v-flash>
           <form @submit.prevent="onSubmit">
             <form-group>
               <label class="text-bold">Username or email address</label>
